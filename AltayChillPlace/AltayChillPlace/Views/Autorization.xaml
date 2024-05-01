@@ -2,31 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AltayChillPlace.Views.Autorization" 
-             xmlns:custom ="clr-namespace:AltayChillPlace.CustomXaml"
+             xmlns:custom ="clr-namespace:AltayChillPlace.CustomXaml" 
+             xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" x:DataType="viewmodels:AutorizationVM"
              IconImageSource="">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Для текста -->
             <RowDefinition Height="*"/>
-            <!-- Оставшееся пространство -->
         </Grid.RowDefinitions>
 
-        <!-- Фоновое изображение, охватывающее весь Grid -->
         <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
             <Image Source="BackgroundSingIn.png" Aspect="AspectFill"
                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
         </AbsoluteLayout>
 
-        <!-- Текстовый контент в первой строке -->
-        <StackLayout Grid.Row="0"
-                     HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-            <Label Text="Welcome" FontFamily="windsong" TextColor="#EFF5FB" FontSize="{OnIdiom Phone=90}"
-                   HorizontalOptions="Center" HorizontalTextAlignment="Center" Opacity="0.6"/>
-            <Label Text="Добро пожаловать!" FontFamily="poiretone" TextColor="#EFF5FB" FontSize="{OnIdiom Phone=35}"
-                   HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-            <custom:EntryCustom IconSource="call.png" Placeholder="Введите телефон"/>
-
+        <StackLayout HorizontalOptions="Center">
+            <Label Text="Welcome" FontFamily="poiretone" TextColor="#EFF5FB" FontSize="{OnIdiom Phone=70}"
+             HorizontalOptions="Center" Opacity="0.6" Margin="0"/>
+            <Label Text="Добро пожаловать!" FontFamily="poiretone" TextColor="#EFF5FB" FontSize="{OnIdiom Phone=30}"
+            HorizontalOptions="Center" Margin="0"/>
+            <Label Text="Номер телефона" FontFamily="poiretone" TextColor="#C3C7C6" HorizontalOptions="Center" Margin="0,100,0,0" FontSize="18"/>
+            <!--<Entry Placeholder="Логин" Text="{Binding Login}"/>-->
+            <custom:EntryPhoneMask Text="{Binding Login}"/>
+            <Label Text="Пароль" FontFamily="poiretone" TextColor="#C3C7C6" HorizontalOptions="Center" Margin="0,10,0,0" FontSize="18"/>
+            <!--<Entry Placeholder="Логин" IsPassword="True" Text="{Binding Password}"/>-->
+            <custom:EntryCustom Text="{Binding Password}" IsPasswordEntry="True"/>
+            <Button Style="{StaticResource ButtonStyle}" Text="Войти" Margin="0,30,0,0" Command="{Binding SingInCommand}"/>
+            <StackLayout Orientation="Horizontal">
+            </StackLayout>
         </StackLayout>
     </Grid>
 </ContentPage>

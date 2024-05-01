@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:control="clr-namespace:Xamarin.Forms.MaskedEntry;assembly=Xamarin.Forms.MaskedEntry" xmlns:customxaml="clr-namespace:AltayChillPlace.CustomXaml" x:DataType="customxaml:EntryCustom"
-             x:Class="AltayChillPlace.CustomXaml.EntryCustom">
+             xmlns:control="clr-namespace:Xamarin.Forms.MaskedEntry;assembly=Xamarin.Forms.MaskedEntry"
+             xmlns:custom ="clr-namespace:AltayChillPlace.CustomXaml;assembly=AltayChillPlace"
+             x:Class="AltayChillPlace.CustomXaml.EntryPhoneMask">
     <Frame CornerRadius="20" BorderColor="#EFF5FB" Padding="0" HasShadow="False" BackgroundColor="Transparent" WidthRequest="300">
         <Grid VerticalOptions="Center">
             <Grid.ColumnDefinitions>
@@ -10,18 +11,20 @@
                 <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
 
-            <Entry x:Name="entry" 
+            <control:MaskedEntry x:Name="entry" 
                    Grid.Column="0"
                    Placeholder=""
                    VerticalOptions="Center"
                    BackgroundColor="Transparent"
                    TextColor="White"
                    Text=""
-                   IsPassword="{Binding IsPasswordEntry}"
-                   Margin="10,0,0,0"/>
+                   Mask="+7(XXX)XXX-XX-XX"
+                   Keyboard="Telephone"
+                   Margin="10,0,0,0">
+            </control:MaskedEntry>
             <Image x:Name="icon" 
                    Grid.Column="1"
-                   Source="{Binding IconSource}"
+                   Source=""
                    VerticalOptions="Center"
                    WidthRequest="40"
                    HeightRequest="40"/>

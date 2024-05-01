@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network_security_config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain> <!-- Для Android Emulator -->
+        <domain includeSubdomains="true">192.168.x.x</domain> <!-- Ваш локальный IP, если тестируете на физическом устройстве -->
+    </domain-config>
+
+    <!-- Разрешить нешифрованный трафик для всех доменов (не рекомендуется для продакшена) -->
+    <base-config cleartextTrafficPermitted="true" />
+</network_security_config>
