@@ -1,0 +1,72 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:help="clr-namespace:AltayChillPlace.Helpers;assembly=AltayChillPlace"
+             xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" x:DataType="viewmodels:LentaVM"
+             xmlns:custom="clr-namespace:AltayChillPlace.CustomXaml;assembly=AltayChillPlace"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="AltayChillPlace.Views.Lenta">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Image Source="lenta2.png"
+                       Aspect="AspectFill"
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Fill"
+                       Grid.Row="0" />
+                <StackLayout Grid.Row="0" Margin="100,390,100,0">
+                    <StackLayout WidthRequest="100">
+                        <Label Text="Дата заезда" 
+                               TextColor="#999494" 
+                               FontSize="18"/>
+                        <custom:CustomDatePicker FontSize="18" 
+                                    Date="{Binding ArrivalDate}"
+                                    MinimumDate="{Binding MinArrivalDate }"
+                                    MaximumDate="{Binding MaxArrivalDate}">
+                            <DatePicker.Behaviors>
+                                <help:DatePickerBehavior Command="{Binding DateChangedEventArgs}"/>
+                            </DatePicker.Behaviors>
+                        </custom:CustomDatePicker>
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="Дата выезда"
+                               TextColor="#999494" 
+                               FontSize="20"/>
+                        <custom:CustomDatePicker FontSize="18" 
+                                    Date="{Binding DepartureDate}" 
+                                    MinimumDate="{Binding MinDepartureDate}" 
+                                    MaximumDate="{Binding MaxDepartureDate}">
+                            <DatePicker.Behaviors>
+                                <help:DatePickerBehavior/>
+                            </DatePicker.Behaviors>
+                        </custom:CustomDatePicker>
+                        <Button Text="Посмотреть варианты" 
+                                FontSize="14" 
+                                BackgroundColor="Transparent"
+                                BorderColor="#799D6D"
+                                BorderWidth="2"
+                                Command="{Binding OpenHousesMenuCommand}"/>
+                    </StackLayout>
+                    <Button
+                        Text="Подробнее о номерах"
+                        FontSize="14" 
+                        BackgroundColor="Transparent"
+                        BorderColor="#E0B499"
+                        BorderWidth="2"
+                        TextColor="#1C3E0D"
+                        Margin="0,780,0,0"/>
+                    <Button
+                        Text="Подробнее в блоге"
+                        FontSize="14" 
+                        BackgroundColor="Transparent"
+                        BorderColor="#E0B499"
+                        BorderWidth="2"
+                        TextColor="#1C3E0D"
+                        Margin="0,700,0,0"/>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

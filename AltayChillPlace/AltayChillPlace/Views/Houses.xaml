@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AltayChillPlace.Views.Houses"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid BackgroundColor="#E9F7E7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="130"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Source="logo.png"/>
+            <Grid Grid.Row="1">
+                <Frame   
+                    BackgroundColor="#88AA7C"
+                    CornerRadius="50"
+                    Opacity="76"
+                    Margin="10,0,10,0"
+                    Padding="1">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Button Text="Номера"
+                            BackgroundColor="Transparent" 
+                            BorderWidth="0"/>
+                        <Button Text="Услуги"
+                            BackgroundColor="Transparent" 
+                            BorderWidth="0"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+            <ListView Grid.Row="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <Image Source="" 
+                                       WidthRequest="80" 
+                                       HeightRequest="80" 
+                                       Aspect="AspectFill" />
+                                <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                                    <Label Text="" 
+                                           FontSize="16" 
+                                           FontAttributes="Bold" />
+                                    <Label Text="" 
+                                           FontSize="14" 
+                                           Opacity="0.6" 
+                                           MaxLines="2"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

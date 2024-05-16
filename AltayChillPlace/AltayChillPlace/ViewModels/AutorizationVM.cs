@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using AltayChillPlace.Interface;
+using AltayChillPlace.Views;
+using Prism.Commands;
 using Prism.Mvvm;
 using System.Threading.Tasks;
-using AltayChillPlace.Interface;
-using Prism.Commands;
+using Xamarin.Forms;
+using System;
+using AltayChillPlace.NavigationFile;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -39,6 +39,7 @@ namespace AltayChillPlace.ViewModels
             }
         }
         public DelegateCommand SingInCommand { get; private set; }
+        public DelegateCommand RegistrationCommand { get; private set; }
         public AutorizationVM(IAuthService authService, IMessageService messageService)
         {
             _authService = authService;
@@ -55,7 +56,8 @@ namespace AltayChillPlace.ViewModels
             var success = await _authService.LoginAsync(username, password);
             if (success)
             {
-                _messageService.ShowPopup("Успешно");
+                //_messageService.ShowPopup("Успешно");
+                await NavigationDispatcher.Instance.Navigation.PushAsync(new Lenta());
             }
             else
             {
@@ -63,9 +65,15 @@ namespace AltayChillPlace.ViewModels
             }
         }
 
+        private async void OpenRegistrationPage()
+        {
+            await NavigationDispatcher.Instance.Navigation.PushAsync(new Registration());
+        }
+
         private void InitializingCommands()
         {
             SingInCommand = new DelegateCommand(SingInAsync);
+            RegistrationCommand = new DelegateCommand(OpenRegistrationPage);
         }
     }
 }

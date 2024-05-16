@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:custom ="clr-namespace:AltayChillPlace.CustomXaml" xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" x:DataType="viewmodels:RegistrationVM"
+             x:Class="AltayChillPlace.Views.Registration">
+
+    <ScrollView Background="RegistrationBackground.png">
+        <Grid>
+            <RelativeLayout>
+                <Image Source="RegistrationBackground.png"
+                       Aspect="AspectFill"
+                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"/>
+                <StackLayout>
+                    <StackLayout HorizontalOptions="Center">
+                        <Label Text="Welcome" FontFamily="poiretone" TextColor="#EFF5FB" FontSize="{OnIdiom Phone=70}"
+                       HorizontalOptions="Center" Opacity="0.6" Margin="0"/>
+                        <Label Text="Добро пожаловать!" FontFamily="poiretone" TextColor="#EFF5FB" FontSize="{OnIdiom Phone=30}"
+                       HorizontalOptions="Center" Margin="0"/>
+                        <Label Text="Имя*" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
+                        <custom:EntryCustom Text="{Binding FirstName}"/>
+                        <Label Text="Фамилия*" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
+                        <custom:EntryCustom Text="{Binding MiddleName}"/>
+                        <Label Text="Отчество" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
+                        <custom:EntryCustom Text="{Binding LastName}"/>
+                        <Label Text="Дата рождения" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
+                        <custom:EntryDateMask Date="{Binding DateOfBirth}"/>
+                        <Label Text="Номер телефона*" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
+                        <custom:EntryPhoneMask Text="{Binding PhoneNumber}"/>
+                        <Label Text="Email*" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
+                        <custom:EntryCustom Text="{Binding Email}"/>
+                        <Label Text="Пароль*" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
+                        <custom:EntryCustom IsPasswordEntry="True" Text="{Binding Password}"/>
+                        <Button Style="{StaticResource ButtonStyle}" Text="Зарегистрироваться" Command="{Binding RegistrationCommand}" Margin="0,20,0,0"/>
+                    </StackLayout>
+                    <Label Text="Нажимая кнопку 'Зарегистрироваться', вы подтверждаете, что ознакомлены и соглашаетесь с нашей политикой конфиденциальности и условиями использования. Добро пожаловать в наше сообщество!"
+                   TextColor="#EFF5FB"
+                   HorizontalTextAlignment="Center"
+                   Margin="20"/>
+                </StackLayout>
+            </RelativeLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>
