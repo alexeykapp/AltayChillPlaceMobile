@@ -1,8 +1,8 @@
-﻿using System;
-using AltayChillPlace.Configuration;
-using Xamarin.Forms;
+﻿using AltayChillPlace.Configuration;
+using AltayChillPlace.NavigationFile;
+using AltayChillPlace.Services;
 using AltayChillPlace.Views;
-using Xamarin.Forms.Xaml;
+using Xamarin.Forms;
 
 namespace AltayChillPlace
 {
@@ -15,7 +15,7 @@ namespace AltayChillPlace
 
             AppInitializer = new AppInitializer();
             AppInitializer.Initialize();
-            MainPage = new Autorization();
+            NavigateMainPage();
         }
 
         protected override void OnStart()
@@ -29,5 +29,21 @@ namespace AltayChillPlace
         protected override void OnResume()
         {
         }
+
+        private async void NavigateMainPage()
+        {
+            TokenService tokenService = new TokenService();
+            var resultValidate = tokenService.IsTokenValidAsync().Result;
+            if (resultValidate)
+            {
+                MainPage = new NavigationPage(new Houses());
+            }
+            MainPage = new NavigationPage(new Autorization());
+
+            MainPage = new NavigationPage(new Autorization());
+            NavigationPage.SetHasNavigationBar(MainPage, false);
+            NavigationDispatcher.Instance.Initialize(MainPage.Navigation);
+        }
     }
+
 }

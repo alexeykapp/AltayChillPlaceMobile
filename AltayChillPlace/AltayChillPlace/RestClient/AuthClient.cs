@@ -22,14 +22,12 @@ namespace AltayChillPlace.RestClient
         {
             var content = new FormUrlEncodedContent(new[]
             {
-                new KeyValuePair<string, string>("email", login),
+                new KeyValuePair<string, string>("phone", login),
                 new KeyValuePair<string, string>("password", password)
             });
-            Debug.WriteLine($"Login: {login}, Password: {password}");
             var response = await _apiClient.HttpClient.PostAsync("user/login", content);
             if (!response.IsSuccessStatusCode)
             {
-                Debug.WriteLine($"Error - {response.RequestMessage}");
                 throw new Exception("Authentication failed");
             }
 

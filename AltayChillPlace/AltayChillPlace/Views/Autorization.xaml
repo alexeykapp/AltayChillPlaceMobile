@@ -4,6 +4,7 @@
              x:Class="AltayChillPlace.Views.Autorization" 
              xmlns:custom ="clr-namespace:AltayChillPlace.CustomXaml" 
              xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" x:DataType="viewmodels:AutorizationVM"
+             NavigationPage.HasNavigationBar="False"
              IconImageSource="">
     <Grid>
         <Grid.RowDefinitions>
@@ -22,13 +23,18 @@
             <Label Text="Добро пожаловать!" FontFamily="poiretone" TextColor="#EFF5FB" FontSize="{OnIdiom Phone=30}"
             HorizontalOptions="Center" Margin="0"/>
             <Label Text="Номер телефона" FontFamily="poiretone" TextColor="#C3C7C6" HorizontalOptions="Center" Margin="0,100,0,0" FontSize="18"/>
-            <!--<Entry Placeholder="Логин" Text="{Binding Login}"/>-->
-            <custom:EntryPhoneMask Text="{Binding Login}"/>
+            <custom:EntryPhoneMask Text="{Binding Login}" IconSource="call.png"/>
             <Label Text="Пароль" FontFamily="poiretone" TextColor="#C3C7C6" HorizontalOptions="Center" Margin="0,10,0,0" FontSize="18"/>
-            <!--<Entry Placeholder="Логин" IsPassword="True" Text="{Binding Password}"/>-->
             <custom:EntryCustom Text="{Binding Password}" IsPasswordEntry="True"/>
             <Button Style="{StaticResource ButtonStyle}" Text="Войти" Margin="0,30,0,0" Command="{Binding SingInCommand}"/>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label Text="Забыли пароль" TextColor="#C3C7C6" FontFamily="montserrat" FontSize="14"/>
+                <BoxView WidthRequest="1" BackgroundColor="Gray" VerticalOptions="CenterAndExpand" HeightRequest="17" Margin="5,0,5,0"/>
+                <Label Text="Регистрация" TextColor="#C3C7C6" FontFamily="montserrat" FontSize="14">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RegistrationCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
             </StackLayout>
         </StackLayout>
     </Grid>

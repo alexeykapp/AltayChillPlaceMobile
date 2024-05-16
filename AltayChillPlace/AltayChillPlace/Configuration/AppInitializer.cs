@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using AltayChillPlace.Interface;
+using AltayChillPlace.Models;
 using AltayChillPlace.RestClient;
 using AltayChillPlace.Services;
 using AltayChillPlace.ViewModels;
+using AltayChillPlace.Views;
 using Microsoft.Extensions.DependencyInjection;
+using Prism.Navigation;
 
 namespace AltayChillPlace.Configuration
 {
@@ -24,10 +27,17 @@ namespace AltayChillPlace.Configuration
         {
             var apiClient = ConfiguringHttpClient();
             services.AddSingleton<IAuthService, AuthService>();
+            services.AddSingleton<IRegistrationService, RegistrationService>();
             services.AddSingleton<IMessageService, MessageService>();
+            services.AddSingleton<IDataTransferService, DataTransferService>();
             services.AddTransient<AutorizationVM>();
+            services.AddTransient<RegistrationModel>();
+            services.AddTransient<RegistrationVM>();
+            services.AddTransient<LentaVM>();
+            services.AddTransient<HousesVM>();
             services.AddTransient<ApiClient>(provider => apiClient);
             services.AddTransient<AuthClient>(provider => new AuthClient(provider.GetService<ApiClient>()));
+            services.AddTransient<RegistrationClient>(provider => new RegistrationClient(provider.GetService<ApiClient>()));
             services.AddTransient<TokenService>();
         }
 

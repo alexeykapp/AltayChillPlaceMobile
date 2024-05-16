@@ -22,7 +22,6 @@ namespace AltayChillPlace.CustomXaml
         public EntryPhoneMask()
         {
             InitializeComponent(); 
-            //entry.Text = Text;
             entry.TextChanged += OnTextChanged;
         }
         public ImageSource IconSource
