@@ -1,4 +1,6 @@
-﻿using AltayChillPlace.Configuration;
+﻿using System;
+using System.Diagnostics;
+using AltayChillPlace.Configuration;
 using AltayChillPlace.NavigationFile;
 using AltayChillPlace.Services;
 using AltayChillPlace.Views;
@@ -32,18 +34,24 @@ namespace AltayChillPlace
 
         private async void NavigateMainPage()
         {
-            TokenService tokenService = new TokenService();
-            var resultValidate = tokenService.IsTokenValidAsync().Result;
-            if (resultValidate)
+            try
             {
-                MainPage = new NavigationPage(new Houses());
-            }
-            MainPage = new NavigationPage(new Autorization());
+                TokenService tokenService = new TokenService();
+                var resultValidate = await tokenService.IsTokenValidAsync();
 
-            MainPage = new NavigationPage(new Autorization());
-            NavigationPage.SetHasNavigationBar(MainPage, false);
-            NavigationDispatcher.Instance.Initialize(MainPage.Navigation);
+                // Инициализация MainPage в зависимости от результата проверки токена
+                MainPage = resultValidate ? new NavigationPage(new Houses()) : new NavigationPage(new Autorization());
+
+                // Общие настройки
+                NavigationPage.SetHasNavigationBar(MainPage, false);
+                NavigationDispatcher.Instance.Initialize(MainPage.Navigation);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw;
+            }
         }
     }
-
 }
+

@@ -9,5 +9,22 @@
             <Setter Property="CornerRadius" Value="20"/>
             <Setter Property="FontFamily" Value="poiretone"/>
         </Style>
+
+        <ResourceDictionary>
+            <DataTemplate x:Key="Item1Template">
+                <ViewCell>
+                    <!-- Здесь определите отображение для ItemType1 -->
+                    <Label Text="{Binding PropertyOfItem1}" />
+                </ViewCell>
+            </DataTemplate>
+
+            <DataTemplate x:Key="Item2Template">
+                <ViewCell>
+                    <!-- Здесь определите отображение для ItemType2 -->
+                    <Label Text="{Binding PropertyOfItem2}" />
+                </ViewCell>
+            </DataTemplate>
+            <!-- Другие глобальные ресурсы -->
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
