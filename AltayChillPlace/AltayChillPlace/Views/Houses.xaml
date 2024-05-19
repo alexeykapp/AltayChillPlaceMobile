@@ -1,8 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels"
+             xmlns:helpers="clr-namespace:AltayChillPlace.Helpers;assembly=AltayChillPlace"
+             x:DataType="viewmodels:HousesVM"
              x:Class="AltayChillPlace.Views.Houses"
              NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="HousesData">
+            <ViewCell>
+                <StackLayout Orientation="Horizontal" Padding="10">
+                    <Image Source="" 
+                           WidthRequest="80" 
+                           HeightRequest="80" 
+                           Aspect="AspectFill" />
+                    <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                        <Label Text="" 
+                               FontSize="16" 
+                               FontAttributes="Bold" />
+                        <Label Text="" 
+                               FontSize="14" 
+                               Opacity="0.6" 
+                               MaxLines="2"/>
+                    </StackLayout>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Item2Template">
+            <ViewCell>
+                <Label Text="{Binding PropertyOfItem2}" />
+            </ViewCell>
+        </DataTemplate>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <Grid BackgroundColor="#E9F7E7">
             <Grid.RowDefinitions>
@@ -19,36 +49,25 @@
                     Margin="10,0,10,0"
                     Padding="1">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <Button Text="Номера"
+                        <Button x:Name="houseButton"
+                            Text="Номера"
                             BackgroundColor="Transparent" 
-                            BorderWidth="0"/>
-                        <Button Text="Услуги"
+                            BorderWidth="0"
+                            TextColor="{Binding HouseColor}"
+                            Command="{Binding HouseClickCommand}"/>
+                        <Button x:Name ="servicesButton"
+                            Text="Услуги"
                             BackgroundColor="Transparent" 
-                            BorderWidth="0"/>
+                            BorderWidth="0"
+                            TextColor="{Binding  ServicesColor}"
+                            Command="{Binding ServicesClickCommand}"/>
                     </StackLayout>
                 </Frame>
             </Grid>
-            <ListView Grid.Row="2">
+            <ListView x:Name="MyListView" ItemsSource="{Binding CurrentItems}">
                 <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="10">
-                                <Image Source="" 
-                                       WidthRequest="80" 
-                                       HeightRequest="80" 
-                                       Aspect="AspectFill" />
-                                <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
-                                    <Label Text="" 
-                                           FontSize="16" 
-                                           FontAttributes="Bold" />
-                                    <Label Text="" 
-                                           FontSize="14" 
-                                           Opacity="0.6" 
-                                           MaxLines="2"/>
-                                </StackLayout>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
+                    <helpers:MyDataTemplateSelector Template1="{StaticResource Item1Template}"
+                                                  Template2="{StaticResource Item2Template}"/>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>

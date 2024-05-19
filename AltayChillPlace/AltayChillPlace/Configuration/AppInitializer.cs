@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AltayChillPlace.Interface;
+﻿using AltayChillPlace.Interface;
 using AltayChillPlace.Models;
 using AltayChillPlace.RestClient;
 using AltayChillPlace.Services;
 using AltayChillPlace.ViewModels;
-using AltayChillPlace.Views;
 using Microsoft.Extensions.DependencyInjection;
-using Prism.Navigation;
+using System;
 
 namespace AltayChillPlace.Configuration
 {
@@ -30,6 +26,7 @@ namespace AltayChillPlace.Configuration
             services.AddSingleton<IRegistrationService, RegistrationService>();
             services.AddSingleton<IMessageService, MessageService>();
             services.AddSingleton<IDataTransferService, DataTransferService>();
+            services.AddSingleton<IHouseDataService, HouseDataSevice>();
             services.AddTransient<AutorizationVM>();
             services.AddTransient<RegistrationModel>();
             services.AddTransient<RegistrationVM>();
@@ -38,6 +35,7 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<ApiClient>(provider => apiClient);
             services.AddTransient<AuthClient>(provider => new AuthClient(provider.GetService<ApiClient>()));
             services.AddTransient<RegistrationClient>(provider => new RegistrationClient(provider.GetService<ApiClient>()));
+            services.AddTransient<HousesDataClient>(provider => new HousesDataClient(provider.GetService<ApiClient>()));
             services.AddTransient<TokenService>();
         }
 

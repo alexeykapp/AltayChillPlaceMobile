@@ -37,27 +37,40 @@ namespace AltayChillPlace.Services
 
         public async Task<bool> IsTokenValidAsync()
         {
-            string token = await SecureStorage.GetAsync("token_key");
-
-            if (string.IsNullOrEmpty(token))
+            try
             {
-                return false;
-            }
+                string token = await SecureStorage.GetAsync("RefreshToken");
 
-            // Разобьем токен на составляющие части
-            var parts = token.Split('.');
-            if (parts.Length != 3) // JWT должен состоять из 3 частей
+                if (string.IsNullOrEmpty(token))
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    return false;
+                }
+
+                // Разобьем токен на составляющие части
+                var parts = token.Split('.');
+                if (parts.Length != 3) // JWT должен состоять из 3 частей
+                {
+                    return false;
+                }
+
+                var payload = ConvertFromBase64UrlToBase64String(parts[1]);
+                // Декодируем полезную нагрузку
+                var payloadJson = Encoding.UTF8.GetString(Convert.FromBase64String(payload));
+                var payloadData = JsonConvert.DeserializeObject<JwtPayload>(payloadJson);
+
+                var expDate = DateTimeOffset.FromUnixTimeSeconds(payloadData.ExpiresAt);
+                return expDate.UtcDateTime > DateTime.UtcNow;
+            }
+            catch (Exception ex)
             {
-                return false;
+                Debug.WriteLine(ex.Message);
             }
-
-            var payload = ConvertFromBase64UrlToBase64String(parts[1]);
-            // Декодируем полезную нагрузку
-            var payloadJson = Encoding.UTF8.GetString(Convert.FromBase64String(payload));
-            var payloadData = JsonConvert.DeserializeObject<JwtPayload>(payloadJson);
-
-            var expDate = DateTimeOffset.FromUnixTimeSeconds(payloadData.ExpiresAt);
-            return expDate.UtcDateTime > DateTime.UtcNow;
+            return false;
         }
         private string ConvertFromBase64UrlToBase64String(string base64Url)
         {
