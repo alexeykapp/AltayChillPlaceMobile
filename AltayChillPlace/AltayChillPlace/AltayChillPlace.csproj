@@ -14,12 +14,24 @@
 
   <ItemGroup>
     <None Remove="Fonts\Montserrat.ttf" />
+    <None Remove="Fonts\MontserratAlternates.ttf" />
+    <None Remove="Fonts\MontserratAlternatesBold.ttf" />
+    <None Remove="Fonts\MontserratAlternatesMedium.ttf" />
+    <None Remove="Fonts\MontserratAlternatesRegular.ttf" />
+    <None Remove="Fonts\OldStandardBold.ttf" />
+    <None Remove="Fonts\OldStandardItalic.ttf" />
     <None Remove="Fonts\PoiretOne.ttf" />
     <None Remove="Fonts\windsong.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Fonts\Montserrat.ttf" />
+    <EmbeddedResource Include="Fonts\MontserratAlternatesBold.ttf" />
+    <EmbeddedResource Include="Fonts\MontserratAlternates.ttf" />
+    <EmbeddedResource Include="Fonts\MontserratAlternatesMedium.ttf" />
+    <EmbeddedResource Include="Fonts\MontserratAlternatesRegular.ttf" />
+    <EmbeddedResource Include="Fonts\OldStandardBold.ttf" />
+    <EmbeddedResource Include="Fonts\OldStandardItalic.ttf" />
     <EmbeddedResource Include="Fonts\PoiretOne.ttf" />
     <EmbeddedResource Include="Fonts\windsong.ttf" />
   </ItemGroup>

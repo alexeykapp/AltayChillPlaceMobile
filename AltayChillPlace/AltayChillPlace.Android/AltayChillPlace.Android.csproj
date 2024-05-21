@@ -128,5 +128,21 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\person.png" />
+    <AndroidResource Include="Resources\drawable\price.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sizeHouse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\cube.png" />
+    <AndroidResource Include="Resources\drawable\personGreen.png" />
+    <AndroidResource Include="Resources\drawable\priceGreen.png" />
+    <AndroidResource Include="Resources\drawable\sizeHomeGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logo2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

@@ -15,14 +15,18 @@ namespace AltayChillPlace.ViewModels
     public class HousesVM : BindableBase
     {
         private readonly HouseModel _houseModel;
+        private object _currentItems;
         public ObservableCollection<HouseResponse> Houses { get; private set; }
+        public ObservableCollection<AdditionalServiceResponse> Service { get; private set; }
         private Color _currentServicesColor = Color.Black;
         private Color _currentHouseColor = Color.White;
         public DateTime ArrivalDate { get; set; }
         public DateTime DepartureDate { get; set; }
-        public HousesVM()
+        public HousesVM(HouseModel houseModel)
         {
             CommandSetting();
+            _houseModel = houseModel;
+            GetData();
         }
         public DelegateCommand HouseClickCommand { get; private set; }
         public DelegateCommand ServicesClickCommand { get; private set; }
@@ -32,15 +36,24 @@ namespace AltayChillPlace.ViewModels
             Houses = await _houseModel.GetAllHouses();
         }
 
+        public object CurrentItems
+        {
+            get => _currentItems;
+            set => SetProperty(ref _currentItems, value);
+        }
         private void ExecuteHouseClick()
         {
             ServicesColor = Color.Black;
             HouseColor = Color.White;
+
+            CurrentItems = Houses;
         }
         private void ExecuteServicesClick()
         {
             HouseColor = Color.Black;
             ServicesColor = Color.White;
+
+            CurrentItems = Service;
         }
         private void CommandSetting()
         {
@@ -57,6 +70,11 @@ namespace AltayChillPlace.ViewModels
         {
             get => _currentServicesColor;
             set => SetProperty(ref _currentServicesColor, value);
+        }
+
+        private async void GetData()
+        {
+            Houses = await _houseModel.GetAllHouses();
         }
     }
 }
