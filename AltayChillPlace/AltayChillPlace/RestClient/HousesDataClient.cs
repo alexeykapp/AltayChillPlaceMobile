@@ -19,7 +19,7 @@ namespace AltayChillPlace.RestClient
 
         public async Task<ObservableCollection<HouseResponse>> GetDataAsync(string url)
         {
-            var response = await _apiClient.HttpClient.GetAsync("houses/all");
+            var response = await _apiClient.HttpClient.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
             {

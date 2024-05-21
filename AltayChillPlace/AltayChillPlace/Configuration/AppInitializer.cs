@@ -22,17 +22,28 @@ namespace AltayChillPlace.Configuration
         private void ConfigureServices(IServiceCollection services)
         {
             var apiClient = ConfiguringHttpClient();
+            ConfigureSingletonServices(services, apiClient);
+            ConfigureTransientServices(services, apiClient);
+        }
+
+        private void ConfigureSingletonServices(IServiceCollection services, ApiClient apiClient)
+        {
             services.AddSingleton<IAuthService, AuthService>();
             services.AddSingleton<IRegistrationService, RegistrationService>();
             services.AddSingleton<IMessageService, MessageService>();
             services.AddSingleton<IDataTransferService, DataTransferService>();
             services.AddSingleton<IHouseDataService, HouseDataSevice>();
+            services.AddSingleton<ApiClient>(provider => apiClient);
+        }
+
+        private void ConfigureTransientServices(IServiceCollection services, ApiClient apiClient)
+        {
             services.AddTransient<AutorizationVM>();
             services.AddTransient<RegistrationModel>();
             services.AddTransient<RegistrationVM>();
             services.AddTransient<LentaVM>();
+            services.AddTransient<HouseModel>();
             services.AddTransient<HousesVM>();
-            services.AddTransient<ApiClient>(provider => apiClient);
             services.AddTransient<AuthClient>(provider => new AuthClient(provider.GetService<ApiClient>()));
             services.AddTransient<RegistrationClient>(provider => new RegistrationClient(provider.GetService<ApiClient>()));
             services.AddTransient<HousesDataClient>(provider => new HousesDataClient(provider.GetService<ApiClient>()));
@@ -41,7 +52,7 @@ namespace AltayChillPlace.Configuration
 
         private ApiClient ConfiguringHttpClient()
         {
-            string baseApiAdress = "http://192.168.3.27:5000/api/";
+            string baseApiAdress = "http://172.23.144.1:5000/api/";
             var apiClient = new ApiClient(baseApiAdress);
             return apiClient;
         }

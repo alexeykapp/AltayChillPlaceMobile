@@ -8,25 +8,65 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="HousesData">
             <ViewCell>
-                <StackLayout Orientation="Horizontal" Padding="10">
-                    <Image Source="" 
-                           WidthRequest="80" 
-                           HeightRequest="80" 
-                           Aspect="AspectFill" />
-                    <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
-                        <Label Text="" 
-                               FontSize="16" 
-                               FontAttributes="Bold" />
-                        <Label Text="" 
-                               FontSize="14" 
-                               Opacity="0.6" 
-                               MaxLines="2"/>
+                <Frame Padding="10" Margin="10" BackgroundColor="White" CornerRadius="10">
+                    <StackLayout Orientation="Horizontal" Padding="3">
+                        <Image Source="logo.png" 
+                           WidthRequest="130" 
+                           HeightRequest="160" 
+                           Aspect="AspectFill"/>
+                        <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand" Margin="10,0,0,0" Spacing="0">
+                            <Label Text="{Binding HouseName}" 
+                               FontSize="17" 
+                               FontFamily="OldStandBold"
+                               TextColor="#234314"/>
+                            <Label Text="{Binding RoomDescription}"
+                                   FontSize="14"
+                                   FontFamily="MaMedium"
+                                   Opacity="0.6"
+                                   Margin="0,5,0,0"
+                                   MaxLines="2"/>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" Spacing="0">
+                                <Image Source="personGreen.png"
+                                       HeightRequest="25"
+                                       WidthRequest="20"/>
+                                <Label 
+                                    Text="{Binding MaxNumberOfPeople}"
+                                    VerticalOptions="Center"
+                                    FontFamily="MaMedium"
+                                    FontSize="15"/>
+                                <Image Source="sizeHomeGreen.png"
+                                       HeightRequest="25"
+                                       Margin="10,0,0,0"
+                                       WidthRequest="25"/>
+                                <Label Text="{Binding RoomSize}"
+                                       FontFamily="MaMedium"
+                                       VerticalOptions="Center"/>
+                                <Image Source="cube.png"
+                                       VerticalOptions="StartAndExpand"
+                                       HeightRequest="22"
+                                       WidthRequest="22"/>
+                                <Image Source="priceGreen.png"
+                                       HeightRequest="26"
+                                       WidthRequest="21"
+                                       Margin="15,0,0,0"/>
+                                <Label
+                                    Text="{Binding PricePerDay}"
+                                    VerticalOptions="Center"
+                                    TextColor="#A45723"/>
+                            </StackLayout>
+                            <Label Text="Цена за сутки*"
+                                   FontSize="10"
+                                   HorizontalOptions="EndAndExpand"
+                                   TextColor="#576B57"
+                                   FontFamily="MaMedium"
+                                   Margin="0,0,20,0"/>
+                        </StackLayout>
                     </StackLayout>
-                </StackLayout>
+                </Frame>
             </ViewCell>
         </DataTemplate>
 
-        <DataTemplate x:Key="Item2Template">
+        <DataTemplate x:Key="ServicesData">
             <ViewCell>
                 <Label Text="{Binding PropertyOfItem2}" />
             </ViewCell>
@@ -34,13 +74,13 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid BackgroundColor="#E9F7E7">
+        <Grid BackgroundColor="#EFF5FB">
             <Grid.RowDefinitions>
-                <RowDefinition Height="130"/>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="45"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Image Grid.Row="0" Source="logo.png"/>
+            <Image Grid.Row="0" Source="logo2.png" HeightRequest="130" WidthRequest="130"/>
             <Grid Grid.Row="1">
                 <Frame   
                     BackgroundColor="#88AA7C"
@@ -48,26 +88,32 @@
                     Opacity="76"
                     Margin="10,0,10,0"
                     Padding="1">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="0">
                         <Button x:Name="houseButton"
                             Text="Номера"
+                            TextTransform="None"
                             BackgroundColor="Transparent" 
                             BorderWidth="0"
+                            FontSize="18"
+                            FontFamily="MaRegular"
                             TextColor="{Binding HouseColor}"
                             Command="{Binding HouseClickCommand}"/>
                         <Button x:Name ="servicesButton"
-                            Text="Услуги"
-                            BackgroundColor="Transparent" 
-                            BorderWidth="0"
-                            TextColor="{Binding  ServicesColor}"
-                            Command="{Binding ServicesClickCommand}"/>
+                                TextTransform="None"
+                                Text="Услуги"
+                                FontSize="18"
+                                BackgroundColor="Transparent"
+                                FontFamily="MaRegular"
+                                BorderWidth="0"
+                                TextColor="{Binding  ServicesColor}"
+                                Command="{Binding ServicesClickCommand}"/>
                     </StackLayout>
                 </Frame>
             </Grid>
-            <ListView x:Name="MyListView" ItemsSource="{Binding CurrentItems}">
+            <ListView Grid.Row="2" x:Name="MyListView" ItemsSource="{Binding CurrentItems}" HasUnevenRows="True" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
-                    <helpers:MyDataTemplateSelector Template1="{StaticResource Item1Template}"
-                                                  Template2="{StaticResource Item2Template}"/>
+                    <helpers:MyDataTemplateSelector Template1="{StaticResource HousesData}"
+                                                  Template2="{StaticResource ServicesData}"/>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
