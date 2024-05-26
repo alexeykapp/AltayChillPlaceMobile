@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels"
              xmlns:helpers="clr-namespace:AltayChillPlace.Helpers;assembly=AltayChillPlace"
+             xmlns:custom="clr-namespace:AltayChillPlace.CustomXaml;assembly=AltayChillPlace"
              x:DataType="viewmodels:HousesVM"
              x:Class="AltayChillPlace.Views.Houses"
              NavigationPage.HasNavigationBar="False">
@@ -9,66 +10,80 @@
         <DataTemplate x:Key="HousesData">
             <ViewCell>
                 <Frame Padding="10" Margin="10" BackgroundColor="White" CornerRadius="10">
-                    <StackLayout Orientation="Horizontal" Padding="3">
-                        <Image Source="logo.png" 
-                           WidthRequest="130" 
-                           HeightRequest="160" 
-                           Aspect="AspectFill"/>
-                        <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand" Margin="10,0,0,0" Spacing="0">
-                            <Label Text="{Binding HouseName}" 
+                    <Grid>
+                        <ActivityIndicator 
+                            IsVisible="{Binding IsVisibleActivityIndicator}" 
+                            IsRunning="{Binding IsVisibleActivityIndicator}"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                            Color="Green"
+                            HeightRequest="30"
+                            WidthRequest="30"/>
+                        <StackLayout Orientation="Horizontal" Padding="3" IsVisible="{Binding IsVisibleHouseList}">
+                            <Image Source="logo.png" 
+                                WidthRequest="130" 
+                                HeightRequest="160" 
+                                Aspect="AspectFill"/>
+                            <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand" Margin="10,0,0,0" Spacing="0">
+                                <Label Text="{Binding HouseName}" 
                                FontSize="17" 
                                FontFamily="OldStandBold"
                                TextColor="#234314"/>
-                            <Label Text="{Binding RoomDescription}"
+                                <Label Text="{Binding RoomDescription}"
                                    FontSize="14"
                                    FontFamily="MaMedium"
                                    Opacity="0.6"
                                    Margin="0,5,0,0"
                                    MaxLines="2"/>
-                            <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" Spacing="0">
-                                <Image Source="personGreen.png"
+                                <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" Spacing="0">
+                                    <Image Source="personGreen.png"
                                        HeightRequest="25"
                                        WidthRequest="20"/>
-                                <Label 
+                                    <Label 
                                     Text="{Binding MaxNumberOfPeople}"
                                     VerticalOptions="Center"
                                     FontFamily="MaMedium"
                                     FontSize="15"/>
-                                <Image Source="sizeHomeGreen.png"
+                                    <Image Source="sizeHomeGreen.png"
                                        HeightRequest="25"
                                        Margin="10,0,0,0"
                                        WidthRequest="25"/>
-                                <Label Text="{Binding RoomSize}"
+                                    <Label Text="{Binding RoomSize}"
                                        FontFamily="MaMedium"
                                        VerticalOptions="Center"/>
-                                <Image Source="cube.png"
+                                    <Image Source="cube.png"
                                        VerticalOptions="StartAndExpand"
                                        HeightRequest="22"
                                        WidthRequest="22"/>
-                                <Image Source="priceGreen.png"
+                                    <Image Source="priceGreen.png"
                                        HeightRequest="26"
                                        WidthRequest="21"
                                        Margin="15,0,0,0"/>
-                                <Label
+                                    <Label
                                     Text="{Binding PricePerDay}"
                                     VerticalOptions="Center"
+                                    FontFamily="MaMedium"
                                     TextColor="#A45723"/>
-                            </StackLayout>
-                            <Label Text="Цена за сутки*"
+                                </StackLayout>
+                                <Label Text="Цена за сутки*"
                                    FontSize="10"
                                    HorizontalOptions="EndAndExpand"
                                    TextColor="#576B57"
                                    FontFamily="MaMedium"
                                    Margin="0,0,20,0"/>
+                            </StackLayout>
                         </StackLayout>
-                    </StackLayout>
+                    </Grid>
+
                 </Frame>
             </ViewCell>
         </DataTemplate>
 
         <DataTemplate x:Key="ServicesData">
             <ViewCell>
-                <Label Text="{Binding PropertyOfItem2}" />
+                <Frame>
+                    
+                </Frame>
             </ViewCell>
         </DataTemplate>
     </ContentPage.Resources>
@@ -76,7 +91,7 @@
     <ContentPage.Content>
         <Grid BackgroundColor="#EFF5FB">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -108,9 +123,65 @@
                                 TextColor="{Binding  ServicesColor}"
                                 Command="{Binding ServicesClickCommand}"/>
                     </StackLayout>
+
                 </Frame>
+
             </Grid>
+            <ActivityIndicator
+                Grid.Row="2"
+                IsVisible="{Binding IsVisibleActivityIndicator}"
+                IsRunning="{Binding IsVisibleActivityIndicator}"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                Color="Green"
+                Margin="0,0,0,300"/>
+            <Label Text="Ошибка" 
+                   TextColor="Gray"
+                   Grid.Row="2"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="20"
+                   Margin="0,0,0,200"
+                   IsVisible="{Binding IsVisibleError}"/>
             <ListView Grid.Row="2" x:Name="MyListView" ItemsSource="{Binding CurrentItems}" HasUnevenRows="True" SeparatorVisibility="None">
+                <ListView.Header>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsVisibleHeader}" Spacing="0">
+                        <StackLayout Orientation="Vertical" Spacing="0" Margin="0,0,30,0">
+                            <Label Text="Дата заезда"
+                                   FontSize="15"
+                                   FontFamily="MaMedium"/>
+                            <DatePicker FontSize="15"
+                                                     FontFamily="MaMedium"
+                                                     Date="{Binding ArrivalDate}" 
+                                                     MinimumDate="{Binding MinArrivalDate}" 
+                                                     MaximumDate="{Binding MaxArrivalDate}">
+                                <DatePicker.Behaviors>
+                                    <helpers:DatePickerBehavior/>
+                                </DatePicker.Behaviors>
+                            </DatePicker>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" Spacing="0">
+                            <Label Text="Дата выезда"
+                                   FontSize="15"
+                                   FontFamily="MaMedium"/>
+                            <DatePicker CharacterSpacing="0" 
+                                                     FontFamily="MaMedium"
+                                                     FontSize="15" 
+                                                     Date="{Binding DepartureDate}" 
+                                                     MinimumDate="{Binding MinDepartureDate}" 
+                                                     MaximumDate="{Binding MaxDepartureDate}">
+                                <DatePicker.Behaviors>
+                                    <helpers:DatePickerBehavior/>
+                                </DatePicker.Behaviors>
+                            </DatePicker>
+                        </StackLayout>
+                        <Image Source="searchButton.png" 
+                               Margin="25,0,0,7"
+                               WidthRequest="50"
+                               HeightRequest="50"
+                               VerticalOptions="EndAndExpand"/>
+                    </StackLayout>
+                </ListView.Header>
                 <ListView.ItemTemplate>
                     <helpers:MyDataTemplateSelector Template1="{StaticResource HousesData}"
                                                   Template2="{StaticResource ServicesData}"/>

@@ -23,7 +23,7 @@ namespace AltayChillPlace.Configuration
         {
             var apiClient = ConfiguringHttpClient();
             ConfigureSingletonServices(services, apiClient);
-            ConfigureTransientServices(services, apiClient);
+            ConfigureTransientServices(services);
         }
 
         private void ConfigureSingletonServices(IServiceCollection services, ApiClient apiClient)
@@ -36,7 +36,7 @@ namespace AltayChillPlace.Configuration
             services.AddSingleton<ApiClient>(provider => apiClient);
         }
 
-        private void ConfigureTransientServices(IServiceCollection services, ApiClient apiClient)
+        private void ConfigureTransientServices(IServiceCollection services)
         {
             services.AddTransient<AutorizationVM>();
             services.AddTransient<RegistrationModel>();
@@ -52,7 +52,7 @@ namespace AltayChillPlace.Configuration
 
         private ApiClient ConfiguringHttpClient()
         {
-            string baseApiAdress = "http://172.23.144.1:5000/api/";
+            string baseApiAdress = "http://172.20.10.2:5000/api/";
             var apiClient = new ApiClient(baseApiAdress);
             return apiClient;
         }
