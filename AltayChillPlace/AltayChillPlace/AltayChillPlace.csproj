@@ -60,6 +60,9 @@
     <EmbeddedResource Update="Views\Autorization.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Carousel.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Houses.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -73,5 +76,11 @@
 
   <ItemGroup>
     <Folder Include="CustomXaml\Dop\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Carousel.xaml.cs">
+      <DependentUpon>Carousel.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

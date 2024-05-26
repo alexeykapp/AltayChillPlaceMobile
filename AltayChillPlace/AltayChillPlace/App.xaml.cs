@@ -17,7 +17,8 @@ namespace AltayChillPlace
 
             AppInitializer = new AppInitializer();
             AppInitializer.Initialize();
-            NavigateMainPage();
+            MainPage = new NavigationPage(new Carousel());
+            //NavigateMainPage();
         }
 
         protected override void OnStart()

@@ -19,10 +19,17 @@ namespace AltayChillPlace.ViewModels
         private object _currentItems;
         private bool _isVisibleHeader;
         private bool _isVisibleHouseList;
-        private bool _isVisibleActivityIndicator = true;
+        private bool _isVisibleActivityIndicator;
         private bool _isVisibleError;
+        private DateTime _arrivalDate;
+        private DateTime _departureDate;
+        private DateTime _minDepartureDate = DateTime.Now.AddDays(2);
+        private DateTime _maxDepartureDate = DateTime.Now.AddMonths(5);
+        private DateTime _minArrivalDate = DateTime.Now.AddDays(1);
+        private DateTime _maxArrivaDate = DateTime.Now.AddMonths(5);
         private Color _currentHouseColor = Color.White;
         private Color _currentServicesColor = Color.Black;
+        private event Action ClickHouse;
 
         // Constructor
         public HousesVM(HouseModel houseModel, ServiceModel serviceModel)
@@ -97,7 +104,10 @@ namespace AltayChillPlace.ViewModels
 
         private void ExecuteHouseClick()
         {
-            IsVisibleHeader = true;
+            if (Houses.Count != 0 || Houses != null)
+            {
+                IsVisibleHeader = true;
+            }
             HouseColor = Color.White;
             ServicesColor = Color.Black;
             CurrentItems = Houses;
@@ -144,6 +154,41 @@ namespace AltayChillPlace.ViewModels
         {
             IsVisibleHouseList = Services != null && Services.Count > 0;
             IsVisibleError = Services == null || Services.Count == 0;
+        }
+        public DateTime ArrivalDate
+        {
+            get => _arrivalDate;
+            set => SetProperty(ref _arrivalDate, value);
+        }
+
+        public DateTime DepartureDate
+        {
+            get => _departureDate;
+            set => SetProperty(ref _departureDate, value);
+        }
+
+        public DateTime MinDepartureDate
+        {
+            get => _minDepartureDate;
+            set => SetProperty(ref _minDepartureDate, value);
+        }
+
+        public DateTime MaxDepartureDate
+        {
+            get => _maxDepartureDate;
+            set => SetProperty(ref _maxDepartureDate, value);
+        }
+
+        public DateTime MinArrivalDate
+        {
+            get => _minArrivalDate;
+            set => SetProperty(ref _minArrivalDate, value);
+        }
+
+        public DateTime MaxArrivalDate
+        {
+            get => _maxArrivaDate;
+            set => SetProperty(ref _maxArrivaDate, value);
         }
     }
 }
