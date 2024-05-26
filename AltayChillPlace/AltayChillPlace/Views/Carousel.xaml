@@ -1,0 +1,25 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels"
+             x:DataType="viewmodels:CarouselVM"
+             x:Class="AltayChillPlace.Views.Carousel"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout>
+            <CarouselView ItemsSource="{Binding ImageCollection}" 
+                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding .}"
+                               Aspect="AspectFill"/>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="IndicatorView"
+                       IndicatorColor="LightGray"
+                       SelectedIndicatorColor="Black"
+                       HorizontalOptions="Center">
+            </IndicatorView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

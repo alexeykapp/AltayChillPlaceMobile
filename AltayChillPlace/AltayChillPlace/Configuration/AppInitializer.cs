@@ -33,6 +33,7 @@ namespace AltayChillPlace.Configuration
             services.AddSingleton<IMessageService, MessageService>();
             services.AddSingleton<IDataTransferService, DataTransferService>();
             services.AddSingleton<IHouseDataService, HouseDataSevice>();
+            services.AddSingleton<IServicesService, ServiceServices>();
             services.AddSingleton<ApiClient>(provider => apiClient);
         }
 
@@ -44,15 +45,18 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<LentaVM>();
             services.AddTransient<HouseModel>();
             services.AddTransient<HousesVM>();
+            services.AddTransient<CarouselVM>();
+            services.AddTransient<ServiceModel>();
             services.AddTransient<AuthClient>(provider => new AuthClient(provider.GetService<ApiClient>()));
             services.AddTransient<RegistrationClient>(provider => new RegistrationClient(provider.GetService<ApiClient>()));
             services.AddTransient<HousesDataClient>(provider => new HousesDataClient(provider.GetService<ApiClient>()));
+            services.AddTransient<ServiceClient>(provider => new ServiceClient(provider.GetService<ApiClient>()));
             services.AddTransient<TokenService>();
         }
 
         private ApiClient ConfiguringHttpClient()
         {
-            string baseApiAdress = "http://172.20.10.2:5000/api/";
+            string baseApiAdress = "http://192.168.3.27:5000/api/";
             var apiClient = new ApiClient(baseApiAdress);
             return apiClient;
         }
