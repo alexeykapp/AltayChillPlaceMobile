@@ -1,80 +1,149 @@
-﻿using AltayChillPlace.Interface;
+﻿using AltayChillPlace.ApiResponses;
+using AltayChillPlace.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Net.Mime;
-using AltayChillPlace.ApiResponses;
-using AltayChillPlace.Helpers;
-using AltayChillPlace.Models;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace AltayChillPlace.ViewModels
 {
     public class HousesVM : BindableBase
     {
+        // Private fields
         private readonly HouseModel _houseModel;
+        private readonly ServiceModel _serviceModel;
+        private ObservableCollection<HouseResponse> _houses;
+        private ObservableCollection<AdditionalServiceResponse> _services;
         private object _currentItems;
-        public ObservableCollection<HouseResponse> Houses { get; private set; }
-        public ObservableCollection<AdditionalServiceResponse> Service { get; private set; }
-        private Color _currentServicesColor = Color.Black;
+        private bool _isVisibleHeader;
+        private bool _isVisibleHouseList;
+        private bool _isVisibleActivityIndicator = true;
+        private bool _isVisibleError;
         private Color _currentHouseColor = Color.White;
-        public DateTime ArrivalDate { get; set; }
-        public DateTime DepartureDate { get; set; }
-        public HousesVM(HouseModel houseModel)
-        {
-            CommandSetting();
-            _houseModel = houseModel;
-            GetData();
-        }
-        public DelegateCommand HouseClickCommand { get; private set; }
-        public DelegateCommand ServicesClickCommand { get; private set; }
+        private Color _currentServicesColor = Color.Black;
 
-        private async void GetAllHouse()
+        // Constructor
+        public HousesVM(HouseModel houseModel, ServiceModel serviceModel)
         {
-            Houses = await _houseModel.GetAllHouses();
+            _houseModel = houseModel ?? throw new ArgumentNullException(nameof(houseModel));
+            _serviceModel = serviceModel ?? throw new ArgumentNullException(nameof(serviceModel));
+
+            // Initialize commands
+            HouseClickCommand = new DelegateCommand(ExecuteHouseClick);
+            ServicesClickCommand = new DelegateCommand(ExecuteServicesClick);
+
+            // Load data asynchronously
+            LoadDataAsync();
+        }
+
+        public ObservableCollection<HouseResponse> Houses
+        {
+            get => _houses;
+            private set => SetProperty(ref _houses, value, onChanged: HandleHousesChanged);
+        }
+
+        public ObservableCollection<AdditionalServiceResponse> Services
+        {
+            get => _services;
+            private set => SetProperty(ref _services, value, onChanged: HandleServicesChanged);
         }
 
         public object CurrentItems
         {
             get => _currentItems;
-            set => SetProperty(ref _currentItems, value);
+            private set => SetProperty(ref _currentItems, value);
         }
-        private void ExecuteHouseClick()
-        {
-            ServicesColor = Color.Black;
-            HouseColor = Color.White;
 
-            CurrentItems = Houses;
-        }
-        private void ExecuteServicesClick()
+        public bool IsVisibleHeader
         {
-            HouseColor = Color.Black;
-            ServicesColor = Color.White;
+            get => _isVisibleHeader;
+            private set => SetProperty(ref _isVisibleHeader, value);
+        }
 
-            CurrentItems = Service;
-        }
-        private void CommandSetting()
+        public bool IsVisibleHouseList
         {
-            HouseClickCommand = new DelegateCommand(ExecuteHouseClick);
-            ServicesClickCommand = new DelegateCommand(ExecuteServicesClick);
+            get => _isVisibleHouseList;
+            private set => SetProperty(ref _isVisibleHouseList, value);
         }
+
+        public bool IsVisibleActivityIndicator
+        {
+            get => _isVisibleActivityIndicator;
+            private set => SetProperty(ref _isVisibleActivityIndicator, value);
+        }
+
+        public bool IsVisibleError
+        {
+            get => _isVisibleError;
+            private set => SetProperty(ref _isVisibleError, value);
+        }
+
         public Color HouseColor
         {
             get => _currentHouseColor;
-            set => SetProperty(ref _currentHouseColor, value);
+            private set => SetProperty(ref _currentHouseColor, value);
         }
 
         public Color ServicesColor
         {
             get => _currentServicesColor;
-            set => SetProperty(ref _currentServicesColor, value);
+            private set => SetProperty(ref _currentServicesColor, value);
         }
 
-        private async void GetData()
+        public DelegateCommand HouseClickCommand { get; private set; }
+        public DelegateCommand ServicesClickCommand { get; private set; }
+
+        private void ExecuteHouseClick()
         {
-            Houses = await _houseModel.GetAllHouses();
+            IsVisibleHeader = true;
+            HouseColor = Color.White;
+            ServicesColor = Color.Black;
+            CurrentItems = Houses;
+        }
+
+        private void ExecuteServicesClick()
+        {
+            IsVisibleHeader = false;
+            HouseColor = Color.Black;
+            ServicesColor = Color.White;
+            CurrentItems = Services;
+            IsVisibleHeader = false;
+        }
+
+        private async void LoadDataAsync()
+        {
+            IsVisibleActivityIndicator = true;
+            IsVisibleError = false;
+
+            try
+            {
+                Houses = await _houseModel.GetAllHouses();
+                Services = await _serviceModel.GetAllServices();
+
+                CurrentItems = Houses;
+            }
+            catch (Exception)
+            {
+                IsVisibleError = true;
+            }
+            finally
+            {
+                IsVisibleActivityIndicator = false;
+            }
+        }
+
+        private void HandleHousesChanged()
+        {
+            IsVisibleHouseList = Houses != null && Houses.Count > 0;
+            IsVisibleError = Houses == null || Houses.Count == 0;
+        }
+
+        private void HandleServicesChanged()
+        {
+            IsVisibleHouseList = Services != null && Services.Count > 0;
+            IsVisibleError = Services == null || Services.Count == 0;
         }
     }
 }
