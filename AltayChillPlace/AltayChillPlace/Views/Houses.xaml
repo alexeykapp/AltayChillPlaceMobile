@@ -8,6 +8,13 @@
              x:Class="AltayChillPlace.Views.Houses"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
+        <DataTemplate x:Key="HouseHeaderTemplate">
+            <custom:HeaderContentView BindingContext="{Binding }"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ServiceHeaderTemplate">
+            <custom:ServiceHeader BindingContext="{Binding }"/>
+        </DataTemplate>
         <DataTemplate x:Key="HousesData">
             <ViewCell>
                 <Frame Padding="10" Margin="10" BackgroundColor="White" CornerRadius="10">
@@ -81,11 +88,41 @@
 
         <DataTemplate x:Key="ServicesData">
             <ViewCell>
-                <Frame>
-
+                <Frame Padding="10" Margin="10" BackgroundColor="White" CornerRadius="10">
+                    <Grid>
+                        <StackLayout>
+                            <Label
+                                Text="{Binding NameOfAdditionalService}"
+                                FontSize="20"
+                                FontFamily="OldStandBold"
+                                TextColor="#234314"/>
+                            <Label
+                                Text="{Binding DescriptionOfAdditionalService}"
+                                FontFamily="MaRegular"
+                                TextColor="#576B57"/>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" Spacing="0">
+                                <Image
+                                    Source="priceGreen"
+                                    WidthRequest="24"
+                                    HeightRequest="26"/>
+                                <Label
+                                    VerticalOptions="Center"
+                                     FontFamily="MaMedium"
+                                    FontSize="16"
+                                    TextColor="#A45723"
+                                    Margin="0,0,20,0"
+                                    Text="{Binding AdditionalServicePrice}"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
                 </Frame>
             </ViewCell>
         </DataTemplate>
+
+        <helpers:HeaderTemplateSelector
+      x:Key="HeaderTemplateSelector"
+      HouseHeader="{StaticResource HouseHeaderTemplate}"
+      ServiceHeader="{StaticResource ServiceHeaderTemplate}" />
     </ContentPage.Resources>
 
     <ContentPage.Content>
@@ -148,18 +185,10 @@
                 IsVisible="{Binding IsVisibleButtonUpdate}"/>
             <ListView Grid.Row="2" x:Name="MyListView" ItemsSource="{Binding CurrentItems}" HasUnevenRows="True" SeparatorVisibility="None">
                 <ListView.Header>
-                    <custom:HeaderContentView IsVisible="{Binding IsVisibleHeader}"
-                                              BindingContext="{Binding }"
-                                              x:Name="listViewHeader"/>
+                    <helpers:HeaderTemplateSelector
+                        HouseHeader="{StaticResource HouseHeaderTemplate}"
+                        ServiceHeader="{StaticResource ServiceHeaderTemplate}"/>
                 </ListView.Header>
-                <ListView.Triggers>
-                    <DataTrigger Binding="{Binding IsVisibleHeader}" TargetType="ListView" Value="False">
-                        <Setter Property="Header" Value="{x:Null}" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding IsVisibleHeader}" TargetType="ListView" Value="True">
-                        <Setter Property="Header" Value="{x:Reference listViewHeader}" />
-                    </DataTrigger>
-                </ListView.Triggers>
                 <ListView.ItemTemplate>
                     <helpers:MyDataTemplateSelector Template1="{StaticResource HousesData}"
                                                     Template2="{StaticResource ServicesData}"/>

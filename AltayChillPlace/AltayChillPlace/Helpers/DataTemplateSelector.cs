@@ -16,7 +16,7 @@ namespace AltayChillPlace.Helpers
             if (item is HouseResponse)
                 return Template1;
             else if (item is AdditionalServiceResponse)
-                return Template2;
+                    return Template2;
 
             return null;
         }

@@ -26,8 +26,8 @@ namespace AltayChillPlace.ViewModels
         private bool _isVisibleError;
         private bool _isVisibleButtonUpdate;
         // Date
-        private DateTime _arrivalDate;
-        private DateTime _departureDate;
+        private DateTime _arrivalDate = DateTime.Now.AddDays(1);
+        private DateTime _departureDate = DateTime.Now.AddDays(2);
         private DateTime _minDepartureDate = DateTime.Now.AddDays(2);
         private DateTime _maxDepartureDate = DateTime.Now.AddMonths(5);
         private DateTime _minArrivalDate = DateTime.Now.AddDays(1);
@@ -36,7 +36,7 @@ namespace AltayChillPlace.ViewModels
         private Color _currentHouseColor = Color.White;
         private Color _currentServicesColor = Color.Black;
 
-        private CurrentPage _currentPage;
+        private CurrentPage _currentPage = CurrentPage.House;
         public HousesVM(HouseModel houseModel, ServiceModel serviceModel)
         {
             _houseModel = houseModel ?? throw new ArgumentNullException(nameof(houseModel));
@@ -45,6 +45,8 @@ namespace AltayChillPlace.ViewModels
             // Initialize commands
             HouseClickCommand = new DelegateCommand(ExecuteHouseClick);
             ServicesClickCommand = new DelegateCommand(ExecuteServicesClick);
+
+            UpdateProperties();
 
             // Load data asynchronously
             LoadDataAsync();
@@ -143,6 +145,7 @@ namespace AltayChillPlace.ViewModels
                 await Task.WhenAll(houses, services);
                 Houses = houses.Result;
                 Services = services.Result;
+                SetupCurrentItem();
             }
             catch (Exception ex)
             {
@@ -154,7 +157,17 @@ namespace AltayChillPlace.ViewModels
                 IsVisibleActivityIndicator = false;
             }
         }
-
+        private void SetupCurrentItem()
+        {
+            if (_currentPage == CurrentPage.House)
+            {
+                CurrentItems = Houses;
+            }
+            else
+            {
+                CurrentItems = Services;
+            }
+        }
         //private void HandleHousesChanged()
         //{
         //    IsVisibleHouseList = Houses != null && Houses.Count > 0;
@@ -200,6 +213,17 @@ namespace AltayChillPlace.ViewModels
         {
             get => _maxArrivaDate;
             set => SetProperty(ref _maxArrivaDate, value);
+        }
+        public async void UpdateProperties()
+        {
+            await Task.Delay(100);
+            MinDepartureDate = DateTime.Now.AddDays(2);
+            MaxDepartureDate = DateTime.Now.AddMonths(5);
+            MinArrivalDate = DateTime.Now.AddDays(1);
+            MaxArrivalDate = DateTime.Now.AddMonths(5);
+
+            ArrivalDate = MinArrivalDate;
+            DepartureDate = MinDepartureDate;
         }
     }
 }
