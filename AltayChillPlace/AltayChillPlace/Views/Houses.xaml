@@ -75,7 +75,6 @@
                             </StackLayout>
                         </StackLayout>
                     </Grid>
-
                 </Frame>
             </ViewCell>
         </DataTemplate>
@@ -83,7 +82,7 @@
         <DataTemplate x:Key="ServicesData">
             <ViewCell>
                 <Frame>
-                    
+
                 </Frame>
             </ViewCell>
         </DataTemplate>
@@ -144,48 +143,26 @@
                    FontSize="20"
                    Margin="0,0,0,200"
                    IsVisible="{Binding IsVisibleError}"/>
+            <Button
+                Text="Обновить"
+                IsVisible="{Binding IsVisibleButtonUpdate}"/>
             <ListView Grid.Row="2" x:Name="MyListView" ItemsSource="{Binding CurrentItems}" HasUnevenRows="True" SeparatorVisibility="None">
                 <ListView.Header>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsVisibleHeader}" Spacing="0">
-                        <StackLayout Orientation="Vertical" Spacing="0" Margin="0,0,30,0">
-                            <Label Text="Дата заезда"
-                                   FontSize="15"
-                                   FontFamily="MaMedium"/>
-                            <DatePicker FontSize="15"
-                                                     FontFamily="MaMedium"
-                                                     Date="{Binding ArrivalDate}" 
-                                                     MinimumDate="{Binding MinArrivalDate}" 
-                                                     MaximumDate="{Binding MaxArrivalDate}">
-                                <DatePicker.Behaviors>
-                                    <helpers:DatePickerBehavior/>
-                                </DatePicker.Behaviors>
-                            </DatePicker>
-                        </StackLayout>
-                        <StackLayout Orientation="Vertical" Spacing="0">
-                            <Label Text="Дата выезда"
-                                   FontSize="15"
-                                   FontFamily="MaMedium"/>
-                            <DatePicker CharacterSpacing="0" 
-                                                     FontFamily="MaMedium"
-                                                     FontSize="15" 
-                                                     Date="{Binding DepartureDate}" 
-                                                     MinimumDate="{Binding MinDepartureDate}" 
-                                                     MaximumDate="{Binding MaxDepartureDate}">
-                                <DatePicker.Behaviors>
-                                    <helpers:DatePickerBehavior/>
-                                </DatePicker.Behaviors>
-                            </DatePicker>
-                        </StackLayout>
-                        <Image Source="searchButton.png" 
-                               Margin="25,0,0,7"
-                               WidthRequest="50"
-                               HeightRequest="50"
-                               VerticalOptions="EndAndExpand"/>
-                    </StackLayout>
+                    <custom:HeaderContentView IsVisible="{Binding IsVisibleHeader}"
+                                              BindingContext="{Binding }"
+                                              x:Name="listViewHeader"/>
                 </ListView.Header>
+                <ListView.Triggers>
+                    <DataTrigger Binding="{Binding IsVisibleHeader}" TargetType="ListView" Value="False">
+                        <Setter Property="Header" Value="{x:Null}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsVisibleHeader}" TargetType="ListView" Value="True">
+                        <Setter Property="Header" Value="{x:Reference listViewHeader}" />
+                    </DataTrigger>
+                </ListView.Triggers>
                 <ListView.ItemTemplate>
                     <helpers:MyDataTemplateSelector Template1="{StaticResource HousesData}"
-                                                  Template2="{StaticResource ServicesData}"/>
+                                                    Template2="{StaticResource ServicesData}"/>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>

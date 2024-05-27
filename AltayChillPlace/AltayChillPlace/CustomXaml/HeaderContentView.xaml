@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:AltayChillPlace.Helpers;assembly=AltayChillPlace"
+             x:Class="AltayChillPlace.CustomXaml.HeaderContentView">
+    <StackLayout>
+        <StackLayout Orientation="Vertical" Spacing="0" Margin="0,0,30,0">
+            <Label Text="Дата заезда"
+           FontSize="15"
+           FontFamily="MaMedium"/>
+            <DatePicker FontSize="15"
+                FontFamily="MaMedium"
+                Date="{Binding ArrivalDate}" 
+                MinimumDate="{Binding MinArrivalDate}" 
+                MaximumDate="{Binding MaxArrivalDate}">
+                <DatePicker.Behaviors>
+                    <helpers:DatePickerBehavior/>
+                </DatePicker.Behaviors>
+            </DatePicker>
+        </StackLayout>
+        <StackLayout Orientation="Vertical" Spacing="0">
+            <Label Text="Дата выезда"
+           FontSize="15"
+           FontFamily="MaMedium"/>
+            <DatePicker CharacterSpacing="0" 
+                FontFamily="MaMedium"
+                FontSize="15" 
+                Date="{Binding DepartureDate}" 
+                MinimumDate="{Binding MinDepartureDate}" 
+                MaximumDate="{Binding MaxDepartureDate}">
+                <DatePicker.Behaviors>
+                    <helpers:DatePickerBehavior/>
+                </DatePicker.Behaviors>
+            </DatePicker>
+        </StackLayout>
+        <Image Source="searchButton.png" 
+       Margin="25,0,0,7"
+       WidthRequest="50"
+       HeightRequest="50"
+       VerticalOptions="EndAndExpand"/>
+    </StackLayout>
+</ContentPage>

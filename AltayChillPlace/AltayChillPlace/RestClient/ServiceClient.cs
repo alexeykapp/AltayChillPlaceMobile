@@ -18,7 +18,7 @@ namespace AltayChillPlace.RestClient
         }
         public async Task<ObservableCollection<AdditionalServiceResponse>> GetAllServices()
         {
-            var response = await _apiClient.HttpClient.GetAsync("/service/all");
+            var response = await _apiClient.HttpClient.GetAsync("service/all");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("GET request failed");
