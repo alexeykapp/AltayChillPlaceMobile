@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:helpers="clr-namespace:AltayChillPlace.Helpers;assembly=AltayChillPlace"
              x:Class="AltayChillPlace.CustomXaml.HeaderContentView">
-    <StackLayout>
+    <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0">
         <StackLayout Orientation="Vertical" Spacing="0" Margin="0,0,30,0">
             <Label Text="Дата заезда"
            FontSize="15"
            FontFamily="MaMedium"/>
             <DatePicker FontSize="15"
                 FontFamily="MaMedium"
-                Date="{Binding ArrivalDate}" 
                 MinimumDate="{Binding MinArrivalDate}" 
-                MaximumDate="{Binding MaxArrivalDate}">
+                MaximumDate="{Binding MaxArrivalDate}"
+                Date="{Binding ArrivalDate}">
                 <DatePicker.Behaviors>
                     <helpers:DatePickerBehavior/>
                 </DatePicker.Behaviors>
@@ -25,9 +25,9 @@
             <DatePicker CharacterSpacing="0" 
                 FontFamily="MaMedium"
                 FontSize="15" 
-                Date="{Binding DepartureDate}" 
-                MinimumDate="{Binding MinDepartureDate}" 
-                MaximumDate="{Binding MaxDepartureDate}">
+                MinimumDate="{Binding MinDepartureDate}"
+                MaximumDate="{Binding MaxDepartureDate}"        
+                Date="{Binding DepartureDate}">
                 <DatePicker.Behaviors>
                     <helpers:DatePickerBehavior/>
                 </DatePicker.Behaviors>
@@ -39,4 +39,4 @@
        HeightRequest="50"
        VerticalOptions="EndAndExpand"/>
     </StackLayout>
-</ContentPage>
+</ContentView>
