@@ -1,25 +1,55 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels"
-             x:DataType="viewmodels:CarouselVM"
-             x:Class="AltayChillPlace.Views.Carousel"
-             NavigationPage.HasNavigationBar="False">
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" 
+            xmlns:local="clr-namespace:AltayChillPlace.CustomXaml"
+            x:DataType="viewmodels:CarouselVM"
+            x:Class="AltayChillPlace.Views.Carousel"
+            NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout>
-            <CarouselView ItemsSource="{Binding ImageCollection}" 
-                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid>
+            <CarouselView x:Name="carousel"
+                          ItemsSource="{Binding ImageCollection}" 
+                          VerticalOptions="FillAndExpand" 
+                          HorizontalOptions="FillAndExpand"
+                          IndicatorView="indicator"
+                          Loop="False">
                 <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding .}"
-                               Aspect="AspectFill"/>
+                    <DataTemplate x:DataType="local:SlideData">
+                        <Grid>
+                            <Image Source="{Binding BackgroundImage}"
+                              Aspect="Fill"/>
+                            <Button IsVisible="{Binding IsVisibleButton}"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="EndAndExpand"
+                                    Margin="0,0,0,45"
+                                    BackgroundColor="Transparent"
+                                    BorderWidth="2"
+                                    BorderColor="#E0B499"
+                                    HeightRequest="35"
+                                    Text="Подробнее о номерах"
+                                    FontSize="14"
+                                    FontFamily="MaMedium"
+                                    TextColor="#1C3E0D"/>
+                            <Button IsVisible="{Binding IsVisibleButtonSkip}"
+                                    HorizontalOptions="EndAndExpand"
+                                    VerticalOptions="EndAndExpand"
+                                    Margin="0,0,10,15"
+                                    BackgroundColor="Transparent"
+                                    Text="Пропустить"
+                                    TextColor="#576B57"
+                                    FontFamily="MaMedium"/>
+                        </Grid>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
-            <IndicatorView x:Name="IndicatorView"
-                       IndicatorColor="LightGray"
-                       SelectedIndicatorColor="Black"
-                       HorizontalOptions="Center">
-            </IndicatorView>
-        </StackLayout>
+            <IndicatorView
+                VerticalOptions="End" 
+                HeightRequest="30"
+                x:Name="indicator"
+                IndicatorColor="#BBB794"
+                SelectedIndicatorColor="#88A87F"
+                HorizontalOptions="Center"
+                IndicatorSize="13"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

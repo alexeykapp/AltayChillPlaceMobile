@@ -1,11 +1,13 @@
 ﻿using AltayChillPlace.ApiResponses;
 using AltayChillPlace.Models;
+using AltayChillPlace.Helpers;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -17,21 +19,24 @@ namespace AltayChillPlace.ViewModels
         private ObservableCollection<HouseResponse> _houses;
         private ObservableCollection<AdditionalServiceResponse> _services;
         private object _currentItems;
+        // isVisible
         private bool _isVisibleHeader;
         private bool _isVisibleHouseList;
         private bool _isVisibleActivityIndicator;
         private bool _isVisibleError;
+        private bool _isVisibleButtonUpdate;
+        // Date
         private DateTime _arrivalDate;
         private DateTime _departureDate;
         private DateTime _minDepartureDate = DateTime.Now.AddDays(2);
         private DateTime _maxDepartureDate = DateTime.Now.AddMonths(5);
         private DateTime _minArrivalDate = DateTime.Now.AddDays(1);
         private DateTime _maxArrivaDate = DateTime.Now.AddMonths(5);
+        // Color
         private Color _currentHouseColor = Color.White;
         private Color _currentServicesColor = Color.Black;
-        private event Action ClickHouse;
 
-        // Constructor
+        private CurrentPage _currentPage;
         public HousesVM(HouseModel houseModel, ServiceModel serviceModel)
         {
             _houseModel = houseModel ?? throw new ArgumentNullException(nameof(houseModel));
@@ -48,13 +53,13 @@ namespace AltayChillPlace.ViewModels
         public ObservableCollection<HouseResponse> Houses
         {
             get => _houses;
-            private set => SetProperty(ref _houses, value, onChanged: HandleHousesChanged);
+            private set => SetProperty(ref _houses, value);
         }
 
         public ObservableCollection<AdditionalServiceResponse> Services
         {
             get => _services;
-            private set => SetProperty(ref _services, value, onChanged: HandleServicesChanged);
+            private set => SetProperty(ref _services, value);
         }
 
         public object CurrentItems
@@ -86,6 +91,11 @@ namespace AltayChillPlace.ViewModels
             get => _isVisibleError;
             private set => SetProperty(ref _isVisibleError, value);
         }
+        public bool IsVisibleButtonUpdate
+        {
+            get => _isVisibleButtonUpdate;
+            set => SetProperty(ref _isVisibleButtonUpdate, value);
+        }
 
         public Color HouseColor
         {
@@ -104,10 +114,9 @@ namespace AltayChillPlace.ViewModels
 
         private void ExecuteHouseClick()
         {
-            if (Houses.Count != 0 || Houses != null)
-            {
-                IsVisibleHeader = true;
-            }
+            _currentPage = CurrentPage.House;
+
+            IsVisibleHeader = true;
             HouseColor = Color.White;
             ServicesColor = Color.Black;
             CurrentItems = Houses;
@@ -115,6 +124,8 @@ namespace AltayChillPlace.ViewModels
 
         private void ExecuteServicesClick()
         {
+            _currentPage = CurrentPage.Service;
+
             IsVisibleHeader = false;
             HouseColor = Color.Black;
             ServicesColor = Color.White;
@@ -125,17 +136,17 @@ namespace AltayChillPlace.ViewModels
         private async void LoadDataAsync()
         {
             IsVisibleActivityIndicator = true;
-            IsVisibleError = false;
-
             try
             {
-                Houses = await _houseModel.GetAllHouses();
-                Services = await _serviceModel.GetAllServices();
-
-                CurrentItems = Houses;
+                var houses = _houseModel.GetAllHouses();
+                var services = _serviceModel.GetAllServices();
+                await Task.WhenAll(houses, services);
+                Houses = houses.Result;
+                Services = services.Result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 IsVisibleError = true;
             }
             finally
@@ -144,17 +155,17 @@ namespace AltayChillPlace.ViewModels
             }
         }
 
-        private void HandleHousesChanged()
-        {
-            IsVisibleHouseList = Houses != null && Houses.Count > 0;
-            IsVisibleError = Houses == null || Houses.Count == 0;
-        }
+        //private void HandleHousesChanged()
+        //{
+        //    IsVisibleHouseList = Houses != null && Houses.Count > 0;
+        //    IsVisibleError = Houses == null || Houses.Count == 0;
+        //}
 
-        private void HandleServicesChanged()
-        {
-            IsVisibleHouseList = Services != null && Services.Count > 0;
-            IsVisibleError = Services == null || Services.Count == 0;
-        }
+        //private void HandleServicesChanged()
+        //{
+        //    IsVisibleHouseList = Services != null && Services.Count > 0;
+        //    IsVisibleError = Services == null || Services.Count == 0;
+        //}
         public DateTime ArrivalDate
         {
             get => _arrivalDate;
