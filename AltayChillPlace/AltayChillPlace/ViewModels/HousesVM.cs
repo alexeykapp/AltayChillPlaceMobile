@@ -8,6 +8,8 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Diagnostics;
+using System.Windows.Input;
+using System.Linq;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -18,13 +20,19 @@ namespace AltayChillPlace.ViewModels
         private readonly ServiceModel _serviceModel;
         private ObservableCollection<HouseResponse> _houses;
         private ObservableCollection<AdditionalServiceResponse> _services;
+        private ObservableCollection<TypeHouse> _typeHouses;
         private object _currentItems;
+        private string _searchTextService;
+        private bool _isSelectedType;
+        private TypeHouse _typeHouseSelected;
         // isVisible
         private bool _isVisibleHeader;
         private bool _isVisibleHouseList;
         private bool _isVisibleActivityIndicator;
         private bool _isVisibleError;
         private bool _isVisibleButtonUpdate;
+        private bool _isVisibleHeaderHouse = true;
+        private bool _isVisibleHeaderService = false;
         // Date
         private DateTime _arrivalDate = DateTime.Now.AddDays(1);
         private DateTime _departureDate = DateTime.Now.AddDays(2);
@@ -45,80 +53,40 @@ namespace AltayChillPlace.ViewModels
             // Initialize commands
             HouseClickCommand = new DelegateCommand(ExecuteHouseClick);
             ServicesClickCommand = new DelegateCommand(ExecuteServicesClick);
-
-            UpdateProperties();
+            ItemTappedHouseCommand = new Command<ItemTappedEventArgs>(OnItemTappedHouse);
+            SelectItemCommand = new Command<TypeHouse>(OnItemSelected);
 
             // Load data asynchronously
             LoadDataAsync();
         }
-
-        public ObservableCollection<HouseResponse> Houses
+        private void OnItemSelected(TypeHouse item)
         {
-            get => _houses;
-            private set => SetProperty(ref _houses, value);
+            if (TypeHouseSelected == item)
+            {
+                TypeHouseSelected = null;
+                item.IsSelected = false;
+            }
+            else
+            {
+                if (TypeHouseSelected != null)
+                {
+                    TypeHouseSelected.IsSelected = false;
+                }
+                TypeHouseSelected = item;
+                item.IsSelected = true;
+            }
         }
-
-        public ObservableCollection<AdditionalServiceResponse> Services
+        private void OnItemTappedHouse(ItemTappedEventArgs e)
         {
-            get => _services;
-            private set => SetProperty(ref _services, value);
+            var selectedItem = e.Item as HouseResponse;
         }
-
-        public object CurrentItems
-        {
-            get => _currentItems;
-            private set => SetProperty(ref _currentItems, value);
-        }
-
-        public bool IsVisibleHeader
-        {
-            get => _isVisibleHeader;
-            private set => SetProperty(ref _isVisibleHeader, value);
-        }
-
-        public bool IsVisibleHouseList
-        {
-            get => _isVisibleHouseList;
-            private set => SetProperty(ref _isVisibleHouseList, value);
-        }
-
-        public bool IsVisibleActivityIndicator
-        {
-            get => _isVisibleActivityIndicator;
-            private set => SetProperty(ref _isVisibleActivityIndicator, value);
-        }
-
-        public bool IsVisibleError
-        {
-            get => _isVisibleError;
-            private set => SetProperty(ref _isVisibleError, value);
-        }
-        public bool IsVisibleButtonUpdate
-        {
-            get => _isVisibleButtonUpdate;
-            set => SetProperty(ref _isVisibleButtonUpdate, value);
-        }
-
-        public Color HouseColor
-        {
-            get => _currentHouseColor;
-            private set => SetProperty(ref _currentHouseColor, value);
-        }
-
-        public Color ServicesColor
-        {
-            get => _currentServicesColor;
-            private set => SetProperty(ref _currentServicesColor, value);
-        }
-
-        public DelegateCommand HouseClickCommand { get; private set; }
-        public DelegateCommand ServicesClickCommand { get; private set; }
 
         private void ExecuteHouseClick()
         {
             _currentPage = CurrentPage.House;
 
-            IsVisibleHeader = true;
+            IsVisibleHeaderService = false;
+            IsVisibleHeaderHouse = true;
             HouseColor = Color.White;
             ServicesColor = Color.Black;
             CurrentItems = Houses;
@@ -128,34 +96,24 @@ namespace AltayChillPlace.ViewModels
         {
             _currentPage = CurrentPage.Service;
 
-            IsVisibleHeader = false;
+            IsVisibleHeaderHouse = false;
+            IsVisibleHeaderService = true;
             HouseColor = Color.Black;
             ServicesColor = Color.White;
             CurrentItems = Services;
             IsVisibleHeader = false;
         }
 
-        private async void LoadDataAsync()
+        public async void UpdateProperties()
         {
-            IsVisibleActivityIndicator = true;
-            try
-            {
-                var houses = _houseModel.GetAllHouses();
-                var services = _serviceModel.GetAllServices();
-                await Task.WhenAll(houses, services);
-                Houses = houses.Result;
-                Services = services.Result;
-                SetupCurrentItem();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                IsVisibleError = true;
-            }
-            finally
-            {
-                IsVisibleActivityIndicator = false;
-            }
+            await Task.Delay(100);
+            MinDepartureDate = DateTime.Now.AddDays(2);
+            MaxDepartureDate = DateTime.Now.AddMonths(5);
+            MinArrivalDate = DateTime.Now.AddDays(1);
+            MaxArrivalDate = DateTime.Now.AddMonths(5);
+
+            ArrivalDate = MinArrivalDate;
+            DepartureDate = MinDepartureDate;
         }
         private void SetupCurrentItem()
         {
@@ -168,17 +126,51 @@ namespace AltayChillPlace.ViewModels
                 CurrentItems = Services;
             }
         }
-        //private void HandleHousesChanged()
-        //{
-        //    IsVisibleHouseList = Houses != null && Houses.Count > 0;
-        //    IsVisibleError = Houses == null || Houses.Count == 0;
-        //}
+        private async void LoadDataAsync()
+        {
+            IsVisibleActivityIndicator = true;
+            try
+            {
+                var houses = _houseModel.GetAllHouses();
+                var services = _serviceModel.GetAllServices();
+                var typeHouse = _houseModel.GetTypeHouses();
+                await Task.WhenAll(houses, services, typeHouse);
+                Houses = houses.Result;
+                Services = services.Result;
+                TypeHouses = typeHouse.Result;
+                SetupCurrentItem();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                IsVisibleError = true;
+            }
+            finally
+            {
+                IsVisibleActivityIndicator = false;
+            }
+        }
 
-        //private void HandleServicesChanged()
-        //{
-        //    IsVisibleHouseList = Services != null && Services.Count > 0;
-        //    IsVisibleError = Services == null || Services.Count == 0;
-        //}
+        public DelegateCommand HouseClickCommand { get; private set; }
+        public DelegateCommand ServicesClickCommand { get; private set; }
+        public DelegateCommand SortingByDataCommand { get; private set; }
+        public ICommand ItemTappedHouseCommand { get; private set; }
+        public ICommand SelectItemCommand { get; private set; }
+        public ICommand ItemTappedCommand
+        {
+            get
+            {
+                return new Command((item) =>
+                {
+                    HouseResponse selectedItem = item as HouseResponse;
+
+                });
+            }
+        }
+        private void SearchServives()
+        {
+            CurrentItems = Services.Where(item => item.NameOfAdditionalService.ToLower().Contains(_searchTextService.ToLower())).ToList();
+        }
         public DateTime ArrivalDate
         {
             get => _arrivalDate;
@@ -214,16 +206,89 @@ namespace AltayChillPlace.ViewModels
             get => _maxArrivaDate;
             set => SetProperty(ref _maxArrivaDate, value);
         }
-        public async void UpdateProperties()
-        {
-            await Task.Delay(100);
-            MinDepartureDate = DateTime.Now.AddDays(2);
-            MaxDepartureDate = DateTime.Now.AddMonths(5);
-            MinArrivalDate = DateTime.Now.AddDays(1);
-            MaxArrivalDate = DateTime.Now.AddMonths(5);
 
-            ArrivalDate = MinArrivalDate;
-            DepartureDate = MinDepartureDate;
+
+        public bool IsSelectedType
+        {
+            get => _isSelectedType;
+            set => SetProperty(ref _isSelectedType, value);
+        }
+        public bool IsVisibleHeaderHouse
+        {
+            get => _isVisibleHeaderHouse;
+            set => SetProperty(ref _isVisibleHeaderHouse, value);
+        }
+        public bool IsVisibleHeaderService
+        {
+            get => _isVisibleHeaderService;
+            set => SetProperty(ref _isVisibleHeaderService, value);
+        }
+        public bool IsVisibleError
+        {
+            get => _isVisibleError;
+            private set => SetProperty(ref _isVisibleError, value);
+        }
+        public bool IsVisibleButtonUpdate
+        {
+            get => _isVisibleButtonUpdate;
+            set => SetProperty(ref _isVisibleButtonUpdate, value);
+        }
+        public object CurrentItems
+        {
+            get => _currentItems;
+            private set => SetProperty(ref _currentItems, value);
+        }
+
+        public bool IsVisibleHeader
+        {
+            get => _isVisibleHeader;
+            private set => SetProperty(ref _isVisibleHeader, value);
+        }
+
+        public bool IsVisibleHouseList
+        {
+            get => _isVisibleHouseList;
+            private set => SetProperty(ref _isVisibleHouseList, value);
+        }
+
+        public bool IsVisibleActivityIndicator
+        {
+            get => _isVisibleActivityIndicator;
+            private set => SetProperty(ref _isVisibleActivityIndicator, value);
+        }
+
+        public Color HouseColor
+        {
+            get => _currentHouseColor;
+            private set => SetProperty(ref _currentHouseColor, value);
+        }
+
+        public Color ServicesColor
+        {
+            get => _currentServicesColor;
+            private set => SetProperty(ref _currentServicesColor, value);
+        }
+
+        public ObservableCollection<HouseResponse> Houses
+        {
+            get => _houses;
+            private set => SetProperty(ref _houses, value);
+        }
+
+        public ObservableCollection<AdditionalServiceResponse> Services
+        {
+            get => _services;
+            private set => SetProperty(ref _services, value);
+        }
+        public ObservableCollection<TypeHouse> TypeHouses
+        {
+            get => _typeHouses;
+            set => SetProperty(ref _typeHouses, value);
+        }
+        public TypeHouse TypeHouseSelected
+        {
+            get => _typeHouseSelected;
+            set => SetProperty(ref _typeHouseSelected, value);
         }
     }
 }

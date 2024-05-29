@@ -31,5 +31,18 @@ namespace AltayChillPlace.Services
                 throw new Exception("Error in the request to get a list of houses: " + ex.Message);
             }
         }
+        public async Task<ObservableCollection<TypeHouse>> GetTypeHouseAsync()
+        {
+            try
+            {
+                ObservableCollection<TypeHouse> listTypes = await _housesDataClient.GetAllTypeAsync();
+                return listTypes;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw new Exception("Error in the request to get a list of types: " + ex.Message);
+            }
+        }
     }
 }

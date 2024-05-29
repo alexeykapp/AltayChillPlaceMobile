@@ -29,5 +29,16 @@ namespace AltayChillPlace.RestClient
             var houses = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<ObservableCollection<HouseResponse>>(houses);
         }
+        public async Task<ObservableCollection<TypeHouse>> GetAllTypeAsync()
+        {
+            var response = await _apiClient.HttpClient.GetAsync("typeHouse/all");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("GET request failed");
+            }
+            var typesHouse = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ObservableCollection<TypeHouse>>(typesHouse);
+        }
+        
     }
 }

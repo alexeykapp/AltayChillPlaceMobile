@@ -19,5 +19,9 @@ namespace AltayChillPlace.Models
         {
             return await _houseDataService.GetAllHouseAsync();
         }
+        public async Task<ObservableCollection<TypeHouse>> GetTypeHouses()
+        {
+            return await _houseDataService.GetTypeHouseAsync();
+        }
     }
 }
