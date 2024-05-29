@@ -1,42 +1,116 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:helpers="clr-namespace:AltayChillPlace.Helpers;assembly=AltayChillPlace"
+             xmlns:helpers="clr-namespace:AltayChillPlace.Helpers;assembly=AltayChillPlace" 
+             xmlns:local="clr-namespace:AltayChillPlace.Helpers"
              x:Class="AltayChillPlace.CustomXaml.HeaderContentView">
-    <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0">
-        <StackLayout Orientation="Vertical" Spacing="0" Margin="0,0,30,0">
-            <Label Text="Дата заезда"
-           FontSize="15"
-           FontFamily="MaMedium"/>
-            <DatePicker FontSize="15"
-                FontFamily="MaMedium"
-                MinimumDate="{Binding MinArrivalDate}" 
-                MaximumDate="{Binding MaxArrivalDate}"
-                Date="{Binding ArrivalDate}">
-                <DatePicker.Behaviors>
-                    <helpers:DatePickerBehavior/>
-                </DatePicker.Behaviors>
-            </DatePicker>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <local:BooleanToBackgroundColorConverter x:Key="BooleanToBackgroundColorConverter" />
+        </ResourceDictionary>
+
+        <Style TargetType="Frame" x:Key="SelectableFrameStyle">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="BorderColor" Value="Green" />
+            <Style.Triggers>
+                <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="True">
+                    <Setter Property="BackgroundColor" Value="Green" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="SelectableButtonStyle">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontFamily" Value="MaMedium"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Style.Triggers>
+                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                    <Setter Property="BackgroundColor" Value="Green" />
+                    <Setter Property="TextColor" Value="White" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </ContentView.Resources>
+    <Grid>
+        <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
+            <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0" >
+                <StackLayout Orientation="Vertical" Spacing="0" Margin="0,0,30,0" IsVisible="{Binding IsVisibleHeaderHouse}">
+                    <Label Text="Дата заезда"
+                       FontSize="15"
+                       FontFamily="MaMedium"/>
+                    <DatePicker FontSize="15"
+                            FontFamily="MaMedium"
+                            MinimumDate="{Binding MinArrivalDate}" 
+                            MaximumDate="{Binding MaxArrivalDate}"
+                            Date="{Binding ArrivalDate}">
+                        <DatePicker.Behaviors>
+                            <helpers:DatePickerBehavior/>
+                        </DatePicker.Behaviors>
+                    </DatePicker>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Spacing="0" IsVisible="{Binding IsVisibleHeaderHouse}">
+                    <Label Text="Дата выезда"
+                   FontSize="15"
+                   FontFamily="MaMedium"/>
+                    <DatePicker CharacterSpacing="0" 
+                            FontFamily="MaMedium"
+                            FontSize="15" 
+                            MinimumDate="{Binding MinDepartureDate}"
+                            MaximumDate="{Binding MaxDepartureDate}"        
+                            Date="{Binding DepartureDate}">
+                        <DatePicker.Behaviors>
+                            <helpers:DatePickerBehavior/>
+                        </DatePicker.Behaviors>
+                    </DatePicker>
+                </StackLayout>
+                <Button ImageSource="searchButton.png"
+                   Margin="25,0,0,7"
+                   WidthRequest="50"
+                   HeightRequest="50"
+                   VerticalOptions="EndAndExpand"
+                   IsVisible="{Binding IsVisibleHeaderHouse}"/>
+
+                <Grid IsVisible="{Binding IsVisibleHeaderService}">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0" >
+                        <SearchBar
+                    FontFamily="MaMedium"
+                    FontSize="17"
+                    WidthRequest="300"
+                    Placeholder="Search items..."/>
+                        <Button
+                        ImageSource="searchButton"
+                        Margin="25,0,0,7"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        VerticalOptions="EndAndExpand"/>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+            <CollectionView  HeightRequest="33" 
+                             WidthRequest="150"
+                             Margin="15,0,15,0"
+                             x:Name="HousesCollectionView"
+                             ItemsSource="{Binding TypeHouses}"
+                             SelectionMode="Multiple"
+                             SelectedItem="{Binding TypeHouseSelected, Mode=TwoWay}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Style="{StaticResource SelectableFrameStyle}">
+                            <Button Text="{Binding NameTypeHouse}"
+                        Style="{StaticResource SelectableButtonStyle}"
+                        Command="{Binding Source={x:Reference HousesCollectionView}, Path=BindingContext.SelectItemCommand}"
+                        CommandParameter="{Binding .}" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
-        <StackLayout Orientation="Vertical" Spacing="0">
-            <Label Text="Дата выезда"
-           FontSize="15"
-           FontFamily="MaMedium"/>
-            <DatePicker CharacterSpacing="0" 
-                FontFamily="MaMedium"
-                FontSize="15" 
-                MinimumDate="{Binding MinDepartureDate}"
-                MaximumDate="{Binding MaxDepartureDate}"        
-                Date="{Binding DepartureDate}">
-                <DatePicker.Behaviors>
-                    <helpers:DatePickerBehavior/>
-                </DatePicker.Behaviors>
-            </DatePicker>
-        </StackLayout>
-        <Image Source="searchButton.png" 
-       Margin="25,0,0,7"
-       WidthRequest="50"
-       HeightRequest="50"
-       VerticalOptions="EndAndExpand"/>
-    </StackLayout>
+    </Grid>
+
 </ContentView>

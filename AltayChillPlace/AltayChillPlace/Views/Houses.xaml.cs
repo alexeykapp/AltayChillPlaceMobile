@@ -18,5 +18,13 @@ namespace AltayChillPlace.Views
             InitializeComponent();
             BindingContext = App.AppInitializer.ServiceProvider.GetService<HousesVM>();
         }
+        private void OnItemTapped(object sender, EventArgs e)
+        {
+            if (BindingContext is HousesVM viewModel && sender is ListView listView)
+            {
+                viewModel.ItemTappedCommand.Execute(listView.SelectedItem);
+                listView.SelectedItem = null;
+            }
+        }
     }
 }

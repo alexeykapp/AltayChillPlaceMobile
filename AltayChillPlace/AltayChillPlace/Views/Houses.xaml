@@ -8,13 +8,6 @@
              x:Class="AltayChillPlace.Views.Houses"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
-        <DataTemplate x:Key="HouseHeaderTemplate">
-            <custom:HeaderContentView BindingContext="{Binding }"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="ServiceHeaderTemplate">
-            <custom:ServiceHeader BindingContext="{Binding }"/>
-        </DataTemplate>
         <DataTemplate x:Key="HousesData">
             <ViewCell>
                 <Frame Padding="10" Margin="10" BackgroundColor="White" CornerRadius="10">
@@ -118,11 +111,6 @@
                 </Frame>
             </ViewCell>
         </DataTemplate>
-
-        <helpers:HeaderTemplateSelector
-      x:Key="HeaderTemplateSelector"
-      HouseHeader="{StaticResource HouseHeaderTemplate}"
-      ServiceHeader="{StaticResource ServiceHeaderTemplate}" />
     </ContentPage.Resources>
 
     <ContentPage.Content>
@@ -160,9 +148,7 @@
                                 TextColor="{Binding  ServicesColor}"
                                 Command="{Binding ServicesClickCommand}"/>
                     </StackLayout>
-
                 </Frame>
-
             </Grid>
             <ActivityIndicator
                 Grid.Row="2"
@@ -183,11 +169,9 @@
             <Button
                 Text="Обновить"
                 IsVisible="{Binding IsVisibleButtonUpdate}"/>
-            <ListView Grid.Row="2" x:Name="MyListView" ItemsSource="{Binding CurrentItems}" HasUnevenRows="True" SeparatorVisibility="None">
+            <ListView Grid.Row="2" x:Name="MyListView" ItemsSource="{Binding CurrentItems}" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="OnItemTapped">
                 <ListView.Header>
-                    <helpers:HeaderTemplateSelector
-                        HouseHeader="{StaticResource HouseHeaderTemplate}"
-                        ServiceHeader="{StaticResource ServiceHeaderTemplate}"/>
+                    <custom:HeaderContentView BindingContext="{Binding }"/>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <helpers:MyDataTemplateSelector Template1="{StaticResource HousesData}"
