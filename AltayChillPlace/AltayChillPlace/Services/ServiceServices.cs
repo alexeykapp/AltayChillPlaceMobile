@@ -21,5 +21,10 @@ namespace AltayChillPlace.Services
             var services = await _serviceClient.GetAllServices();
             return services;
         }
+        public async Task<ObservableCollection<ServiceTypeResponce>> GetServicesType()
+        {
+            var serviceType = await _serviceClient.GetServicesType();
+            return serviceType;
+        }
     }
 }

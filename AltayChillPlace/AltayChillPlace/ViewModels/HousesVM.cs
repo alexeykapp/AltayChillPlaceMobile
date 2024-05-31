@@ -10,6 +10,10 @@ using Xamarin.Forms;
 using System.Diagnostics;
 using System.Windows.Input;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Collections.Generic;
+using AltayChillPlace.NavigationFile;
+using AltayChillPlace.Views;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -18,18 +22,23 @@ namespace AltayChillPlace.ViewModels
         // Private fields
         private readonly HouseModel _houseModel;
         private readonly ServiceModel _serviceModel;
+        private readonly FilteringService _filteringService;
         private ObservableCollection<HouseResponse> _houses;
+        private ObservableCollection<HouseResponse> _availableHouses;
         private ObservableCollection<AdditionalServiceResponse> _services;
         private ObservableCollection<TypeHouse> _typeHouses;
+        private ObservableCollection<ServiceTypeResponce> _typeServices;
         private object _currentItems;
         private string _searchTextService;
         private bool _isSelectedType;
         private TypeHouse _typeHouseSelected;
+        private ServiceTypeResponce _typeServiceSelected;
+        private string _textLabel;
         // isVisible
         private bool _isVisibleHeader;
         private bool _isVisibleHouseList;
         private bool _isVisibleActivityIndicator;
-        private bool _isVisibleError;
+        private bool _isVisibleLabel;
         private bool _isVisibleButtonUpdate;
         private bool _isVisibleHeaderHouse = true;
         private bool _isVisibleHeaderService = false;
@@ -49,18 +58,31 @@ namespace AltayChillPlace.ViewModels
         {
             _houseModel = houseModel ?? throw new ArgumentNullException(nameof(houseModel));
             _serviceModel = serviceModel ?? throw new ArgumentNullException(nameof(serviceModel));
+            _filteringService = new FilteringService();
 
             // Initialize commands
             HouseClickCommand = new DelegateCommand(ExecuteHouseClick);
             ServicesClickCommand = new DelegateCommand(ExecuteServicesClick);
             ItemTappedHouseCommand = new Command<ItemTappedEventArgs>(OnItemTappedHouse);
             SelectItemCommand = new Command<TypeHouse>(OnItemSelected);
+            SelectItemServiceCommand = new Command<ServiceTypeResponce>(OnItemSelectedService);
+            SearchAvailableCommand = new DelegateCommand(SearchAvailableHouse);
+            SearchSevicesCommand = new DelegateCommand(SearchServives);
+            ShowMainMenuCommand = new DelegateCommand(ShowMainMenu);
 
             // Load data asynchronously
             LoadDataAsync();
         }
         private void OnItemSelected(TypeHouse item)
         {
+            if (_availableHouses != null)
+            {
+                CurrentItems = _availableHouses;
+            }
+            else
+            {
+                CurrentItems = Houses;
+            }
             if (TypeHouseSelected == item)
             {
                 TypeHouseSelected = null;
@@ -74,11 +96,62 @@ namespace AltayChillPlace.ViewModels
                 }
                 TypeHouseSelected = item;
                 item.IsSelected = true;
+                IEnumerable<HouseResponse> houseResponses = CurrentItems as IEnumerable<HouseResponse>;
+                var housesFiltering = _filteringService.FilteringHousesByCategory(houseResponses, item.IdTypeHouse);
+                if (housesFiltering.Count == 0)
+                {
+                    IsVisibleLabel = true;
+                    TextLabel = "Нет доступных домов";
+                }
+                else
+                {
+                    IsVisibleLabel = false;
+                }
+                CurrentItems = housesFiltering;
             }
         }
-        private void OnItemTappedHouse(ItemTappedEventArgs e)
+        private void OnItemSelectedService(ServiceTypeResponce item)
+        {
+            if (TypeServiceSelected == item)
+            {
+                TypeServiceSelected = null;
+                item.IsSelected = false;
+                CurrentItems = Services;
+            }
+            else
+            {
+                if (TypeServiceSelected != null)
+                {
+                    TypeServiceSelected.IsSelected = false;
+                }
+                TypeServiceSelected = item;
+                item.IsSelected = true;
+                if (String.IsNullOrEmpty(SearchTextService))
+                {
+                    CurrentItems = Services;
+                }
+                else
+                {
+                    SearchServives();
+                }
+                IEnumerable<AdditionalServiceResponse> additionalServices = CurrentItems as IEnumerable<AdditionalServiceResponse>;
+                var serviceFiltering = _filteringService.FilteringServicesByCategory(additionalServices, item.IdTypeService);
+                if (serviceFiltering.Count == 0)
+                {
+                    IsVisibleLabel = true;
+                    TextLabel = "Нет доступных домов";
+                }
+                else
+                {
+                    IsVisibleLabel = false;
+                }
+                CurrentItems = serviceFiltering;
+            }
+        }
+        private async void OnItemTappedHouse(ItemTappedEventArgs e)
         {
             var selectedItem = e.Item as HouseResponse;
+            await NavigationDispatcher.Instance.Navigation.PushAsync(new HouseInfoPage(selectedItem.IdHouse));
         }
 
         private void ExecuteHouseClick()
@@ -134,16 +207,19 @@ namespace AltayChillPlace.ViewModels
                 var houses = _houseModel.GetAllHouses();
                 var services = _serviceModel.GetAllServices();
                 var typeHouse = _houseModel.GetTypeHouses();
-                await Task.WhenAll(houses, services, typeHouse);
+                var typeService = _serviceModel.GetServicesType();
+                await Task.WhenAll(houses, services, typeHouse, typeService);
                 Houses = houses.Result;
                 Services = services.Result;
                 TypeHouses = typeHouse.Result;
+                TypeServices = typeService.Result;
                 SetupCurrentItem();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                IsVisibleError = true;
+                IsVisibleLabel = true;
+                TextLabel = ex.Message;
             }
             finally
             {
@@ -154,8 +230,12 @@ namespace AltayChillPlace.ViewModels
         public DelegateCommand HouseClickCommand { get; private set; }
         public DelegateCommand ServicesClickCommand { get; private set; }
         public DelegateCommand SortingByDataCommand { get; private set; }
+        public DelegateCommand SearchAvailableCommand { get; private set; }
+        public DelegateCommand SearchSevicesCommand { get; private set; }
+        public DelegateCommand ShowMainMenuCommand {  get; private set; }
         public ICommand ItemTappedHouseCommand { get; private set; }
         public ICommand SelectItemCommand { get; private set; }
+        public ICommand SelectItemServiceCommand { get; private set; }
         public ICommand ItemTappedCommand
         {
             get
@@ -169,7 +249,32 @@ namespace AltayChillPlace.ViewModels
         }
         private void SearchServives()
         {
-            CurrentItems = Services.Where(item => item.NameOfAdditionalService.ToLower().Contains(_searchTextService.ToLower())).ToList();
+            if (_searchTextService != null)
+            {
+                CurrentItems = Services.Where(item => item.NameOfAdditionalService.ToLower().Contains(_searchTextService.ToLower())).ToList();
+            }
+        }
+        private async void SearchAvailableHouse()
+        {
+            _availableHouses = await _houseModel.GetAvailableHouse(ArrivalDate, DepartureDate);
+            if (_availableHouses == null || _availableHouses.Count == 0)
+            {
+                IsVisibleLabel = true;
+                TextLabel = "Нет доступных домов";
+            }
+            else
+            {
+                IsVisibleLabel = false;
+            }
+            if (TypeHouseSelected != null)
+            {
+                TypeHouseSelected.IsSelected = false;
+            }
+            if (_availableHouses != null)
+            {
+                CurrentItems = _availableHouses;
+            }
+
         }
         public DateTime ArrivalDate
         {
@@ -187,6 +292,10 @@ namespace AltayChillPlace.ViewModels
         {
             get => _minDepartureDate;
             set => SetProperty(ref _minDepartureDate, value);
+        }
+        public async void ShowMainMenu()
+        {
+            await NavigationDispatcher.Instance.Navigation.PushAsync(new MainMenu());
         }
 
         public DateTime MaxDepartureDate
@@ -206,8 +315,6 @@ namespace AltayChillPlace.ViewModels
             get => _maxArrivaDate;
             set => SetProperty(ref _maxArrivaDate, value);
         }
-
-
         public bool IsSelectedType
         {
             get => _isSelectedType;
@@ -223,10 +330,10 @@ namespace AltayChillPlace.ViewModels
             get => _isVisibleHeaderService;
             set => SetProperty(ref _isVisibleHeaderService, value);
         }
-        public bool IsVisibleError
+        public bool IsVisibleLabel
         {
-            get => _isVisibleError;
-            private set => SetProperty(ref _isVisibleError, value);
+            get => _isVisibleLabel;
+            private set => SetProperty(ref _isVisibleLabel, value);
         }
         public bool IsVisibleButtonUpdate
         {
@@ -268,6 +375,18 @@ namespace AltayChillPlace.ViewModels
             get => _currentServicesColor;
             private set => SetProperty(ref _currentServicesColor, value);
         }
+        public string SearchTextService
+        {
+            get => _searchTextService;
+            set
+            {
+                SetProperty(ref _searchTextService, value);
+                if (value == "")
+                {
+                    CurrentItems = Services;
+                }
+            }
+        }
 
         public ObservableCollection<HouseResponse> Houses
         {
@@ -285,10 +404,25 @@ namespace AltayChillPlace.ViewModels
             get => _typeHouses;
             set => SetProperty(ref _typeHouses, value);
         }
+        public ObservableCollection<ServiceTypeResponce> TypeServices
+        {
+            get => _typeServices;
+            set => SetProperty(ref _typeServices, value);
+        }
         public TypeHouse TypeHouseSelected
         {
             get => _typeHouseSelected;
             set => SetProperty(ref _typeHouseSelected, value);
+        }
+        public ServiceTypeResponce TypeServiceSelected
+        {
+            get => _typeServiceSelected;
+            set => SetProperty(ref _typeServiceSelected, value);
+        }
+        public string TextLabel
+        {
+            get => _textLabel;
+            set => SetProperty(ref _textLabel, value);
         }
     }
 }

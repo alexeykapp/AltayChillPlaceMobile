@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AltayChillPlace.Views.MainMenu"
+             >
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="170"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
+                <Image Source="background.png" Aspect="AspectFill"
+           AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+            </AbsoluteLayout>
+
+            <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
+            <StackLayout Grid.Row="1" HorizontalOptions="Center">
+                <Button Style="{StaticResource ButtonCustomStyle}"
+                        WidthRequest="270"
+                        HeightRequest="40"
+                        Text="Каталог номеров"
+                        TextTransform="None"
+                        FontFamily="MaRegular"
+                        FontSize="17"/>
+                <Button Style="{StaticResource ButtonCustomStyle}"
+                        WidthRequest="270"
+                        HeightRequest="40"
+                        Text="Личный кабинет"
+                        TextTransform="None"
+                        FontFamily="MaRegular"
+                        FontSize="17"/>
+                <Button Style="{StaticResource ButtonCustomStyle}"
+                        WidthRequest="270"
+                        HeightRequest="40"
+                        Text="Блог"
+                        TextTransform="None"
+                        FontFamily="MaRegular"
+                        FontSize="17"/>
+                <Button Style="{StaticResource ButtonCustomStyle}"
+                        WidthRequest="270"
+                        HeightRequest="40"
+                        Text="Карта"
+                        TextTransform="None"
+                        FontFamily="MaRegular"
+                        FontSize="17"/>
+                <Button Style="{StaticResource ButtonCustomStyle}"
+                        WidthRequest="270"
+                        HeightRequest="40"
+                        Text="О нас"
+                        TextTransform="None"
+                        FontFamily="MaRegular"
+                        FontSize="17"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

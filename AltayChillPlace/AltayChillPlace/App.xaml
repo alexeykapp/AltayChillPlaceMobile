@@ -25,6 +25,15 @@
                 </ViewCell>
             </DataTemplate>
             <!-- Другие глобальные ресурсы -->
+            
         </ResourceDictionary>
+        <Style x:Key="ButtonCustomStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="#576B57" />
+            <Setter Property="BorderWidth" Value="2" />
+            <Setter Property="BorderColor" Value="#799D6D" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="Margin" Value="0,10,0,0" />
+        </Style>
     </Application.Resources>
 </Application>
