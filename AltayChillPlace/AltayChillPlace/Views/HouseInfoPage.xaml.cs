@@ -11,18 +11,19 @@ using Xamarin.Forms.Xaml;
 namespace AltayChillPlace.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Houses : ContentPage
+    public partial class HouseInfoPage : ContentPage
     {
-        public Houses()
+        public HouseInfoPage(int id)
         {
             InitializeComponent();
-            BindingContext = App.AppInitializer.ServiceProvider.GetService<HouseInfoPageVM>();
+            BindingContext = App.AppInitializer.ServiceProvider.GetService<HousesVM>();
+            InitIdHouse(id);
         }
-        private void OnItemTapped(object sender, EventArgs e)
+        private void InitIdHouse(int id)
         {
             if (BindingContext is HouseInfoPageVM viewModel)
             {
-                
+                viewModel.IdHouse = id;
             }
         }
     }

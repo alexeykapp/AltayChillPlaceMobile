@@ -45,6 +45,7 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<LentaVM>();
             services.AddTransient<HouseModel>();
             services.AddTransient<HousesVM>();
+            services.AddTransient<HouseInfoPageVM>();
             services.AddTransient<CarouselVM>();
             services.AddTransient<ServiceModel>();
             services.AddTransient<AuthClient>(provider => new AuthClient(provider.GetService<ApiClient>()));

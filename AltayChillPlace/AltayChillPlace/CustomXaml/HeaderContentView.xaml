@@ -39,13 +39,13 @@
             <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0" >
                 <StackLayout Orientation="Vertical" Spacing="0" Margin="0,0,30,0" IsVisible="{Binding IsVisibleHeaderHouse}">
                     <Label Text="Дата заезда"
-                       FontSize="15"
-                       FontFamily="MaMedium"/>
+                           FontSize="15"
+                           FontFamily="MaMedium"/>
                     <DatePicker FontSize="15"
-                            FontFamily="MaMedium"
-                            MinimumDate="{Binding MinArrivalDate}" 
-                            MaximumDate="{Binding MaxArrivalDate}"
-                            Date="{Binding ArrivalDate}">
+                                FontFamily="MaMedium"
+                                MinimumDate="{Binding MinArrivalDate}" 
+                                MaximumDate="{Binding MaxArrivalDate}"
+                                Date="{Binding ArrivalDate}">
                         <DatePicker.Behaviors>
                             <helpers:DatePickerBehavior/>
                         </DatePicker.Behaviors>
@@ -53,49 +53,54 @@
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Spacing="0" IsVisible="{Binding IsVisibleHeaderHouse}">
                     <Label Text="Дата выезда"
-                   FontSize="15"
-                   FontFamily="MaMedium"/>
+                           FontSize="15"
+                           FontFamily="MaMedium"/>
                     <DatePicker CharacterSpacing="0" 
-                            FontFamily="MaMedium"
-                            FontSize="15" 
-                            MinimumDate="{Binding MinDepartureDate}"
-                            MaximumDate="{Binding MaxDepartureDate}"        
-                            Date="{Binding DepartureDate}">
+                                FontFamily="MaMedium"
+                                FontSize="15" 
+                                MinimumDate="{Binding MinDepartureDate}"
+                                MaximumDate="{Binding MaxDepartureDate}"        
+                                Date="{Binding DepartureDate}">
                         <DatePicker.Behaviors>
                             <helpers:DatePickerBehavior/>
                         </DatePicker.Behaviors>
                     </DatePicker>
                 </StackLayout>
                 <Button ImageSource="searchButton.png"
-                   Margin="25,0,0,7"
-                   WidthRequest="50"
-                   HeightRequest="50"
-                   VerticalOptions="EndAndExpand"
-                   IsVisible="{Binding IsVisibleHeaderHouse}"/>
-
-                <Grid IsVisible="{Binding IsVisibleHeaderService}">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0" >
-                        <SearchBar
-                    FontFamily="MaMedium"
-                    FontSize="17"
-                    WidthRequest="300"
-                    Placeholder="Search items..."/>
-                        <Button
-                        ImageSource="searchButton"
                         Margin="25,0,0,7"
                         WidthRequest="50"
                         HeightRequest="50"
-                        VerticalOptions="EndAndExpand"/>
+                        VerticalOptions="EndAndExpand"
+                        IsVisible="{Binding IsVisibleHeaderHouse}"
+                         Command="{Binding SearchAvailableCommand}"/>
+                <Grid IsVisible="{Binding IsVisibleHeaderService}">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0" >
+                        <SearchBar
+                            FontFamily="MaMedium"
+                            FontSize="17"
+                            WidthRequest="300"
+                            Text="{Binding SearchTextService, Mode=TwoWay}"
+                            Placeholder="Search items..."/>
+                        <Button
+                            ImageSource="searchButton"
+                            Margin="25,0,0,7"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            VerticalOptions="EndAndExpand"
+                            Command="{Binding SearchSevicesCommand}"
+                           />
                     </StackLayout>
                 </Grid>
             </StackLayout>
-            <CollectionView  HeightRequest="33" 
-                             WidthRequest="150"
-                             Margin="15,0,15,0"
-                             x:Name="HousesCollectionView"
-                             ItemsSource="{Binding TypeHouses}"
-                             SelectionMode="Multiple"
-                             SelectedItem="{Binding TypeHouseSelected, Mode=TwoWay}">
+            <CollectionView
+                IsVisible="{Binding IsVisibleHeaderHouse}"
+                HeightRequest="39" 
+                WidthRequest="150"
+                Margin="15,0,15,0"
+                x:Name="HousesCollectionView"
+                ItemsSource="{Binding TypeHouses}"
+                SelectionMode="Multiple"
+                SelectedItem="{Binding TypeHouseSelected, Mode=TwoWay}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                 </CollectionView.ItemsLayout>
@@ -103,9 +108,32 @@
                     <DataTemplate>
                         <Frame Style="{StaticResource SelectableFrameStyle}">
                             <Button Text="{Binding NameTypeHouse}"
-                        Style="{StaticResource SelectableButtonStyle}"
-                        Command="{Binding Source={x:Reference HousesCollectionView}, Path=BindingContext.SelectItemCommand}"
-                        CommandParameter="{Binding .}" />
+                                    Style="{StaticResource SelectableButtonStyle}"
+                                    Command="{Binding Source={x:Reference HousesCollectionView}, Path=BindingContext.SelectItemCommand}"
+                                    CommandParameter="{Binding .}" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView
+                IsVisible="{Binding IsVisibleHeaderService}"
+                HeightRequest="39" 
+                WidthRequest="150"
+                Margin="15,0,15,0"
+                x:Name="ServicesCollectionView"
+                ItemsSource="{Binding TypeServices}"
+                SelectionMode="Multiple"
+                SelectedItem="{Binding TypeServiceSelected, Mode=TwoWay}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Style="{StaticResource SelectableFrameStyle}">
+                            <Button Text="{Binding ServiceTypeName}"
+                                    Style="{StaticResource SelectableButtonStyle}"
+                                    Command="{Binding Source={x:Reference ServicesCollectionView}, Path=BindingContext.SelectItemServiceCommand}"
+                                    CommandParameter="{Binding .}" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

@@ -10,5 +10,6 @@ namespace AltayChillPlace.Interface
     public interface IServicesService
     {
         Task<ObservableCollection<AdditionalServiceResponse>> GetAllServies();
+        Task<ObservableCollection<ServiceTypeResponce>> GetServicesType();
     }
 }

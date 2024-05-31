@@ -10,6 +10,7 @@ namespace AltayChillPlace.Interface
     public interface IHouseDataService
     {
         Task<ObservableCollection<HouseResponse>> GetAllHouseAsync();
+        Task<ObservableCollection<HouseResponse>> GetAvailableHouseAsync(DateTime arrivalDate, DateTime departureDate);
         Task<ObservableCollection<TypeHouse>> GetTypeHouseAsync();
     }
 }

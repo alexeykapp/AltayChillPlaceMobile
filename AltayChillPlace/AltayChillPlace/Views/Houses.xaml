@@ -116,11 +116,23 @@
     <ContentPage.Content>
         <Grid BackgroundColor="#EFF5FB">
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Image Grid.Row="0" Source="logo2.png" HeightRequest="130" WidthRequest="130"/>
+
+            <Grid Grid.Row="0">
+                <Image Grid.Row="0" Source="logo2.png" HeightRequest="100" WidthRequest="130"/>
+                <ImageButton Grid.Row="0"
+                             Source="buttonMainMenu.png" 
+                             VerticalOptions="Center" 
+                             HorizontalOptions="EndAndExpand" 
+                             HeightRequest="50" 
+                             WidthRequest="40" 
+                             BackgroundColor="Transparent"
+                             Command="{Binding ShowMainMenuCommand}"
+                             Margin="0,40,20,0"/>
+            </Grid>
             <Grid Grid.Row="1">
                 <Frame   
                     BackgroundColor="#88AA7C"
@@ -145,7 +157,7 @@
                                 BackgroundColor="Transparent"
                                 FontFamily="MaRegular"
                                 BorderWidth="0"
-                                TextColor="{Binding  ServicesColor}"
+                                TextColor="{Binding ServicesColor}"
                                 Command="{Binding ServicesClickCommand}"/>
                     </StackLayout>
                 </Frame>
@@ -158,14 +170,14 @@
                 HorizontalOptions="CenterAndExpand"
                 Color="Green"
                 Margin="0,0,0,300"/>
-            <Label Text="Ошибка" 
+            <Label Text="{Binding TextLabel}" 
                    TextColor="Gray"
                    Grid.Row="2"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    FontSize="20"
                    Margin="0,0,0,200"
-                   IsVisible="{Binding IsVisibleError}"/>
+                   IsVisible="{Binding IsVisibleLabel}"/>
             <Button
                 Text="Обновить"
                 IsVisible="{Binding IsVisibleButtonUpdate}"/>

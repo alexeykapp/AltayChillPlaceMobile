@@ -12,5 +12,7 @@ namespace AltayChillPlace.ApiResponses
         public int AdditionalServicePrice { get; set; }
         [JsonProperty("description_of_additional_service")]
         public string DescriptionOfAdditionalService { get; set; }
+        [JsonProperty("fk_service_type")]
+        public int FkServiceType { get; set; }
     }
 }

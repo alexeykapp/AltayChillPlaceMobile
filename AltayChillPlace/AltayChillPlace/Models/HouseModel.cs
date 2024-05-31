@@ -23,5 +23,9 @@ namespace AltayChillPlace.Models
         {
             return await _houseDataService.GetTypeHouseAsync();
         }
+        public async Task<ObservableCollection<HouseResponse>> GetAvailableHouse(DateTime arrivalDate, DateTime departureDate)
+        {
+            return await _houseDataService.GetAvailableHouseAsync(arrivalDate, departureDate);
+        }
     }
 }

@@ -39,6 +39,15 @@ namespace AltayChillPlace.RestClient
             var typesHouse = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<ObservableCollection<TypeHouse>>(typesHouse);
         }
-        
+        public async Task<ObservableCollection<HouseResponse>> GetAvailableHouseAsync(string arrivalDate, string departureDate)
+        {
+            var response = await _apiClient.HttpClient.GetAsync($"houses/availableHouses?arrival={arrivalDate}&departure={departureDate}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("GET request failed");
+            }
+            var typesHouse = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ObservableCollection<HouseResponse>>(typesHouse);
+        }
     }
 }

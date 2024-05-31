@@ -26,15 +26,15 @@ namespace AltayChillPlace.RestClient
             var services = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<ObservableCollection<AdditionalServiceResponse>>(services);
         }
-        public async Task<ObservableCollection<AdditionalServiceResponse>> GetAllServicesType()
+        public async Task<ObservableCollection<ServiceTypeResponce>> GetServicesType()
         {
-            var response = await _apiClient.HttpClient.GetAsync("service/all");
+            var response = await _apiClient.HttpClient.GetAsync("service/types");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("GET request failed");
             }
             var services = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<ObservableCollection<AdditionalServiceResponse>>(services);
+            return JsonConvert.DeserializeObject<ObservableCollection<ServiceTypeResponce>>(services);
         }
     }
 }
