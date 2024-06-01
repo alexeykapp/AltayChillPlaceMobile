@@ -21,10 +21,11 @@
                             HeightRequest="30"
                             WidthRequest="30"/>
                         <StackLayout Orientation="Horizontal" Padding="3" IsVisible="{Binding IsVisibleHouseList}">
-                            <Image Source="logo.png" 
-                                WidthRequest="130" 
-                                HeightRequest="160" 
+                            <Frame HorizontalOptions="Start" VerticalOptions="Center" Padding="0" HeightRequest="130" CornerRadius="15">
+                                <Image Source="{Binding PhotoHouses}"
+                                       WidthRequest="145"
                                 Aspect="AspectFill"/>
+                            </Frame>
                             <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand" Margin="10,0,0,0" Spacing="0">
                                 <Label Text="{Binding HouseName}" 
                                FontSize="17" 

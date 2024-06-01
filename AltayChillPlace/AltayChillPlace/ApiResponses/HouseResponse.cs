@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace AltayChillPlace.ApiResponses
 {
@@ -22,5 +24,11 @@ namespace AltayChillPlace.ApiResponses
         public PhotoResponse? PhotoOfTheRoom { get; set; }
         [JsonProperty("fk_type_of_number")]
         public int? FkTypeOfNumber { get; set; }
+        [JsonProperty("additional_characteristic1")]
+        public string AdditionalCharacteristic { get; set; }
+        [JsonProperty("additional_characteristic2")]
+        public string AdditionalCharacteristic2 { get; set; }
+        public ImageSource PhotoHouses { get; set; }
+        public List<ImageSource> PhotosRoom { get; set; }
     }
 }

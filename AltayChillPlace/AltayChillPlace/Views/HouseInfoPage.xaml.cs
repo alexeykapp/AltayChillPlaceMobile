@@ -1,4 +1,5 @@
-﻿using AltayChillPlace.ViewModels;
+﻿using AltayChillPlace.ApiResponses;
+using AltayChillPlace.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +14,19 @@ namespace AltayChillPlace.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HouseInfoPage : ContentPage
     {
-        public HouseInfoPage(int id)
+        public HouseInfoPage(HouseResponse house)
         {
             InitializeComponent();
-            BindingContext = App.AppInitializer.ServiceProvider.GetService<HousesVM>();
-            InitIdHouse(id);
+            BindingContext = App.AppInitializer.ServiceProvider.GetService<HouseInfoPageVM>();
+            InitIdHouse(house);
         }
-        private void InitIdHouse(int id)
+        private void InitIdHouse(HouseResponse house)
         {
             if (BindingContext is HouseInfoPageVM viewModel)
             {
-                viewModel.IdHouse = id;
+                viewModel.ItemHouse = house;
             }
         }
+
     }
 }

@@ -57,5 +57,31 @@ namespace AltayChillPlace.Services
                 throw new Exception("Error in the request to get a list of types: " + ex.Message);
             }
         }
+        public async Task<HouseResponse> GetHouseByIdAsync(int idHouse)
+        {
+            try
+            {
+                HouseResponse house = await _housesDataClient.GetHouseById(idHouse);
+                return house;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<PhotosHouseResponse> GetPhotoHouseByIdAsync(int idHouse)
+        {
+            try
+            {
+                var house = await _housesDataClient.GetPhotoHouseById(idHouse);
+                return house;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
