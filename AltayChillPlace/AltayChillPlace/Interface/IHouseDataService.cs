@@ -12,5 +12,7 @@ namespace AltayChillPlace.Interface
         Task<ObservableCollection<HouseResponse>> GetAllHouseAsync();
         Task<ObservableCollection<HouseResponse>> GetAvailableHouseAsync(DateTime arrivalDate, DateTime departureDate);
         Task<ObservableCollection<TypeHouse>> GetTypeHouseAsync();
+        Task<HouseResponse> GetHouseByIdAsync(int idHouse);
+        Task<PhotosHouseResponse> GetPhotoHouseByIdAsync(int idHouse);
     }
 }

@@ -1,12 +1,114 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" x:DataType="viewmodels:HouseInfoPageVM"
              x:Class="AltayChillPlace.Views.HouseInfoPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
+            <Image Source="backgroundHouseInfo.png" Aspect="AspectFill"
+                   AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+        </AbsoluteLayout>
+        <!--<Image Source="logo2" Grid.Row="0"/>-->
+        <ScrollView>
+            <Frame BackgroundColor="#F7FBFF" Grid.Row="1" CornerRadius="50" Margin="10,0,10,20">
+
+                <StackLayout Spacing="5" HorizontalOptions="FillAndExpand">
+                    <StackLayout>
+                        <CarouselView ItemsSource="{Binding PhotosHouse}"
+                              HeightRequest="250"
+                              WidthRequest="270"
+                              IndicatorView="{x:Reference Name=indicator}"
+                                      Loop="False">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentView>
+                                        <Image Source="{Binding .}"
+                                   Aspect="AspectFit"/>
+                                    </ContentView>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
+                        <ActivityIndicator Color="Green" 
+                   VerticalOptions="Start"
+                   Margin="0,50,0,0"
+                   IsVisible="{Binding IsLoadingVisible}" 
+                   IsRunning="{Binding IsLoadingVisible}"/>
+                        <IndicatorView
+                        x:Name="indicator"
+                        IndicatorColor="#BBB794"
+                        SelectedIndicatorColor="#88A87F"
+                        HorizontalOptions="Center"
+                        IndicatorSize="10"
+                            HeightRequest="20"
+                            WidthRequest="100"
+                            BackgroundColor="Transparent"/>
+                    </StackLayout>
+
+                    <Label Text="{Binding ItemHouse.HouseName}"
+                           Margin="0,10,0,0"
+                       FontFamily="oldStandardItalic"
+                       FontSize="25"
+                       TextColor="#234314"
+                       HorizontalTextAlignment="Center"/>
+                    <Label Text="{Binding ItemHouse.RoomDescription}"
+                       FontFamily="oldStandardItalic"
+                       FontSize="15"
+                       TextColor="#234314"
+                       HorizontalTextAlignment="Start"/>
+                    <Frame HeightRequest="280" 
+                       WidthRequest="295" 
+                       CornerRadius="30" 
+                       HorizontalOptions="Center">
+                        <Grid>
+                            <StackLayout Orientation="Horizontal" Spacing="0" HorizontalOptions="Center">
+                                <Image Source="sofa.png" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="23" WidthRequest="25"/>
+                                <Label Text="Комплектация" 
+                                       TextColor="#576B57" 
+                                       FontFamily="MaMedium"
+                                       FontSize="18"
+                                       Margin="5,0,0,0"
+                                       VerticalTextAlignment="Start"
+                                       HorizontalTextAlignment="Center"/>
+                            </StackLayout>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="1" 
+                                             Margin="0,25,0,0">
+                                    <StackLayout Orientation="Horizontal" Spacing="0">
+                                        <Image Source="personGreen2" HeightRequest="30"/>
+                                        <Label Text="{Binding ItemHouse.MaxNumberOfPeople}" TextColor="#576B57" FontSize="23" VerticalTextAlignment="Center" Margin="5,0,0,0"/>
+                                        <Image Source="homeGreen2" HeightRequest="30" Margin="20,0,0,0"/>
+                                        <Label Text="{Binding ItemHouse.RoomSize}" TextColor="#576B57" FontSize="23" VerticalTextAlignment="Center"/>
+                                        <Label Text="м²" FontSize="23" TextColor="#576B57" Margin="2,0,0,0"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                                        <Image Source="shower"
+                                               HeightRequest="33"/>
+                                        <Label Text="{Binding ItemHouse.AdditionalCharacteristic}"
+                                               FontFamily="MaMedium"
+                                               TextColor="#576B57"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                                        <Image Source="kitchen"
+                                               HeightRequest="30"/>
+                                        <Label Text="{Binding ItemHouse.AdditionalCharacteristic2}"
+                                               FontFamily="MaMedium"
+                                               TextColor="#576B57"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </Grid>
 </ContentPage>

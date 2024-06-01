@@ -53,6 +53,8 @@ namespace AltayChillPlace.ViewModels
         private Color _currentHouseColor = Color.White;
         private Color _currentServicesColor = Color.Black;
 
+        private ICommand _itemTappedCommand;
+
         private CurrentPage _currentPage = CurrentPage.House;
         public HousesVM(HouseModel houseModel, ServiceModel serviceModel)
         {
@@ -63,7 +65,7 @@ namespace AltayChillPlace.ViewModels
             // Initialize commands
             HouseClickCommand = new DelegateCommand(ExecuteHouseClick);
             ServicesClickCommand = new DelegateCommand(ExecuteServicesClick);
-            ItemTappedHouseCommand = new Command<ItemTappedEventArgs>(OnItemTappedHouse);
+            //ItemTappedHouseCommand = new Command<ItemTappedEventArgs>(OnItemTappedHouse);
             SelectItemCommand = new Command<TypeHouse>(OnItemSelected);
             SelectItemServiceCommand = new Command<ServiceTypeResponce>(OnItemSelectedService);
             SearchAvailableCommand = new DelegateCommand(SearchAvailableHouse);
@@ -148,10 +150,9 @@ namespace AltayChillPlace.ViewModels
                 CurrentItems = serviceFiltering;
             }
         }
-        private async void OnItemTappedHouse(ItemTappedEventArgs e)
+        private async void ShowHouseInfo(HouseResponse house)
         {
-            var selectedItem = e.Item as HouseResponse;
-            await NavigationDispatcher.Instance.Navigation.PushAsync(new HouseInfoPage(selectedItem.IdHouse));
+            await NavigationDispatcher.Instance.Navigation.PushAsync(new HouseInfoPage(house));
         }
 
         private void ExecuteHouseClick()
@@ -179,7 +180,7 @@ namespace AltayChillPlace.ViewModels
 
         public async void UpdateProperties()
         {
-            await Task.Delay(100);
+            await Task.Delay(1);
             MinDepartureDate = DateTime.Now.AddDays(2);
             MaxDepartureDate = DateTime.Now.AddMonths(5);
             MinArrivalDate = DateTime.Now.AddDays(1);
@@ -240,11 +241,13 @@ namespace AltayChillPlace.ViewModels
         {
             get
             {
-                return new Command((item) =>
+                _itemTappedCommand = _itemTappedCommand ?? new Command((item) =>
                 {
-                    HouseResponse selectedItem = item as HouseResponse;
-
+                    var selectedItem = item as HouseResponse;
+                    ShowHouseInfo(selectedItem);
                 });
+
+                return _itemTappedCommand;
             }
         }
         private void SearchServives()
