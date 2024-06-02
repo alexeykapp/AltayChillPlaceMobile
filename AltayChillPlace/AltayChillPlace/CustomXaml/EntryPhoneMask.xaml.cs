@@ -19,10 +19,26 @@ namespace AltayChillPlace.CustomXaml
 
         public static readonly BindableProperty TextProperty =
             BindableProperty.Create(nameof(Text), typeof(string), typeof(EntryPhoneMask), default(string), BindingMode.TwoWay);
+
+        public static readonly BindableProperty BorderColorProperty =
+     BindableProperty.Create(nameof(ColorBorder), typeof(Color), typeof(EntryPhoneMask), Color.FromHex("#EFF5FB"));
+        public static readonly BindableProperty TextColorProperty =
+    BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(EntryPhoneMask), Color.White); // Color.Default - это значение по умолчанию
         public EntryPhoneMask()
         {
-            InitializeComponent(); 
+            InitializeComponent();
             entry.TextChanged += OnTextChanged;
+            this.BindingContext = this;
+        }
+        public Color TextColor
+        {
+            get => (Color)GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
+        }
+        public Color ColorBorder
+        {
+            get => (Color)GetValue(BorderColorProperty);
+            set => SetValue(BorderColorProperty, value);
         }
         public ImageSource IconSource
         {
@@ -43,13 +59,17 @@ namespace AltayChillPlace.CustomXaml
         protected override void OnPropertyChanged(string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
+
+            // Если свойство Text изменилось, обновляем текст в Entry
             if (propertyName == nameof(Text) && entry != null)
             {
-                if (propertyName == nameof(Text) && entry != null)
-                {
-                    if (entry.Text != Text)
-                        entry.Text = Text;
-                }
+                if (entry.Text != Text)
+                    entry.Text = Text;
+            }
+            // Если свойство TextColor изменилось, обновляем цвет текста в Entry
+            if (propertyName == nameof(TextColor) && entry != null)
+            {
+                entry.TextColor = TextColor;
             }
         }
     }

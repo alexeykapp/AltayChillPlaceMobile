@@ -2,8 +2,10 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Xamarin.Forms.MaskedEntry;assembly=Xamarin.Forms.MaskedEntry" xmlns:customxaml="clr-namespace:AltayChillPlace.CustomXaml" x:DataType="customxaml:EntryCustom"
-             x:Class="AltayChillPlace.CustomXaml.EntryCustom">
-    <Frame CornerRadius="20" BorderColor="#EFF5FB" Padding="0" HasShadow="False" BackgroundColor="Transparent" WidthRequest="300">
+             x:Class="AltayChillPlace.CustomXaml.EntryCustom"
+             x:Name="entryCustom">
+
+    <Frame CornerRadius="20" BorderColor="{Binding Source={x:Reference Name=entryCustom}, Path=ColorBorder}" Padding="0" HasShadow="False" BackgroundColor="Transparent" WidthRequest="300">
         <Grid VerticalOptions="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -15,7 +17,7 @@
                    Placeholder=""
                    VerticalOptions="Center"
                    BackgroundColor="Transparent"
-                   TextColor="White"
+                   TextColor="{Binding Source={x:Reference Name=entryCustom}, Path=TextColor}"
                    Text=""
                    IsPassword="{Binding IsPasswordEntry}"
                    Margin="10,0,0,0"/>
@@ -27,4 +29,5 @@
                    HeightRequest="40"/>
         </Grid>
     </Frame>
+
 </ContentView>

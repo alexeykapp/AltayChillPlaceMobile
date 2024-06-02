@@ -21,12 +21,26 @@ namespace AltayChillPlace.CustomXaml
             BindableProperty.Create(nameof(IsPasswordEntry), typeof(bool), typeof(EntryCustom), default(bool));
         public static readonly BindableProperty TextProperty =
             BindableProperty.Create(nameof(Text), typeof(string), typeof(EntryCustom), default(string), BindingMode.TwoWay);
+        public static readonly BindableProperty BorderColorProperty =
+     BindableProperty.Create(nameof(ColorBorder), typeof(Color), typeof(EntryCustom), Color.FromHex("#EFF5FB"));
+        public static readonly BindableProperty TextColorProperty =
+   BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(EntryCustom), Color.White);
         public EntryCustom()
         {
             InitializeComponent();
             entry.Text = Text;
             entry.IsPassword = IsPasswordEntry;
             entry.TextChanged += OnTextChanged;
+        }
+        public Color ColorBorder
+        {
+            get => (Color)GetValue(BorderColorProperty);
+            set => SetValue(BorderColorProperty, value);
+        }
+        public Color TextColor
+        {
+            get => (Color)GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
         }
         public ImageSource IconSource
         {

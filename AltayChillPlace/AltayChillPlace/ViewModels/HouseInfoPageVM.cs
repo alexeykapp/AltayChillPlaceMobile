@@ -8,6 +8,9 @@ using System.Text;
 using Xamarin.Forms;
 using AltayChillPlace.Interface;
 using System.Collections.ObjectModel;
+using Prism.Commands;
+using AltayChillPlace.NavigationFile;
+using AltayChillPlace.Views;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -25,6 +28,7 @@ namespace AltayChillPlace.ViewModels
         {
             _houseDataService = houseDataSevice;
             _listImageSources = new ObservableCollection<ListImageSource>();
+            ShowBookingPageCommand = new DelegateCommand(ShowBookingPage);
         }
 
         public HouseResponse ItemHouse
@@ -58,6 +62,7 @@ namespace AltayChillPlace.ViewModels
                 IsLoadingVisible = false;
             }
         }
+        public DelegateCommand ShowBookingPageCommand{ get; set; }
         public ObservableCollection<ImageSource> PhotosHouse
         {
             get => _photosHouse;
@@ -87,6 +92,10 @@ namespace AltayChillPlace.ViewModels
             {
                 ListImageSources.Add(new ListImageSource { ImageSource = photo });
             }
+        }
+        private async void ShowBookingPage()
+        {
+            await NavigationDispatcher.Instance.Navigation.PushAsync(new Booking(_house));
         }
     }
 }
