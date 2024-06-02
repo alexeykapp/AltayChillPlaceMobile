@@ -18,11 +18,13 @@ namespace AltayChillPlace.ViewModels
         private HouseResponse _houseResponse;
         private PhotosHouseResponse _photosHouseResponse;
         private ObservableCollection<ImageSource> _photosHouse;
+        private ObservableCollection<ListImageSource> _listImageSources;
 
         private bool _isLoadingVisible = true;
         public HouseInfoPageVM(IHouseDataService houseDataSevice)
         {
             _houseDataService = houseDataSevice;
+            _listImageSources = new ObservableCollection<ListImageSource>();
         }
 
         public HouseResponse ItemHouse
@@ -46,10 +48,13 @@ namespace AltayChillPlace.ViewModels
             {
                 var listPhoto = await ImageConverter.ConvertBase64StringToImages(_photosHouseResponse.Photos);
                 PhotosHouse = listPhoto;
+                FillList();
             }
             else
             {
-                PhotosHouse.Add(ImageSource.FromFile("@drawable/logo.png"));
+                var image = ImageSource.FromFile("logo.png");
+                var photo = new ListImageSource { ImageSource  = image };
+                ListImageSources.Add(photo);
                 IsLoadingVisible = false;
             }
         }
@@ -69,6 +74,19 @@ namespace AltayChillPlace.ViewModels
         {
             get => _isLoadingVisible;
             set => SetProperty(ref _isLoadingVisible, value);
+        }
+        public ObservableCollection<ListImageSource> ListImageSources
+        {
+            get => _listImageSources;
+            set => SetProperty(ref _listImageSources, value);
+        }
+        private void FillList()
+        {
+            ListImageSources = new ObservableCollection<ListImageSource>();
+            foreach (var photo in PhotosHouse)
+            {
+                ListImageSources.Add(new ListImageSource { ImageSource = photo });
+            }
         }
     }
 }

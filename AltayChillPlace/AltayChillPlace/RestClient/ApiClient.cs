@@ -16,7 +16,7 @@ namespace AltayChillPlace.RestClient
             _httpClient = new HttpClient
             {
                 BaseAddress = new Uri(baseAdress),
-                Timeout = TimeSpan.FromSeconds(30),
+                Timeout = TimeSpan.FromSeconds(120),
                 DefaultRequestHeaders = { Accept = { new MediaTypeWithQualityHeaderValue("application/json") } }
             };
         }

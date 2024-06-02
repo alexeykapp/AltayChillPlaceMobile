@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" x:DataType="viewmodels:HouseInfoPageVM"
+             xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" 
+             xmlns:help="clr-namespace:AltayChillPlace.Helpers" 
+             x:DataType="viewmodels:HouseInfoPageVM"
              x:Class="AltayChillPlace.Views.HouseInfoPage">
     <Grid>
         <Grid.RowDefinitions>
@@ -19,15 +21,15 @@
 
                 <StackLayout Spacing="5" HorizontalOptions="FillAndExpand">
                     <StackLayout>
-                        <CarouselView ItemsSource="{Binding PhotosHouse}"
+                        <CarouselView ItemsSource="{Binding ListImageSources}"
                               HeightRequest="250"
                               WidthRequest="270"
                               IndicatorView="{x:Reference Name=indicator}"
                                       Loop="False">
                             <CarouselView.ItemTemplate>
                                 <DataTemplate>
-                                    <ContentView>
-                                        <Image Source="{Binding .}"
+                                    <ContentView x:DataType="help:ListImageSource">
+                                        <Image Source="{Binding ImageSource}"
                                    Aspect="AspectFit"/>
                                     </ContentView>
                                 </DataTemplate>
@@ -51,19 +53,20 @@
 
                     <Label Text="{Binding ItemHouse.HouseName}"
                            Margin="0,10,0,0"
-                       FontFamily="oldStandardItalic"
-                       FontSize="25"
-                       TextColor="#234314"
-                       HorizontalTextAlignment="Center"/>
+                           FontAttributes="Bold"
+                           FontFamily="oldStandardItalic"
+                           FontSize="25"
+                           TextColor="#234314"
+                           HorizontalTextAlignment="Center"/>
                     <Label Text="{Binding ItemHouse.RoomDescription}"
-                       FontFamily="oldStandardItalic"
-                       FontSize="15"
-                       TextColor="#234314"
-                       HorizontalTextAlignment="Start"/>
-                    <Frame HeightRequest="280" 
-                       WidthRequest="295" 
-                       CornerRadius="30" 
-                       HorizontalOptions="Center">
+                           FontFamily="oldStandardItalic"
+                           FontSize="18"
+                           TextColor="#234314"
+                           HorizontalTextAlignment="Center"/>
+                    <Frame HeightRequest="370" 
+                           WidthRequest="295" 
+                           CornerRadius="30" 
+                           HorizontalOptions="Center">
                         <Grid>
                             <StackLayout Orientation="Horizontal" Spacing="0" HorizontalOptions="Center">
                                 <Image Source="sofa.png" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="23" WidthRequest="25"/>
@@ -105,6 +108,16 @@
                                     </StackLayout>
                                 </StackLayout>
                             </Grid>
+                            <Button VerticalOptions="End"
+                                    HorizontalOptions="Center"
+                                    WidthRequest="190"
+                                    Text="Забронировать"
+                                    TextTransform="None"
+                                    FontFamily="MaMedium"
+                                    CornerRadius="23"
+                                    FontSize="16"
+                                    TextColor="White"
+                                    BackgroundColor="#607D56"/>
                         </Grid>
                     </Frame>
                 </StackLayout>

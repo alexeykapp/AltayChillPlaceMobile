@@ -35,5 +35,9 @@
             <Setter Property="CornerRadius" Value="0" />
             <Setter Property="Margin" Value="0,10,0,0" />
         </Style>
+        <Style TargetType="NavigationPage">
+            <Setter Property="BarBackgroundColor" Value="#607D56"/>
+            <Setter Property="BarTextColor" Value="White"/>
+        </Style>
     </Application.Resources>
 </Application>
