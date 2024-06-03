@@ -1,26 +1,69 @@
 ﻿using AltayChillPlace.ApiResponses;
+using AltayChillPlace.Interface;
+using AltayChillPlace.Services;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Diagnostics.SymbolStore;
+using Xamarin.Essentials;
 
 namespace AltayChillPlace.ViewModels
 {
     public class BookingVM : BindableBase
     {
+        private readonly IBookingService _bookingServices;
+        private int _idUser;
         private string _firstName;
         private string _middleName;
         private string _lastName;
         private string _phoneNumber;
-        private DateTime _arrivalDate;
-        private DateTime _departureDate;
+        private int _numberOfPeople;
+        // date
+
+        private DateTime _arrivalDate = DateTime.Now.AddDays(1);
+        private DateTime _departureDate = DateTime.Now.AddDays(2);
+        private DateTime _minDepartureDate = DateTime.Now.AddDays(2);
+        private DateTime _maxDepartureDate = DateTime.Now.AddMonths(5);
+        private DateTime _minArrivalDate = DateTime.Now.AddDays(1);
+        private DateTime _maxArrivaDate = DateTime.Now.AddMonths(5);
         private HouseResponse house;
         private int _finalPrice;
-        public BookingVM()
-        {
+        private MessageService _messageService;
 
+        public BookingVM(IBookingService bookingService)
+        {
+            _bookingServices = bookingService;
+            BookingCommand = new DelegateCommand(RequestBooking);
         }
-        private void SettingValue()
+        public DelegateCommand BookingCommand { get; set; }
+
+        private async void RequestBooking()
+        {
+            var resultCheck = CheckIsEmpty();
+            if (resultCheck)
+            {
+                int[] arr = new int[1] { 111 };
+                var resultCreate = await _bookingServices.CreateNewBooking(1, house.IdHouse, _numberOfPeople, _arrivalDate, _departureDate);
+                if (resultCreate == null)
+                {
+                    _messageService.ShowPopup("Ошибка!");
+                }
+                else
+                {
+                    _messageService.ShowPopup("Успешно!");
+                }
+            }
+            else
+            {
+                _messageService.ShowPopup("Проверьте все поля ввода");
+            }
+        }
+
+        private async void SettingValue()
         {
             FinalPrice = House.PricePerDay;
+            //var id = await SecureStorage.GetAsync("IdUser");
+            //_idUser = int.Parse(id);
         }
         public string FirstName
         {
@@ -54,6 +97,31 @@ namespace AltayChillPlace.ViewModels
             get => _departureDate;
             set => SetProperty(ref _departureDate, value);
         }
+        public DateTime MinDepartureDate
+        {
+            get => _minDepartureDate;
+            set => SetProperty(ref _minDepartureDate, value);
+        }
+        public DateTime MaxDepartureDate
+        {
+            get => _maxDepartureDate;
+            set => SetProperty(ref _maxDepartureDate, value);
+        }
+        public DateTime MinArrivalDate
+        {
+            get => _minArrivalDate;
+            set => SetProperty(ref _minArrivalDate, value);
+        }
+        public DateTime MaxArrivalDate
+        {
+            get => _maxArrivaDate;
+            set => SetProperty(ref _maxArrivaDate, value);
+        }
+        public int NumberOfPeople
+        {
+            get => _numberOfPeople;
+            set => SetProperty(ref _numberOfPeople, value);
+        }
         public HouseResponse House
         {
             get => house;
@@ -67,6 +135,38 @@ namespace AltayChillPlace.ViewModels
         {
             get => _finalPrice;
             set => SetProperty(ref _finalPrice, value);
+        }
+        private bool CheckIsEmpty()
+        {
+            if (string.IsNullOrEmpty(FirstName))
+            {
+                _messageService.ShowPopup($"Пустое поле 'Имя'");
+                return false;
+            }
+            else if (string.IsNullOrEmpty(MiddleName))
+            {
+                _messageService.ShowPopup($"Пустое поле 'Отчество'");
+                return false;
+            }
+            else if (string.IsNullOrEmpty(LastName))
+            {
+                _messageService.ShowPopup($"Пустое поле 'Фамилия'");
+                return false;
+            }
+            else if (!string.IsNullOrEmpty(PhoneNumber))
+            {
+                _messageService.ShowPopup($"Пустое поле 'Телефон'");
+                return false;
+            }
+            return true;
+        }
+        private void EntryEmpty()
+        {
+            FirstName = string.Empty;
+            MiddleName = string.Empty;
+            LastName = string.Empty;
+            PhoneNumber = string.Empty;
+            NumberOfPeople = 0;
         }
     }
 }

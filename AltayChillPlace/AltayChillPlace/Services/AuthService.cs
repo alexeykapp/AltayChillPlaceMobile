@@ -1,10 +1,12 @@
 ﻿using System;
+using AltayChillPlace.Static;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using AltayChillPlace.Interface;
 using AltayChillPlace.RestClient;
+using AltayChillPlace.ApiResponses;
 
 namespace AltayChillPlace.Services
 {
@@ -44,5 +46,6 @@ namespace AltayChillPlace.Services
         {
             return await _tokenService.GetAccessTokenAsync();
         }
+        
     }
 }

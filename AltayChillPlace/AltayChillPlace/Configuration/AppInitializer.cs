@@ -34,6 +34,7 @@ namespace AltayChillPlace.Configuration
             services.AddSingleton<IDataTransferService, DataTransferService>();
             services.AddSingleton<IHouseDataService, HouseDataSevice>();
             services.AddSingleton<IServicesService, ServiceServices>();
+            services.AddSingleton<IBookingService, BookingServices>();
             services.AddSingleton<ApiClient>(provider => apiClient);
         }
 
@@ -53,6 +54,7 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<RegistrationClient>(provider => new RegistrationClient(provider.GetService<ApiClient>()));
             services.AddTransient<HousesDataClient>(provider => new HousesDataClient(provider.GetService<ApiClient>()));
             services.AddTransient<ServiceClient>(provider => new ServiceClient(provider.GetService<ApiClient>()));
+            services.AddTransient<BookingClient>(provider => new BookingClient(provider.GetService<ApiClient>()));
             services.AddTransient<TokenService>();
         }
 

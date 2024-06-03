@@ -182,15 +182,17 @@
             <Button
                 Text="Обновить"
                 IsVisible="{Binding IsVisibleButtonUpdate}"/>
-            <ListView Grid.Row="2" x:Name="MyListView" ItemsSource="{Binding CurrentItems}" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="OnItemTapped">
-                <ListView.Header>
-                    <custom:HeaderContentView BindingContext="{Binding }"/>
-                </ListView.Header>
-                <ListView.ItemTemplate>
-                    <helpers:MyDataTemplateSelector Template1="{StaticResource HousesData}"
+            <RefreshView Grid.Row="2" IsRefreshing="{Binding IsRefreshing}" Command="{Binding IsRefreshingCommand}">
+                <ListView Grid.Row="2" x:Name="MyListView" ItemsSource="{Binding CurrentItems}" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="OnItemTapped">
+                    <ListView.Header>
+                        <custom:HeaderContentView BindingContext="{Binding }"/>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <helpers:MyDataTemplateSelector Template1="{StaticResource HousesData}"
                                                     Template2="{StaticResource ServicesData}"/>
-                </ListView.ItemTemplate>
-            </ListView>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </RefreshView>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

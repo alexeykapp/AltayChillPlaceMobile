@@ -18,6 +18,7 @@ namespace AltayChillPlace.Services
             {
                 await SecureStorage.SetAsync("AccessToken", tokenResponse.AccessToken);
                 await SecureStorage.SetAsync("RefreshToken", tokenResponse.RefreshToken);
+                await SecureStorage.SetAsync("IdUser", tokenResponse.User.Id.ToString());
             }
             catch (Exception ex)
             {
@@ -51,15 +52,14 @@ namespace AltayChillPlace.Services
                     return false;
                 }
 
-                // Разобьем токен на составляющие части
                 var parts = token.Split('.');
-                if (parts.Length != 3) // JWT должен состоять из 3 частей
+                if (parts.Length != 3) 
                 {
                     return false;
                 }
 
                 var payload = ConvertFromBase64UrlToBase64String(parts[1]);
-                // Декодируем полезную нагрузку
+
                 var payloadJson = Encoding.UTF8.GetString(Convert.FromBase64String(payload));
                 var payloadData = JsonConvert.DeserializeObject<JwtPayload>(payloadJson);
 

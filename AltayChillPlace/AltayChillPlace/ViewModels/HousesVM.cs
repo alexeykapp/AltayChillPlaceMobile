@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 using System.Collections.Generic;
 using AltayChillPlace.NavigationFile;
 using AltayChillPlace.Views;
+using System.Runtime.CompilerServices;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -42,6 +43,7 @@ namespace AltayChillPlace.ViewModels
         private bool _isVisibleButtonUpdate;
         private bool _isVisibleHeaderHouse = true;
         private bool _isVisibleHeaderService = false;
+        private bool _isRefreshing = false;
         // Date
         private DateTime _arrivalDate = DateTime.Now.AddDays(1);
         private DateTime _departureDate = DateTime.Now.AddDays(2);
@@ -71,7 +73,7 @@ namespace AltayChillPlace.ViewModels
             SearchAvailableCommand = new DelegateCommand(SearchAvailableHouse);
             SearchSevicesCommand = new DelegateCommand(SearchServives);
             ShowMainMenuCommand = new DelegateCommand(ShowMainMenu);
-
+            IsRefreshingCommand = new DelegateCommand(RefreshingAsync);
             // Load data asynchronously
             LoadDataAsync();
         }
@@ -226,6 +228,12 @@ namespace AltayChillPlace.ViewModels
             {
                 IsVisibleActivityIndicator = false;
             }
+            IsRefreshing = false;
+        }
+        private void RefreshingAsync()
+        {
+            IsRefreshing = true;
+            LoadDataAsync();
         }
 
         public DelegateCommand HouseClickCommand { get; private set; }
@@ -233,7 +241,8 @@ namespace AltayChillPlace.ViewModels
         public DelegateCommand SortingByDataCommand { get; private set; }
         public DelegateCommand SearchAvailableCommand { get; private set; }
         public DelegateCommand SearchSevicesCommand { get; private set; }
-        public DelegateCommand ShowMainMenuCommand {  get; private set; }
+        public DelegateCommand ShowMainMenuCommand { get; private set; }
+        public DelegateCommand IsRefreshingCommand { get; set; }
         public ICommand ItemTappedHouseCommand { get; private set; }
         public ICommand SelectItemCommand { get; private set; }
         public ICommand SelectItemServiceCommand { get; private set; }
@@ -348,7 +357,11 @@ namespace AltayChillPlace.ViewModels
             get => _currentItems;
             private set => SetProperty(ref _currentItems, value);
         }
-
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
         public bool IsVisibleHeader
         {
             get => _isVisibleHeader;
