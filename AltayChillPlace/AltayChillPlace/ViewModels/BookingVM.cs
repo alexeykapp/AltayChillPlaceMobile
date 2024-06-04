@@ -33,6 +33,7 @@ namespace AltayChillPlace.ViewModels
         public BookingVM(IBookingService bookingService)
         {
             _bookingServices = bookingService;
+            _messageService = new MessageService();
             BookingCommand = new DelegateCommand(RequestBooking);
         }
         public DelegateCommand BookingCommand { get; set; }
@@ -51,6 +52,7 @@ namespace AltayChillPlace.ViewModels
                 else
                 {
                     _messageService.ShowPopup("Успешно!");
+                    EntryEmpty();
                 }
             }
             else

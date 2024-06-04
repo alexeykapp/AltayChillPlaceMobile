@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AltayChillPlace.HttpClientMiddleware;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -11,14 +12,20 @@ namespace AltayChillPlace.RestClient
         private readonly HttpClient _httpClient;
         public HttpClient HttpClient => _httpClient;
 
-        public ApiClient(string baseAdress)
+        public ApiClient(string baseAddress)
         {
-            _httpClient = new HttpClient
+            var handler = new HttpClientHandler();
+            var refreshTokenHandler = new RefreshTokenHandler(handler, baseAddress);
+
+            _httpClient = new HttpClient(refreshTokenHandler)
             {
-                BaseAddress = new Uri(baseAdress),
-                Timeout = TimeSpan.FromSeconds(120),
-                DefaultRequestHeaders = { Accept = { new MediaTypeWithQualityHeaderValue("application/json") } }
+                BaseAddress = new Uri(baseAddress),
+                Timeout = TimeSpan.FromSeconds(120)
             };
+
+            refreshTokenHandler.SetHttpClient(_httpClient);
+
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
     }
 }

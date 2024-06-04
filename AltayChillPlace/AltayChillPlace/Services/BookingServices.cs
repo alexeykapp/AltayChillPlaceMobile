@@ -25,8 +25,8 @@ namespace AltayChillPlace.Services
                     id_client = idClient,
                     id_house = idHouse,
                     numberOfPeople = numberOfPeople,
-                    arrivalDate = arrivalDate.ToString(),
-                    departureDate = departureDate.ToString()
+                    arrivalDate = arrivalDate.ToString("yyyy-MM-dd"),
+                    departureDate = departureDate.ToString("yyyy-MM-dd")
                 },
                 services = new int[1] { 111 }
             };
