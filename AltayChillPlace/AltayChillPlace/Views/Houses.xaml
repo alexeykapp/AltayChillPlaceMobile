@@ -42,37 +42,37 @@
                                        HeightRequest="25"
                                        WidthRequest="20"/>
                                     <Label 
-                                    Text="{Binding MaxNumberOfPeople}"
-                                    VerticalOptions="Center"
-                                    FontFamily="MaMedium"
-                                    FontSize="15"/>
+                                        Text="{Binding MaxNumberOfPeople}"
+                                        VerticalOptions="Center"
+                                        FontFamily="MaMedium"
+                                        FontSize="15"/>
                                     <Image Source="sizeHomeGreen.png"
-                                       HeightRequest="25"
-                                       Margin="10,0,0,0"
-                                       WidthRequest="25"/>
+                                           HeightRequest="25"
+                                           Margin="10,0,0,0"
+                                           WidthRequest="25"/>
                                     <Label Text="{Binding RoomSize}"
-                                       FontFamily="MaMedium"
-                                       VerticalOptions="Center"/>
+                                           FontFamily="MaMedium"
+                                           VerticalOptions="Center"/>
                                     <Image Source="cube.png"
-                                       VerticalOptions="StartAndExpand"
-                                       HeightRequest="22"
-                                       WidthRequest="22"/>
+                                           VerticalOptions="StartAndExpand"
+                                           HeightRequest="22"
+                                           WidthRequest="22"/>
                                     <Image Source="priceGreen.png"
-                                       HeightRequest="26"
-                                       WidthRequest="21"
-                                       Margin="15,0,0,0"/>
+                                           HeightRequest="26"
+                                           WidthRequest="21"
+                                           Margin="15,0,0,0"/>
                                     <Label
-                                    Text="{Binding PricePerDay}"
-                                    VerticalOptions="Center"
-                                    FontFamily="MaMedium"
-                                    TextColor="#A45723"/>
+                                        Text="{Binding PricePerDay}"
+                                        VerticalOptions="Center"
+                                        FontFamily="MaMedium"
+                                        TextColor="#A45723"/>
                                 </StackLayout>
                                 <Label Text="Цена за сутки*"
-                                   FontSize="10"
-                                   HorizontalOptions="EndAndExpand"
-                                   TextColor="#576B57"
-                                   FontFamily="MaMedium"
-                                   Margin="0,0,20,0"/>
+                                       FontSize="10"
+                                       HorizontalOptions="EndAndExpand"
+                                       TextColor="#576B57"
+                                       FontFamily="MaMedium"
+                                       Margin="0,0,20,0"/>
                             </StackLayout>
                         </StackLayout>
                     </Grid>

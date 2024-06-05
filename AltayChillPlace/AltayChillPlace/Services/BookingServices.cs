@@ -37,7 +37,31 @@ namespace AltayChillPlace.Services
             }
             catch (Exception)
             {
-                throw new Exception("Error post create new booking");
+                return null;
+            }
+        }
+        public async Task<BookingResponce> CreateNewBooking(int idClient, int idHouse, int numberOfPeople, DateTime arrivalDate, DateTime departureDate, int[] servicesBooking)
+        {
+            RootBoking root = new RootBoking
+            {
+                booking = new RestClientModel.BookingModel
+                {
+                    id_client = idClient,
+                    id_house = idHouse,
+                    numberOfPeople = numberOfPeople,
+                    arrivalDate = arrivalDate.ToString("yyyy-MM-dd"),
+                    departureDate = departureDate.ToString("yyyy-MM-dd")
+                },
+                services = servicesBooking
+            };
+            try
+            {
+                var result = await _bookingClient.CreateNewBooking(root);
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
     }

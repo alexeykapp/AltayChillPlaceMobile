@@ -16,15 +16,17 @@
                        HorizontalOptions="Fill"
                        VerticalOptions="Fill"
                        Grid.Row="0" />
-                <StackLayout Grid.Row="0" Margin="100,390,100,0">
+                <StackLayout Grid.Row="0" Margin="100,410,100,0">
                     <StackLayout WidthRequest="100">
                         <Label Text="Дата заезда" 
-                               TextColor="#999494" 
+                               TextColor="#999494"
+                               FontFamily="MaMedium"
                                FontSize="18"/>
-                        <custom:CustomDatePicker FontSize="18" 
-                                    Date="{Binding ArrivalDate}"
-                                    MinimumDate="{Binding MinArrivalDate }"
-                                    MaximumDate="{Binding MaxArrivalDate}">
+                        <custom:CustomDatePicker FontSize="20"
+                                                 FontFamily="MaMedium"
+                                                 Date="{Binding ArrivalDate}"
+                                                 MinimumDate="{Binding MinArrivalDate }"
+                                                 MaximumDate="{Binding MaxArrivalDate}">
                             <DatePicker.Behaviors>
                                 <help:DatePickerBehavior Command="{Binding DateChangedEventArgs}"/>
                             </DatePicker.Behaviors>
@@ -32,9 +34,11 @@
                     </StackLayout>
                     <StackLayout>
                         <Label Text="Дата выезда"
+                               FontFamily="MaMedium"
                                TextColor="#999494" 
                                FontSize="20"/>
-                        <custom:CustomDatePicker FontSize="18" 
+                        <custom:CustomDatePicker FontSize="20" 
+                                                 FontFamily="MaMedium"
                                     Date="{Binding DepartureDate}" 
                                     MinimumDate="{Binding MinDepartureDate}" 
                                     MaximumDate="{Binding MaxDepartureDate}">
@@ -43,7 +47,9 @@
                             </DatePicker.Behaviors>
                         </custom:CustomDatePicker>
                         <Button Text="Посмотреть варианты" 
-                                FontSize="14" 
+                                FontSize="16"
+                                TextTransform="None"
+                                FontFamily="MaMedium"
                                 BackgroundColor="Transparent"
                                 BorderColor="#799D6D"
                                 BorderWidth="2"
@@ -51,20 +57,22 @@
                     </StackLayout>
                     <Button
                         Text="Подробнее о номерах"
-                        FontSize="14" 
+                        FontSize="15" 
+                        FontFamily="MaMedium"
                         BackgroundColor="Transparent"
                         BorderColor="#E0B499"
                         BorderWidth="2"
                         TextColor="#1C3E0D"
-                        Margin="0,780,0,0"/>
+                        Margin="0,730,0,0"/>
                     <Button
                         Text="Подробнее в блоге"
-                        FontSize="14" 
+                        FontSize="15"
+                        FontFamily="MaMedium"
                         BackgroundColor="Transparent"
                         BorderColor="#E0B499"
                         BorderWidth="2"
                         TextColor="#1C3E0D"
-                        Margin="0,700,0,0"/>
+                        Margin="0,720,0,0"/>
                 </StackLayout>
             </Grid>
         </ScrollView>

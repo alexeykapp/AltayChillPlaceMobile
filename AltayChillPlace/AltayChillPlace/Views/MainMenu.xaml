@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AltayChillPlace.Views.MainMenu"
+             xmlns:viewmodel ="clr-namespace:AltayChillPlace.ViewModels"
+             x:DataType="viewmodel:MainMenuVM"
              >
     <ContentPage.Content>
         <Grid>
@@ -23,7 +25,8 @@
                         Text="Каталог номеров"
                         TextTransform="None"
                         FontFamily="MaRegular"
-                        FontSize="17"/>
+                        FontSize="17"
+                        Command="{Binding OpenHousesCommand}"/>
                 <Button Style="{StaticResource ButtonCustomStyle}"
                         WidthRequest="270"
                         HeightRequest="40"
@@ -31,6 +34,14 @@
                         TextTransform="None"
                         FontFamily="MaRegular"
                         FontSize="17"/>
+                <Button Style="{StaticResource ButtonCustomStyle}"
+                        WidthRequest="270"
+                        HeightRequest="40"
+                        Text="История бронирования"
+                        TextTransform="None"
+                        FontFamily="MaRegular"
+                        FontSize="17"
+                        Command="{Binding OpenHistoryCommand}"/>
                 <Button Style="{StaticResource ButtonCustomStyle}"
                         WidthRequest="270"
                         HeightRequest="40"
@@ -51,7 +62,8 @@
                         Text="О нас"
                         TextTransform="None"
                         FontFamily="MaRegular"
-                        FontSize="17"/>
+                        FontSize="17"
+                        Command="{Binding OpenAboutCommand}"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

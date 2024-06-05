@@ -15,20 +15,17 @@ namespace AltayChillPlace.CustomXaml
     {
         public static readonly BindableProperty IconSourceProperty =
             BindableProperty.Create(nameof(IconSource), typeof(ImageSource), typeof(EntryPhoneMask), default(ImageSource));
-
-
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(EntryPhoneMask), default(string), BindingMode.TwoWay);
-
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(EntryPhoneMask), "", BindingMode.TwoWay);
         public static readonly BindableProperty BorderColorProperty =
-     BindableProperty.Create(nameof(ColorBorder), typeof(Color), typeof(EntryPhoneMask), Color.FromHex("#EFF5FB"));
+            BindableProperty.Create(nameof(ColorBorder), typeof(Color), typeof(EntryPhoneMask), Color.FromHex("#EFF5FB"));
         public static readonly BindableProperty TextColorProperty =
-    BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(EntryPhoneMask), Color.White); // Color.Default - это значение по умолчанию
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(EntryPhoneMask), Color.White);
         public EntryPhoneMask()
         {
             InitializeComponent();
             entry.TextChanged += OnTextChanged;
-            this.BindingContext = this;
+            //this.BindingContext = this;
         }
         public Color TextColor
         {

@@ -14,9 +14,9 @@ namespace AltayChillPlace.Models
         {
             _registrationService = registrationService;
         }
-        public async Task<bool> RegistrationAsyncTask(string phone, string email, string password, string fullName, string dateOfBirth)
+        public async Task<bool> RegistrationAsyncTask(string phone, string email, string password, string firstName, string middleName, string lastName, string dateOfBirth)
         {
-            var resulReg = await _registrationService.RegistrationAsync(phone, email, password, fullName, dateOfBirth);
+            var resulReg = await _registrationService.RegistrationAsync(phone, email, password, firstName, middleName, lastName, dateOfBirth);
             if (!resulReg)
             {
                 return false;

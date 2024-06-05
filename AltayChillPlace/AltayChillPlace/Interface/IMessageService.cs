@@ -6,6 +6,6 @@ namespace AltayChillPlace.Interface
 {
     public interface IMessageService
     {
-        void ShowPopup(string message);
+        void ShowPopup(string title,string message);
     }
 }

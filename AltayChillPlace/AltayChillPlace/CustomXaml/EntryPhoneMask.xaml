@@ -2,7 +2,8 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Xamarin.Forms.MaskedEntry;assembly=Xamarin.Forms.MaskedEntry"
-             xmlns:custom ="clr-namespace:AltayChillPlace.CustomXaml;assembly=AltayChillPlace" xmlns:customxaml="clr-namespace:AltayChillPlace.CustomXaml" x:DataType="customxaml:EntryPhoneMask"
+             xmlns:custom ="clr-namespace:AltayChillPlace.CustomXaml;assembly=AltayChillPlace" 
+             xmlns:customxaml="clr-namespace:AltayChillPlace.CustomXaml" x:DataType="customxaml:EntryPhoneMask"
              x:Class="AltayChillPlace.CustomXaml.EntryPhoneMask" x:Name="entryPhoneMask">
     <Frame CornerRadius="20" BorderColor="{Binding Source={x:Reference Name=entryPhoneMask}, Path=ColorBorder}" Padding="0" HasShadow="False" BackgroundColor="Transparent" WidthRequest="300">
         <Grid VerticalOptions="Center">
@@ -17,7 +18,6 @@
                    VerticalOptions="Center"
                    BackgroundColor="Transparent"
                    TextColor="{Binding Source={x:Reference Name=entryPhoneMask}, Path=TextColor}"
-                   Text=""
                    Mask="+7(XXX)XXX-XX-XX"
                    Keyboard="Telephone"
                    Margin="10,0,0,0">

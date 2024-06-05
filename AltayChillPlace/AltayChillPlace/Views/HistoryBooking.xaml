@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:AltayChillPlace.ViewModels"
+             xmlns:history="clr-namespace:AltayChillPlace.ApiResponses.History"
+             xmlns:helpers="clr-namespace:AltayChillPlace.Helpers"
+             x:DataType="viewmodel:HistoryBookingVM"
+             x:Class="AltayChillPlace.Views.HistoryBooking">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:DateConverter x:Key="DateConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="170"/>
+                <RowDefinition Height="28"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header with background -->
+           
+            <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
+                <Image Source="background.png" Aspect="AspectFill"
+                       AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+            </AbsoluteLayout>
+            <!-- CollectionView in row 1 -->
+            <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
+            <Label Text="История бронирования" FontFamily="MaMedium" TextColor="#234314" FontSize="22" Grid.Row="1" 
+                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            <CollectionView ItemsSource="{Binding BookingHistories}"  
+                            SelectionMode="Multiple" Grid.Row="2"
+                            Margin="15,0,15,0"
+                            BackgroundColor="Transparent">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="history:BookingHistory">
+                        <Frame Padding="10" Margin="10" BackgroundColor="White" CornerRadius="10">
+                            <Grid>
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding HouseName}" FontFamily="MaRegular" TextColor="#234314" FontSize="18"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Статус заявки: " FontFamily="MaMedium" TextColor="#234314"/>
+                                        <Label Text="{Binding BookingStatus}" FontFamily="MaMedium" TextColor="#234314"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label FontFamily="MaMedium" Text="Дата заезда" TextColor="#234314"/>
+                                        <Label Text="{Binding ArrivalDate, Converter={StaticResource DateConverter}}" FontFamily="MaMedium"  TextColor="#234314"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label FontFamily="MaMedium" Text="Дата выезда" TextColor="#234314"/>
+                                        <Label Text="{Binding DepartureDate, Converter={StaticResource DateConverter}}" FontFamily="MaMedium"  TextColor="#234314"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label FontFamily="MaMedium" Text="Количество человек" TextColor="#234314"/>
+                                        <Label Text="{Binding NumberOfPersons}" FontFamily="MaMedium"  TextColor="#234314"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Итоговая сумма:" FontFamily="MaMedium" TextColor="#234314"/>
+                                        <Label Text="{Binding TotalSum}" FontFamily="MaMedium" TextColor="#A45723"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

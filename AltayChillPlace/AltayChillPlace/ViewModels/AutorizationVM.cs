@@ -57,11 +57,11 @@ namespace AltayChillPlace.ViewModels
             if (success)
             {
                 //_messageService.ShowPopup("Успешно");
-                await NavigationDispatcher.Instance.Navigation.PushAsync(new Lenta());
+                await NavigationDispatcher.Instance.PushAndRemovePreviousAsync(new Lenta());
             }
             else
             {
-                _messageService.ShowPopup("Ошибка");
+                _messageService.ShowPopup("Ошибка", "Повторите попытку");
             }
         }
 

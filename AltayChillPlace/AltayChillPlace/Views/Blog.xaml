@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:AltayChillPlace.ViewModels"
+             xmlns:response="clr-namespace:AltayChillPlace.ApiResponses"
+             x:DataType="viewmodel:BlogVM"
+             x:Class="AltayChillPlace.Views.Blog">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="170"/>
+                <RowDefinition Height="28"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header with background -->
+
+            <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
+                <Image Source="background.png" Aspect="AspectFill"
+                 AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+            </AbsoluteLayout>
+            <!-- CollectionView in row 1 -->
+            <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
+            <Label Text="История бронирования" FontFamily="MaMedium" TextColor="#234314" FontSize="22" Grid.Row="1"/>
+            <CollectionView ItemsSource="{Binding Posts}"  
+                SelectionMode="Multiple" Grid.Row="2"
+                Margin="15,0,15,0"
+                BackgroundColor="Transparent">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="response:BlogPostsResponce">
+                        <Frame Padding="10" 
+                               Margin="10" 
+                               BackgroundColor="White" 
+                               CornerRadius="10">
+                            <Label Text="{Binding Title}" 
+                                   FontFamily="MaMedium" 
+                                   TextColor="#234314"/>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

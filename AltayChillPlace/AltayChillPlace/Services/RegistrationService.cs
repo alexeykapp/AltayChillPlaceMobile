@@ -18,7 +18,7 @@ namespace AltayChillPlace.Services
             _tokenService = tokenService;
         }
 
-        public async Task<bool> RegistrationAsync(string phone, string email, string password, string fullName, string dateOfBirth)
+        public async Task<bool> RegistrationAsync(string phone, string email, string password, string firstName, string middleName, string lastName, string dateOfBirth)
         {
             var content = new FormUrlEncodedContent(new[]
             {
@@ -26,7 +26,9 @@ namespace AltayChillPlace.Services
                 new KeyValuePair<string, string>("password", password),
                 new KeyValuePair<string, string>("email", email),
                 new KeyValuePair<string, string>("dateOfBirth", dateOfBirth),
-                new KeyValuePair<string, string>("fullName", fullName),
+                new KeyValuePair<string, string>("last_name", lastName ),
+                new KeyValuePair<string, string>("middle_name", middleName),
+                new KeyValuePair<string, string>("first_name", firstName),
                 new KeyValuePair<string, string>("device", "1")
             });
             try

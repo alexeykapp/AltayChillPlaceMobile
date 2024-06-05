@@ -47,17 +47,17 @@ namespace AltayChillPlace.ViewModels
                 var resultCreate = await _bookingServices.CreateNewBooking(1, house.IdHouse, _numberOfPeople, _arrivalDate, _departureDate);
                 if (resultCreate == null)
                 {
-                    _messageService.ShowPopup("Ошибка!");
+                    _messageService.ShowPopup("Ошибка","Повторите попытку");
                 }
                 else
                 {
-                    _messageService.ShowPopup("Успешно!");
+                    _messageService.ShowPopup("Успешно!","Ожидайте звонка администратора");
                     EntryEmpty();
                 }
             }
             else
             {
-                _messageService.ShowPopup("Проверьте все поля ввода");
+                _messageService.ShowPopup("Ошибка","Проверьте все поля ввода");
             }
         }
 
@@ -142,22 +142,22 @@ namespace AltayChillPlace.ViewModels
         {
             if (string.IsNullOrEmpty(FirstName))
             {
-                _messageService.ShowPopup($"Пустое поле 'Имя'");
+                _messageService.ShowPopup("Ошибка",$"Пустое поле 'Имя'");
                 return false;
             }
             else if (string.IsNullOrEmpty(MiddleName))
             {
-                _messageService.ShowPopup($"Пустое поле 'Отчество'");
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Отчество'");
                 return false;
             }
             else if (string.IsNullOrEmpty(LastName))
             {
-                _messageService.ShowPopup($"Пустое поле 'Фамилия'");
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Фамилия'");
                 return false;
             }
             else if (!string.IsNullOrEmpty(PhoneNumber))
             {
-                _messageService.ShowPopup($"Пустое поле 'Телефон'");
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Телефон'");
                 return false;
             }
             return true;

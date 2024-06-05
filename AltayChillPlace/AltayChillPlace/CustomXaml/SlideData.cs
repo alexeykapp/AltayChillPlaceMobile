@@ -12,5 +12,6 @@ namespace AltayChillPlace.CustomXaml
         public string Description { get; set; }
         public bool IsVisibleButton { get; set; } = false;
         public bool IsVisibleButtonSkip { get; set; } = true;
+        public Command SkipCommand { get; set; }
     }
 }

@@ -35,6 +35,8 @@ namespace AltayChillPlace.Configuration
             services.AddSingleton<IHouseDataService, HouseDataSevice>();
             services.AddSingleton<IServicesService, ServiceServices>();
             services.AddSingleton<IBookingService, BookingServices>();
+            services.AddSingleton<IHistoryService, HistoryService>();
+            services.AddSingleton<IBlogServices,  BlogServices>();
             services.AddSingleton<ApiClient>(provider => apiClient);
         }
 
@@ -49,12 +51,17 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<CarouselVM>();
             services.AddTransient<HousesVM>();
             services.AddTransient<BookingVM>();
+            services.AddTransient<BlogVM>();
+            services.AddTransient<MainMenuVM>();
+            services.AddTransient<HistoryBookingVM>();
             services.AddTransient<ServiceModel>();
             services.AddTransient<AuthClient>(provider => new AuthClient(provider.GetService<ApiClient>()));
             services.AddTransient<RegistrationClient>(provider => new RegistrationClient(provider.GetService<ApiClient>()));
             services.AddTransient<HousesDataClient>(provider => new HousesDataClient(provider.GetService<ApiClient>()));
             services.AddTransient<ServiceClient>(provider => new ServiceClient(provider.GetService<ApiClient>()));
             services.AddTransient<BookingClient>(provider => new BookingClient(provider.GetService<ApiClient>()));
+            services.AddTransient<HistoryClient>(provider => new HistoryClient(provider.GetService<ApiClient>()));
+            services.AddTransient<BlogClient>(provider => new BlogClient(provider.GetService<ApiClient>()));
             services.AddTransient<TokenService>();
         }
 

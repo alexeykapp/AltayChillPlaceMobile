@@ -7,7 +7,7 @@
             <Setter Property="BackgroundColor" Value="#607D56"/>
             <Setter Property="TextColor" Value="#C3C7C6"/>
             <Setter Property="CornerRadius" Value="20"/>
-            <Setter Property="FontFamily" Value="poiretone"/>
+            <Setter Property="FontFamily" Value="MaMedium"/>
         </Style>
 
         <ResourceDictionary>

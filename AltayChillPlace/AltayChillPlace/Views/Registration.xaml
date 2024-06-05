@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:custom ="clr-namespace:AltayChillPlace.CustomXaml" xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" x:DataType="viewmodels:RegistrationVM"
+             xmlns:custom ="clr-namespace:AltayChillPlace.CustomXaml" 
+             xmlns:viewmodels="clr-namespace:AltayChillPlace.ViewModels" 
+             x:DataType="viewmodels:RegistrationVM"
              x:Class="AltayChillPlace.Views.Registration">
 
     <ScrollView Background="RegistrationBackground.png">
@@ -26,7 +28,7 @@
                         <Label Text="Дата рождения" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
                         <custom:EntryDateMask Date="{Binding DateOfBirth}"/>
                         <Label Text="Номер телефона*" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
-                        <custom:EntryPhoneMask Text="{Binding PhoneNumber}"/>
+                        <custom:EntryPhoneMask TextColor="White" ColorBorder="White" Text="{Binding PhoneNumber, Mode=TwoWay}"/>
                         <Label Text="Email*" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>
                         <custom:EntryCustom Text="{Binding Email}"/>
                         <Label Text="Пароль*" FontFamily="poiretone" TextColor="#EFF5FB" Margin="17,10,0,0" FontSize="18"/>

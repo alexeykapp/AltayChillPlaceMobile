@@ -7,6 +7,6 @@ namespace AltayChillPlace.Interface
 {
     public interface IRegistrationService
     {
-        Task<bool> RegistrationAsync(string phone, string email, string password, string fullName, string dateOfBirth);
+        Task<bool> RegistrationAsync(string phone, string email, string password, string firstName, string middleName, string lastName, string dateOfBirth);
     }
 }

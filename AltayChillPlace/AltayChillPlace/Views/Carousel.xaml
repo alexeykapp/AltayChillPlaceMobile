@@ -21,7 +21,7 @@
                             <Button IsVisible="{Binding IsVisibleButton}"
                                     HorizontalOptions="Center"
                                     VerticalOptions="EndAndExpand"
-                                    Margin="0,0,0,45"
+                                    Margin="0,0,0,35"
                                     BackgroundColor="Transparent"
                                     BorderWidth="2"
                                     BorderColor="#E0B499"
@@ -37,7 +37,8 @@
                                     BackgroundColor="Transparent"
                                     Text="Пропустить"
                                     TextColor="#576B57"
-                                    FontFamily="MaMedium"/>
+                                    FontFamily="MaMedium"
+                                    Command="{Binding SkipCommand}"/>
                         </Grid>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>

@@ -7,6 +7,8 @@ using Prism.Mvvm;
 using AltayChillPlace.Models;
 using Xamarin.Essentials;
 using AltayChillPlace.Services;
+using AltayChillPlace.NavigationFile;
+using AltayChillPlace.Views;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -36,17 +38,16 @@ namespace AltayChillPlace.ViewModels
             {
                 return;
             }
-            var resultReg = await _registrationModel.RegistrationAsyncTask(PhoneNumber, Email, Password,
-                $"{LastName} {MiddleName} {FirstName}", DateOfBirth.ToString("dd-MM-yyyy"));
+            var resultReg = await _registrationModel.RegistrationAsyncTask(PhoneNumber, Email, Password, FirstName, MiddleName, LastName, DateOfBirth.ToString("dd-MM-yyyy"));
             if (!resultReg)
             {
-                _messageService.ShowPopup("Ошибка");
+                _messageService.ShowPopup("Ошибка", "Повторите попытку");
             }
             else
             {
-
+                _messageService.ShowPopup("Успешно","Спасибо, что присоединились к нам!");
+                await NavigationDispatcher.Instance.PushAndRemovePreviousAsync(new Carousel());
             }
-
         }
         public string FirstName
         {
@@ -94,30 +95,34 @@ namespace AltayChillPlace.ViewModels
         {
             if (string.IsNullOrEmpty(FirstName))
             {
-                _messageService.ShowPopup($"Пустое поле 'Имя'");
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Имя'");
                 return false;
-            }
-            else if (string.IsNullOrEmpty(MiddleName))
-            {
-
             }
             else if (string.IsNullOrEmpty(LastName))
             {
-
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Фамилия'");
+                return false;
             }
-            else if (!string.IsNullOrEmpty(Email))
+            else if (string.IsNullOrEmpty(Email))
             {
-
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Email'");
+                return false;
             }
-            else if (!string.IsNullOrEmpty(Password))
+            else if (string.IsNullOrEmpty(Password))
             {
-                
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Пароль'");
+                return false;
+            }
+            else if (string.IsNullOrEmpty(PhoneNumber))
+            {
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Телефон'");
+                return false;
             }
             else if (DateOfBirth == null)
             {
-
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Дата рождения'");
+                return false;
             }
-
             return true;
         }
 

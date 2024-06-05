@@ -84,6 +84,11 @@ namespace AltayChillPlace.Services
 
             return base64Url;
         }
+        public async Task<string> GetUserID()
+        {
+            string id = await SecureStorage.GetAsync("IdUser");
+            return id;
+        }
         public async Task ReplacementRefreshToken(string refreshToken)
         {
 
