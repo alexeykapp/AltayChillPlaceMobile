@@ -48,7 +48,8 @@
                         Text="Блог"
                         TextTransform="None"
                         FontFamily="MaRegular"
-                        FontSize="17"/>
+                        FontSize="17"
+                        Command="{Binding OpenBlogCommand}"/>
                 <Button Style="{StaticResource ButtonCustomStyle}"
                         WidthRequest="270"
                         HeightRequest="40"

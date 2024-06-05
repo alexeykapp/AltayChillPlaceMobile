@@ -3,38 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:AltayChillPlace.ViewModels"
              xmlns:response="clr-namespace:AltayChillPlace.ApiResponses"
+             xmlns:toolkit="http://xamarin.com/schemas/2020/toolkit"
+              xmlns:helpers="clr-namespace:AltayChillPlace.Helpers"
              x:DataType="viewmodel:BlogVM"
-             x:Class="AltayChillPlace.Views.Blog">
-    <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="170"/>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+             x:Class="AltayChillPlace.Views.Blog"
+             BackgroundColor="Transparent">
+    <!-- Устанавливаем прозрачный фон приложения -->
 
-            <!-- Header with background -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+            <helpers:DateConverter x:Key="DateConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid BackgroundColor="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
             <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
                 <Image Source="background.png" Aspect="AspectFill"
                  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
             </AbsoluteLayout>
-            <!-- CollectionView in row 1 -->
-            <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
-            <Label Text="История бронирования" FontFamily="MaMedium" TextColor="#234314" FontSize="22" Grid.Row="1"/>
-            <CollectionView ItemsSource="{Binding Posts}"  
-                SelectionMode="Multiple" Grid.Row="2"
-                Margin="15,0,15,0"
-                BackgroundColor="Transparent">
+            <Image Grid.Row="0" Source="headerMainMenu" Aspect="AspectFill"/>
+            <CollectionView ItemsSource="{Binding Posts}" 
+                            SelectionMode="None" 
+                            Grid.Row="1" 
+                            Margin="15,20,15,0"
+                            BackgroundColor="Transparent">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="response:BlogPostsResponce">
-                        <Frame Padding="10" 
-                               Margin="10" 
-                               BackgroundColor="White" 
+                        <Frame Padding="10"
+                               BackgroundColor="White"
+                               Margin="10, 0, 10, 0"
                                CornerRadius="10">
-                            <Label Text="{Binding Title}" 
-                                   FontFamily="MaMedium" 
-                                   TextColor="#234314"/>
+                            <StackLayout>
+                                <Image Source="{Binding Image.Data, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                                       HeightRequest="250"/>
+                                <Label Text="{Binding Title}" 
+                                       FontFamily="OldStandardBold"
+                                       FontSize="22"
+                                       TextColor="#234314"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding Content}"
+                                       FontFamily="MaMedium"
+                                       TextColor="#234314"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding PublicationDate, Converter={StaticResource DateConverter}}"
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="#234314"
+                                       VerticalTextAlignment="End"
+                                       FontFamily="MaMedium"/>
+                            </StackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

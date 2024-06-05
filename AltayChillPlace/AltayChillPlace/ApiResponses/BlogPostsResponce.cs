@@ -14,7 +14,7 @@ namespace AltayChillPlace.ApiResponses
         public string Title { get; set; }
 
         [JsonProperty("publication_date")]
-        public DateTime PublicationDate { get; set; }
+        public string PublicationDate { get; set; }
 
         [JsonProperty("publication_text")]
         public string Content { get; set; }

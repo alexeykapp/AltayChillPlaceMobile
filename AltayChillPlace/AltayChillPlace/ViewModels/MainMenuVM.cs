@@ -14,11 +14,13 @@ namespace AltayChillPlace.ViewModels
         public DelegateCommand OpenHistoryCommand { get; set; }
         public DelegateCommand OpenHousesCommand { get; set; }
         public DelegateCommand OpenAboutCommand { get; set; }
+        public DelegateCommand OpenBlogCommand { get; set; }
         public MainMenuVM()
         {
             OpenHistoryCommand = new DelegateCommand(OpenHistory);
             OpenHousesCommand = new DelegateCommand(OpenHousesMenu);
             OpenAboutCommand = new DelegateCommand(OpenAbout);
+            OpenBlogCommand = new DelegateCommand(OpenBlog);
         }
         private async void OpenAbout()
         {
@@ -31,6 +33,10 @@ namespace AltayChillPlace.ViewModels
         private async void OpenHousesMenu()
         {
             await NavigationDispatcher.Instance.PushAndRemovePreviousAsync(new Houses());
+        }
+        private async void OpenBlog()
+        {
+            await NavigationDispatcher.Instance.Navigation.PushAsync(new Blog());
         }
     }
 }

@@ -15,7 +15,6 @@
             <Image Source="backgroundHouseInfo.png" Aspect="AspectFill"
                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
         </AbsoluteLayout>
-        <!--<Image Source="logo2" Grid.Row="0"/>-->
         <ScrollView>
             <Frame BackgroundColor="#F7FBFF" Grid.Row="1" CornerRadius="50" Margin="10,0,10,20">
 

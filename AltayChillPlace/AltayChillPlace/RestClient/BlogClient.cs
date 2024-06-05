@@ -18,13 +18,13 @@ namespace AltayChillPlace.RestClient
         }
         public async Task<ObservableCollection<BlogPostsResponce>> GetBlogPostsAsync()
         {
-            var response = await _apiClient.HttpClient.GetAsync("blog/post");
+            var response = await _apiClient.HttpClient.GetAsync("blog/posts");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("Error receiving posts");
             }
-            var history = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<ObservableCollection<BlogPostsResponce>>(history);
+            var posts = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ObservableCollection<BlogPostsResponce>>(posts);
         }
     }
 }
