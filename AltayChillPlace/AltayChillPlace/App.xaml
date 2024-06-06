@@ -27,6 +27,10 @@
             <!-- Другие глобальные ресурсы -->
             
         </ResourceDictionary>
+        <Style x:Key="TextProfileStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="#234314"/>
+            <Setter Property="FontFamily" Value="MaMedium"/>
+        </Style>
         <Style x:Key="ButtonCustomStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="Transparent" />
             <Setter Property="TextColor" Value="#576B57" />

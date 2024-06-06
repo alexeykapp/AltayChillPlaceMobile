@@ -37,6 +37,7 @@ namespace AltayChillPlace.Configuration
             services.AddSingleton<IBookingService, BookingServices>();
             services.AddSingleton<IHistoryService, HistoryService>();
             services.AddSingleton<IBlogServices,  BlogServices>();
+            services.AddSingleton<IProfileService, ProfileService>();
             services.AddSingleton<ApiClient>(provider => apiClient);
         }
 
@@ -53,6 +54,7 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<BookingVM>();
             services.AddTransient<BlogVM>();
             services.AddTransient<MainMenuVM>();
+            services.AddTransient<ProfileVM>();
             services.AddTransient<HistoryBookingVM>();
             services.AddTransient<ServiceModel>();
             services.AddTransient<AuthClient>(provider => new AuthClient(provider.GetService<ApiClient>()));
@@ -62,6 +64,7 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<BookingClient>(provider => new BookingClient(provider.GetService<ApiClient>()));
             services.AddTransient<HistoryClient>(provider => new HistoryClient(provider.GetService<ApiClient>()));
             services.AddTransient<BlogClient>(provider => new BlogClient(provider.GetService<ApiClient>()));
+            services.AddTransient<ProfileClient>(provider => new ProfileClient(provider.GetService<ApiClient>()));
             services.AddTransient<TokenService>();
         }
 

@@ -27,13 +27,17 @@ namespace AltayChillPlace.Services
                 var tokenResponse = await _authClient.AuthenticateAsync(username, password);
                 if (tokenResponse != null && !string.IsNullOrEmpty(tokenResponse.AccessToken))
                 {
+                    if (tokenResponse.User.isAdmin == true)
+                    {
+                        return true;
+                    }
                     await _tokenService.SaveTokensAsync(tokenResponse);
-                    return true;
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Login failed: {ex.Message}");
+                throw new Exception("Login failed");
             }
             return false;
         }

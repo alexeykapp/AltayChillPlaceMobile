@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AltayChillPlace.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace AltayChillPlace.Views
 		public Profile ()
 		{
 			InitializeComponent ();
-		}
+            BindingContext = App.AppInitializer.ServiceProvider.GetService<ProfileVM>();
+        }
 	}
 }

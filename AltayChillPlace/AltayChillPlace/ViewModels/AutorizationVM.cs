@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System;
 using AltayChillPlace.NavigationFile;
+using AltayChillPlace.Views.Admin;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -53,18 +54,23 @@ namespace AltayChillPlace.ViewModels
         }
         private async Task LoginAsync(string username, string password)
         {
-            var success = await _authService.LoginAsync(username, password);
-            if (success)
+            try
             {
-                //_messageService.ShowPopup("Успешно");
-                await NavigationDispatcher.Instance.PushAndRemovePreviousAsync(new Lenta());
+                var resultLogin = await _authService.LoginAsync(username, password);
+                if (resultLogin)
+                {
+                    await NavigationDispatcher.Instance.PushAndRemovePreviousAsync(new MainMenuAdmin());
+                }
+                else
+                {
+                    await NavigationDispatcher.Instance.PushAndRemovePreviousAsync(new Lenta());
+                }
             }
-            else
+            catch (Exception ex)
             {
                 _messageService.ShowPopup("Ошибка", "Повторите попытку");
             }
         }
-
         private async void OpenRegistrationPage()
         {
             await NavigationDispatcher.Instance.Navigation.PushAsync(new Registration());

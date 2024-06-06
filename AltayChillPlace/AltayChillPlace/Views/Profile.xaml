@@ -1,12 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:AltayChillPlace.ViewModels"
+             xmlns:custom="clr-namespace:AltayChillPlace.CustomXaml"
+              xmlns:helpers="clr-namespace:AltayChillPlace.Helpers" 
+             x:DataType="viewmodel:ProfileVM"
              x:Class="AltayChillPlace.Views.Profile">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
+            <Image Source="background.png" Aspect="AspectFill"
+                   AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+        </AbsoluteLayout>
+        <Image Grid.Row="0" Source="headerMainMenu" Aspect="AspectFill"/>
+        <Grid Grid.Row="1" Margin="20,0,20,10">
+            <Frame CornerRadius="50">
+                <StackLayout>
+                    <Label Text="Фамилия"
+                           FontSize="17"
+                           HorizontalTextAlignment="Center"
+                           Style="{StaticResource TextProfileStyle}"/>
+                    <custom:EntryCustom Text="{Binding PersonResponce.LastName, Mode=TwoWay}" ColorBorder="#576B57" TextColor="#576B57" Margin="10,0,10,0"/>
+                    <Label Text="Имя"
+                           FontSize="17"
+                           HorizontalTextAlignment="Center"
+                           Style="{StaticResource TextProfileStyle}"/>
+                    <custom:EntryCustom Text="{Binding PersonResponce.FirstName, Mode=TwoWay}" ColorBorder="#576B57" TextColor="#576B57" Margin="10,0,10,0"/>
+                    <Label Text="Отчество"
+                           FontSize="17"
+                           HorizontalTextAlignment="Center"
+                           Style="{StaticResource TextProfileStyle}"/>
+                    <custom:EntryCustom Text="{Binding PersonResponce.MiddleName, Mode=TwoWay}" ColorBorder="#576B57" TextColor="#576B57" Margin="10,0,10,0"/>
+                    <Label Text="Email" 
+                           Style="{StaticResource TextProfileStyle}"
+                           HorizontalTextAlignment="Center"
+                           FontSize="17"/>
+                    <custom:EntryCustom Text="{Binding PersonResponce.Email, Mode=TwoWay}" ColorBorder="#576B57" TextColor="#576B57" Margin="10,0,10,0"/>
+                    <Label Text="Телефон" 
+                           Style="{StaticResource TextProfileStyle}"
+                           HorizontalTextAlignment="Center"
+                           FontSize="17"/>
+                    <custom:EntryPhoneMask Text="{Binding PersonResponce.Phone, Mode=TwoWay}" ColorBorder="#576B57" TextColor="#576B57" Margin="10,0,10,0"/>
+                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Text="Дата рождения"
+                               Style="{StaticResource TextProfileStyle}"
+                               FontSize="17"
+                               VerticalTextAlignment="Center"/>
+                        <DatePicker VerticalOptions="Center"
+                                    FontFamily="MaMedium"
+                                    TextColor="#576B57"
+                                    WidthRequest="110"
+                                    Date="{Binding PersonResponce.DateOfBerth}"
+                                    IsEnabled="False">
+                            <DatePicker.Behaviors>
+                                <helpers:DatePickerBehavior/>
+                            </DatePicker.Behaviors>
+                        </DatePicker>
+                    </StackLayout>
+                    <Button Text="Сохранить"
+                            Style="{StaticResource ButtonStyle}"
+                            TextTransform="None"
+                            FontSize="18"
+                            TextColor="White"
+                            IsEnabled="{Binding IsEnabledSaveButton}"
+                            Command="{Binding SaveСhangesCommand}"/>
+                    <Button Text="Выйти из профиля"
+                            FontFamily="MaMedium"
+                            TextTransform="None"
+                            TextColor="White"
+                            CornerRadius="30"
+                            Margin="45,10,45,0"
+                            BackgroundColor="#D77070"/>
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </Grid>
+
 </ContentPage>

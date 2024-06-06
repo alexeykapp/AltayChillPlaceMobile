@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AltayChillPlace.ApiResponses.Auth
+namespace AltayChillPlace.ApiResponses
 {
-    public class User
+    public class PersonResponce
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -26,8 +26,6 @@ namespace AltayChillPlace.ApiResponses.Auth
         public string Phone { get; set; }
 
         [JsonProperty("dateOfBerth")]
-        public string DateOfBerth { get; set; }
-        [JsonProperty("isAdmin")]
-        public bool isAdmin { get; set; }
+        public DateTime DateOfBerth { get; set; }
     }
 }
