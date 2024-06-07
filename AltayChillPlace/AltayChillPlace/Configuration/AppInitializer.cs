@@ -3,6 +3,8 @@ using AltayChillPlace.Models;
 using AltayChillPlace.RestClient;
 using AltayChillPlace.Services;
 using AltayChillPlace.ViewModels;
+using AltayChillPlace.ViewModels.Admin;
+using AltayChillPlace.Views.Admin;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -38,6 +40,7 @@ namespace AltayChillPlace.Configuration
             services.AddSingleton<IHistoryService, HistoryService>();
             services.AddSingleton<IBlogServices,  BlogServices>();
             services.AddSingleton<IProfileService, ProfileService>();
+            services.AddSingleton<IAdminService, AdminServices>();
             services.AddSingleton<ApiClient>(provider => apiClient);
         }
 
@@ -52,9 +55,11 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<CarouselVM>();
             services.AddTransient<HousesVM>();
             services.AddTransient<BookingVM>();
-            services.AddTransient<BlogVM>();
+            services.AddTransient<BlogVM>(); 
             services.AddTransient<MainMenuVM>();
+            services.AddTransient<BookingRequestsAdminVM>();
             services.AddTransient<ProfileVM>();
+            services.AddTransient<MainMenuAdminVM>();
             services.AddTransient<HistoryBookingVM>();
             services.AddTransient<ServiceModel>();
             services.AddTransient<AuthClient>(provider => new AuthClient(provider.GetService<ApiClient>()));
@@ -65,6 +70,7 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<HistoryClient>(provider => new HistoryClient(provider.GetService<ApiClient>()));
             services.AddTransient<BlogClient>(provider => new BlogClient(provider.GetService<ApiClient>()));
             services.AddTransient<ProfileClient>(provider => new ProfileClient(provider.GetService<ApiClient>()));
+            services.AddTransient<AdminClient>(provider => new AdminClient(provider.GetService<ApiClient>()));
             services.AddTransient<TokenService>();
         }
 

@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:AltayChillPlace.ViewModels.Admin"
+             x:DataType="viewmodel:MainMenuAdminVM"
              x:Class="AltayChillPlace.Views.Admin.MainMenuAdmin">
 
     <Grid>
@@ -21,7 +23,8 @@
                     Text="Заявки"
                     TextTransform="None"
                     FontFamily="MaRegular"
-                    FontSize="17"/>
+                    FontSize="17"
+                    Command="{Binding OpenReservationPageCommand}"/>
             <Button Style="{StaticResource ButtonCustomStyle}"
                     WidthRequest="270"
                     HeightRequest="40"

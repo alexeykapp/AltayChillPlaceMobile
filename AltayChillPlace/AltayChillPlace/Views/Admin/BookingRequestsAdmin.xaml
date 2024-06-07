@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:AltayChillPlace.ViewModels.Admin"
+             xmlns:data ="clr-namespace:AltayChillPlace.ApiResponses.Admin"
+             xmlns:helpers ="clr-namespace:AltayChillPlace.Helpers"
+             x:DataType="viewmodel:BookingRequestsAdminVM"
+             x:Class="AltayChillPlace.Views.Admin.BookingRequestsAdmin">
+    <ContentPage.Resources>
+        <helpers:DateConverter x:Key="DateConvert"/>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="170"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
+            <Image Source="background.png" Aspect="AspectFill"
+                   AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+        </AbsoluteLayout>
+        <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
+
+        <Grid Grid.Row="1">
+            <CollectionView ItemsSource="{Binding ReservationResponses}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="data:ReservationResponse">
+                        <Frame CornerRadius="30" Opacity="0.7">
+                            <Grid>
+                                <StackLayout>
+                                    <StackLayout Orientation="Horizontal"
+                                                 HorizontalOptions="Center">
+                                        <Label Text="Номер заявки: "
+                                               Style="{StaticResource TextProfileStyle}" Opacity="1"/>
+                                        <Label Text="{Binding RequestBooking.Id}"
+                                               Style="{StaticResource TextProfileStyle}"/>
+                                    </StackLayout>
+                                    <StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Клиент:"
+                                                    Style="{StaticResource TextProfileStyle}"/>
+                                            <Label Text="{Binding Client.FirstName}"
+                                                   Style="{StaticResource TextProfileStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Дата создания заявки:"
+                                                   Style="{StaticResource TextProfileStyle}"/>
+                                            <Label Text="{Binding RequestBooking.DateOfApplication, Converter={StaticResource DateConvert}}"
+                                                   Style="{StaticResource TextProfileStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Дата заезда:"
+                                                   Style="{StaticResource TextProfileStyle}"/>
+                                            <Label Text="{Binding RequestBooking.ArrivalDate, Converter={StaticResource DateConvert}}"
+                                                   Style="{StaticResource TextProfileStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Дата заезда:"
+                                                   Style="{StaticResource TextProfileStyle}"/>
+                                            <Label Text="{Binding RequestBooking.DepartureDate, Converter={StaticResource DateConvert}}"
+                                                   Style="{StaticResource TextProfileStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Номер телефона:"
+                                                   Style="{StaticResource TextProfileStyle}"/>
+                                            <Label Text="{Binding Client.PhoneNumber}"
+                                                   Style="{StaticResource TextProfileStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Spacing="0" >
+                                            <Frame BorderColor="#799D6D" BackgroundColor="Transparent" Padding="6">
+                                                <StackLayout Orientation="Horizontal" Spacing="5">
+                                                    <Label Text="Статус заявки:"
+                                                       Style="{StaticResource TextProfileStyle}"/>
+                                                    <Label Text="{Binding ApplicationStatus.StatusName}"
+                                                       Style="{StaticResource TextProfileStyle}"/>
+                                                    <Grid HeightRequest="18" WidthRequest="18" BackgroundColor="#00EBDFDF" x:DataType="viewmodel:BookingRequestsAdminVM">
+                                                        <Image Source="pencil.png"/>
+                                                        <Button BackgroundColor="Transparent" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditStatusCommand}"/>
+                                                        <Picker x:Name="ss" 
+                                                                ItemsSource="{Binding ApplicationStatuses}" 
+                                                                SelectedItem="{Binding SelectedStatus}" 
+                                                                IsVisible="True" BackgroundColor="Transparent"/>
+                                                    </Grid>
+                                                </StackLayout>
+                                            </Frame>
+                                            <Frame BorderColor="#799D6D" BackgroundColor="Transparent" Padding="6">
+                                                <StackLayout Orientation="Horizontal" Spacing="5">
+                                                    <Label Text="Статус заявки:"
+                                                       Style="{StaticResource TextProfileStyle}"/>
+                                                    <Label Text="{Binding PaymentStatus.PaymentStatusName}"
+                                                       Style="{StaticResource TextProfileStyle}"/>
+                                                </StackLayout>
+                                            </Frame>
+                                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                                <Label Text="Итоговая стоимость:"
+                                                       Style="{StaticResource TextProfileStyle}"/>
+                                                <Label Text="{Binding RequestBooking.TotalPrice}"
+                                                       Style="{StaticResource TextProfileStyle}"
+                                                       TextColor="#A45723"/>
+                                            </StackLayout>
+                                            <Picker x:Name="statusPicker" 
+                                                    FontFamily="MaMedium"
+                                                    Title="Изменить статус"
+                                                    FontSize="15"
+                                                    ItemDisplayBinding="{Binding Status}"
+                                                    ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ApplicationStatuses}" 
+                                                    SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectedStatus}" 
+                                                    IsVisible="True"/>
+                                            <StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>

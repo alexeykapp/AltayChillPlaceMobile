@@ -4,6 +4,7 @@ using AltayChillPlace.Configuration;
 using AltayChillPlace.NavigationFile;
 using AltayChillPlace.Services;
 using AltayChillPlace.Views;
+using AltayChillPlace.Views.Admin;
 using Xamarin.Forms;
 
 namespace AltayChillPlace
@@ -39,9 +40,24 @@ namespace AltayChillPlace
             {
                 TokenService tokenService = new TokenService();
                 var resultValidate = await tokenService.IsTokenValidAsync();
+                var isAdmin = await tokenService.CheckIsAdmin();
 
-                // Инициализация MainPage в зависимости от результата проверки токена
-                MainPage = resultValidate ? new NavigationPage(new Houses()) : new NavigationPage(new Autorization());
+                if (resultValidate)
+                {
+                    if (isAdmin)
+                    {
+                        MainPage = new NavigationPage(new MainMenuAdmin());
+                    }
+                    else
+                    {
+                        MainPage = new NavigationPage(new Houses());
+                    }
+                }
+                else
+                {
+                    MainPage = new NavigationPage(new Autorization());
+                }
+                // MainPage = resultValidate ? new NavigationPage(new Houses()) : new NavigationPage(new Autorization());
 
                 // Общие настройки
                 NavigationPage.SetHasNavigationBar(MainPage, false);

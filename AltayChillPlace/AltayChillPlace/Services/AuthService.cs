@@ -27,11 +27,11 @@ namespace AltayChillPlace.Services
                 var tokenResponse = await _authClient.AuthenticateAsync(username, password);
                 if (tokenResponse != null && !string.IsNullOrEmpty(tokenResponse.AccessToken))
                 {
+                    await _tokenService.SaveTokensAsync(tokenResponse);
                     if (tokenResponse.User.isAdmin == true)
                     {
                         return true;
                     }
-                    await _tokenService.SaveTokensAsync(tokenResponse);
                 }
             }
             catch (Exception ex)

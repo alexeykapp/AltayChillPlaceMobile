@@ -19,6 +19,7 @@ namespace AltayChillPlace.Services
                 await SecureStorage.SetAsync("AccessToken", tokenResponse.AccessToken);
                 await SecureStorage.SetAsync("RefreshToken", tokenResponse.RefreshToken);
                 await SecureStorage.SetAsync("IdUser", tokenResponse.User.Id.ToString());
+                await SecureStorage.SetAsync("isAdmin", tokenResponse.User.isAdmin.ToString());
             }
             catch (Exception ex)
             {
@@ -89,9 +90,10 @@ namespace AltayChillPlace.Services
             string id = await SecureStorage.GetAsync("IdUser");
             return id;
         }
-        public async Task ReplacementRefreshToken(string refreshToken)
+        public async Task<bool> CheckIsAdmin()
         {
-
+            var isAdmin = await SecureStorage.GetAsync("isAdmin");
+            return Convert.ToBoolean(isAdmin);
         }
     }
 }

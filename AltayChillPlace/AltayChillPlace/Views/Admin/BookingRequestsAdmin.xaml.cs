@@ -1,5 +1,4 @@
-﻿using AltayChillPlace.ViewModels;
-using AltayChillPlace.ViewModels.Admin;
+﻿using AltayChillPlace.ViewModels.Admin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace AltayChillPlace.Views.Admin
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MainMenuAdmin : ContentPage
+	public partial class BookingRequestsAdmin : ContentPage
 	{
-		public MainMenuAdmin ()
+		public BookingRequestsAdmin ()
 		{
 			InitializeComponent ();
-            BindingContext = App.AppInitializer.ServiceProvider.GetService<MainMenuAdminVM>();
+            BindingContext = App.AppInitializer.ServiceProvider.GetService<BookingRequestsAdminVM>();
         }
 	}
 }
