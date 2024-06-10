@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using AltayChillPlace.ApiResponses;
 using AltayChillPlace.Interface;
 using AltayChillPlace.Services;
 
@@ -14,14 +15,10 @@ namespace AltayChillPlace.Models
         {
             _registrationService = registrationService;
         }
-        public async Task<bool> RegistrationAsyncTask(string phone, string email, string password, string firstName, string middleName, string lastName, string dateOfBirth)
+        public async Task<TokenResponse> RegistrationAsyncTask(string phone, string email, string password, string firstName, string middleName, string lastName, string dateOfBirth)
         {
             var resulReg = await _registrationService.RegistrationAsync(phone, email, password, firstName, middleName, lastName, dateOfBirth);
-            if (!resulReg)
-            {
-                return false;
-            }
-            return true;
+            return resulReg;
         }
     }
 }

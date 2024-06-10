@@ -20,7 +20,6 @@ namespace AltayChillPlace.ViewModels
 {
     public class HousesVM : BindableBase
     {
-        // Private fields
         private readonly HouseModel _houseModel;
         private readonly ServiceModel _serviceModel;
         private readonly FilteringService _filteringService;
@@ -35,7 +34,7 @@ namespace AltayChillPlace.ViewModels
         private TypeHouse _typeHouseSelected;
         private ServiceTypeResponce _typeServiceSelected;
         private string _textLabel;
-        // isVisible
+ 
         private bool _isVisibleHeader;
         private bool _isVisibleHouseList;
         private bool _isVisibleActivityIndicator;
@@ -44,14 +43,14 @@ namespace AltayChillPlace.ViewModels
         private bool _isVisibleHeaderHouse = true;
         private bool _isVisibleHeaderService = false;
         private bool _isRefreshing = false;
-        // Date
+ 
         private DateTime _arrivalDate = DateTime.Now.AddDays(1);
         private DateTime _departureDate = DateTime.Now.AddDays(2);
         private DateTime _minDepartureDate = DateTime.Now.AddDays(2);
         private DateTime _maxDepartureDate = DateTime.Now.AddMonths(5);
         private DateTime _minArrivalDate = DateTime.Now.AddDays(1);
         private DateTime _maxArrivaDate = DateTime.Now.AddMonths(5);
-        // Color
+
         private Color _currentHouseColor = Color.White;
         private Color _currentServicesColor = Color.Black;
 
@@ -64,17 +63,7 @@ namespace AltayChillPlace.ViewModels
             _serviceModel = serviceModel ?? throw new ArgumentNullException(nameof(serviceModel));
             _filteringService = new FilteringService();
 
-            // Initialize commands
-            HouseClickCommand = new DelegateCommand(ExecuteHouseClick);
-            ServicesClickCommand = new DelegateCommand(ExecuteServicesClick);
-            //ItemTappedHouseCommand = new Command<ItemTappedEventArgs>(OnItemTappedHouse);
-            SelectItemCommand = new Command<TypeHouse>(OnItemSelected);
-            SelectItemServiceCommand = new Command<ServiceTypeResponce>(OnItemSelectedService);
-            SearchAvailableCommand = new DelegateCommand(SearchAvailableHouse);
-            SearchSevicesCommand = new DelegateCommand(SearchServives);
-            ShowMainMenuCommand = new DelegateCommand(ShowMainMenu);
-            IsRefreshingCommand = new DelegateCommand(RefreshingAsync);
-            // Load data asynchronously
+            InitializationProperties();
             LoadDataAsync();
         }
         private void OnItemSelected(TypeHouse item)
@@ -205,30 +194,34 @@ namespace AltayChillPlace.ViewModels
         private async void LoadDataAsync()
         {
             IsVisibleActivityIndicator = true;
+            IsRefreshing = true;
             try
             {
-                var houses = _houseModel.GetAllHouses();
-                var services = _serviceModel.GetAllServices();
-                var typeHouse = _houseModel.GetTypeHouses();
-                var typeService = _serviceModel.GetServicesType();
-                await Task.WhenAll(houses, services, typeHouse, typeService);
-                Houses = houses.Result;
-                Services = services.Result;
-                TypeHouses = typeHouse.Result;
-                TypeServices = typeService.Result;
+                var housesTask = _houseModel.GetAllHouses();
+                var servicesTask = _serviceModel.GetAllServices();
+                var typeHouseTask = _houseModel.GetTypeHouses();
+                var typeServiceTask = _serviceModel.GetServicesType();
+
+                await Task.WhenAll(housesTask, servicesTask, typeHouseTask, typeServiceTask);
+
+                Houses = await housesTask;
+                Services = await servicesTask;
+                TypeHouses = await typeHouseTask;
+                TypeServices = await typeServiceTask;
+
                 SetupCurrentItem();
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Debug.WriteLine($"Error loading data: {ex.Message}");
                 IsVisibleLabel = true;
-                TextLabel = ex.Message;
+                TextLabel = $"An error occurred: {ex.Message}";
             }
             finally
             {
                 IsVisibleActivityIndicator = false;
+                IsRefreshing = false;
             }
-            IsRefreshing = false;
         }
         private void RefreshingAsync()
         {
@@ -236,6 +229,17 @@ namespace AltayChillPlace.ViewModels
             LoadDataAsync();
         }
 
+        private void InitializationProperties()
+        {
+            HouseClickCommand = new DelegateCommand(ExecuteHouseClick);
+            ServicesClickCommand = new DelegateCommand(ExecuteServicesClick);
+            SelectItemCommand = new Command<TypeHouse>(OnItemSelected);
+            SelectItemServiceCommand = new Command<ServiceTypeResponce>(OnItemSelectedService);
+            SearchAvailableCommand = new DelegateCommand(SearchAvailableHouse);
+            SearchSevicesCommand = new DelegateCommand(SearchServives);
+            ShowMainMenuCommand = new DelegateCommand(ShowMainMenu);
+            IsRefreshingCommand = new DelegateCommand(RefreshingAsync);
+        }
         public DelegateCommand HouseClickCommand { get; private set; }
         public DelegateCommand ServicesClickCommand { get; private set; }
         public DelegateCommand SortingByDataCommand { get; private set; }

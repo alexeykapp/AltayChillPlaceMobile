@@ -95,5 +95,11 @@ namespace AltayChillPlace.Services
             var isAdmin = await SecureStorage.GetAsync("isAdmin");
             return Convert.ToBoolean(isAdmin);
         }
+        public async Task LogOut()
+        {
+            await SecureStorage.SetAsync("IdUser", "");
+            await SecureStorage.SetAsync("AccessToken", "");
+            await SecureStorage.SetAsync("RefreshToken", "");
+        }
     }
 }

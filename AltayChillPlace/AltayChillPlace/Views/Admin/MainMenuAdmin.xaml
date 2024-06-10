@@ -16,7 +16,12 @@
                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
         </AbsoluteLayout>
         <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
-        <StackLayout Grid.Row="1" WidthRequest="250" HorizontalOptions="Center" Margin="0,50,0,0">
+        <StackLayout Grid.Row="1" WidthRequest="300" HorizontalOptions="Center" Margin="0,30,0,0">
+            <Label Text="Кабинет администратора"
+                   Style="{StaticResource TextProfileStyle}"
+                   FontSize="19"
+                   Margin="0,0,0,20"
+                   FontFamily="MaRegular"/>
             <Button Style="{StaticResource ButtonCustomStyle}"
                     WidthRequest="270"
                     HeightRequest="40"
@@ -27,18 +32,31 @@
                     Command="{Binding OpenReservationPageCommand}"/>
             <Button Style="{StaticResource ButtonCustomStyle}"
                     WidthRequest="270"
-                    HeightRequest="40"
+                    HeightRequest="43"
                     Text="Добавить публикацию"
                     TextTransform="None"
                     FontFamily="MaRegular"
-                    FontSize="17"/>
+                    FontSize="17"
+                    Command="{Binding OpenNewPostCommand}"/>
             <Button Style="{StaticResource ButtonCustomStyle}"
                     WidthRequest="270"
                     HeightRequest="40"
                     Text="Блог"
                     TextTransform="None"
                     FontFamily="MaRegular"
-                    FontSize="17"/>
+                    FontSize="17"
+                    Command="{Binding OpenBlogEditorCommand}"/>
+            <Button Style="{StaticResource ButtonStyle}"
+                    WidthRequest="200"
+                    HeightRequest="44"
+                    Text="Выход"
+                    TextColor="White"
+                    BackgroundColor="#D77070"
+                    TextTransform="None"
+                    FontFamily="MaRegular"
+                    FontSize="17"
+                    Margin="40,20,40,0"
+                    Command="{Binding LogOutCommand}"/>
         </StackLayout>
     </Grid>
 </ContentPage>

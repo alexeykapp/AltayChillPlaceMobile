@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using AltayChillPlace.ApiResponses;
@@ -28,7 +29,7 @@ namespace AltayChillPlace.RestClient
             {
                 NullValueHandling = NullValueHandling.Ignore
             };
-            return JsonConvert.DeserializeObject<ObservableCollection<ReservationResponse>>(reservation,settings);
+            return JsonConvert.DeserializeObject<ObservableCollection<ReservationResponse>>(reservation, settings);
         }
         public async Task<ObservableCollection<ApplicationStatusResponse>> GetAllApplicationSatus()
         {
@@ -43,6 +44,49 @@ namespace AltayChillPlace.RestClient
                 NullValueHandling = NullValueHandling.Ignore
             };
             return JsonConvert.DeserializeObject<ObservableCollection<ApplicationStatusResponse>>(statuses, settings);
+        }
+        public async Task CreateNewApplicationStatusAsync(string idStatus, int idRequest)
+        {
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("status_id", idStatus),
+            });
+            var response = await _adminClient.HttpClient.PostAsync($"admin/reservations/createStatus/{idRequest}", content);
+            if (response == null || response.IsSuccessStatusCode == false)
+            {
+                throw new Exception("Error creating a new status");
+            }
+        }
+        public async Task CreateNewPaymentStatusAsync(string idStatus, int idRequest)
+        {
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("payment_status_id", idStatus),
+            });
+            var response = await _adminClient.HttpClient.PostAsync($"admin/reservations/createPaymentStatus/{idRequest}", content);
+            if (response == null || response.IsSuccessStatusCode == false)
+            {
+                throw new Exception("Error creating a new status");
+            }
+        }
+        public async Task<NewPostBlogResponse> CreateNewPostBlogAsync(string title, string description, string date, byte[] photo)
+        {
+            var requestData = new
+            {
+                title,
+                description,
+                date,
+                photo
+            };
+            var json = JsonConvert.SerializeObject(requestData);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _adminClient.HttpClient.PostAsync("admin/newpost", content);
+            if (response == null || !response.IsSuccessStatusCode)
+            {
+                throw new Exception("Error creating a new post");
+            }
+            var newPost = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<NewPostBlogResponse>(newPost);
         }
     }
 }

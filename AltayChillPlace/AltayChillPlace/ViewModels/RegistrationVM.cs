@@ -14,6 +14,7 @@ namespace AltayChillPlace.ViewModels
 {
     public class RegistrationVM : BindableBase
     {
+        private TokenService tokenService;
         private readonly RegistrationModel _registrationModel;
         private readonly IMessageService _messageService;
         private string _firstName;
@@ -24,10 +25,11 @@ namespace AltayChillPlace.ViewModels
         private string _email;
         private string _password;
 
-        public RegistrationVM(RegistrationModel registrationModel, IMessageService messageService)
+        public RegistrationVM(RegistrationModel registrationModel, IMessageService messageService, TokenService tokenService)
         {
             _registrationModel = registrationModel;
             _messageService = messageService;
+            this.tokenService = tokenService;
             RegistrationCommand = new DelegateCommand(Registration);
         }
         public DelegateCommand RegistrationCommand { get; private set; }
@@ -39,7 +41,7 @@ namespace AltayChillPlace.ViewModels
                 return;
             }
             var resultReg = await _registrationModel.RegistrationAsyncTask(PhoneNumber, Email, Password, FirstName, MiddleName, LastName, DateOfBirth.ToString("dd-MM-yyyy"));
-            if (!resultReg)
+            if (resultReg == null)
             {
                 _messageService.ShowPopup("Ошибка", "Повторите попытку");
             }

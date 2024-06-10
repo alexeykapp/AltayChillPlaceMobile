@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AltayChillPlace.Interface;
+using AltayChillPlace.ApiResponses;
+using Newtonsoft.Json;
 
 namespace AltayChillPlace.Services
 {
@@ -18,7 +20,7 @@ namespace AltayChillPlace.Services
             _tokenService = tokenService;
         }
 
-        public async Task<bool> RegistrationAsync(string phone, string email, string password, string firstName, string middleName, string lastName, string dateOfBirth)
+        public async Task<TokenResponse> RegistrationAsync(string phone, string email, string password, string firstName, string middleName, string lastName, string dateOfBirth)
         {
             var content = new FormUrlEncodedContent(new[]
             {
@@ -37,14 +39,14 @@ namespace AltayChillPlace.Services
                if (tokenResponse != null || !string.IsNullOrEmpty(tokenResponse.AccessToken))
                {
                    await _tokenService.SaveTokensAsync(tokenResponse);
-                   return true;
+                   return tokenResponse;
                }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Registration failed: {ex.Message}");
             }
-            return false;
+            return null;
         }
     }
 }

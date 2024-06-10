@@ -36,5 +36,22 @@ namespace AltayChillPlace.NavigationFile
                 }
             }
         }
+        public static Page GetCurrentPage()
+        {
+            var mainPage = Application.Current.MainPage;
+            if (mainPage is NavigationPage navigationPage)
+            {
+                return navigationPage.CurrentPage;
+            }
+            if (mainPage is TabbedPage tabbedPage)
+            {
+                return tabbedPage.CurrentPage;
+            }
+            if (mainPage is MasterDetailPage masterDetailPage)
+            {
+                return masterDetailPage.Detail;
+            }
+            return mainPage;
+        }
     }
 }

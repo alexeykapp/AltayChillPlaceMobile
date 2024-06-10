@@ -16,108 +16,123 @@
                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
         </AbsoluteLayout>
         <ScrollView>
-            <Frame BackgroundColor="#F7FBFF" Grid.Row="1" CornerRadius="50" Margin="10,0,10,20">
-
+            <Frame BackgroundColor="#F7FBFF" 
+                   Grid.Row="1" 
+                   CornerRadius="50" 
+                   Margin="6,0,6,20">
                 <StackLayout Spacing="5" HorizontalOptions="FillAndExpand">
                     <StackLayout>
                         <CarouselView ItemsSource="{Binding ListImageSources}"
-                              HeightRequest="250"
-                              WidthRequest="270"
-                              IndicatorView="{x:Reference Name=indicator}"
+                                      HeightRequest="250"
+                                      WidthRequest="270"
+                                      IndicatorView="{x:Reference Name=indicator}"
                                       Loop="False">
                             <CarouselView.ItemTemplate>
                                 <DataTemplate>
                                     <ContentView x:DataType="help:ListImageSource">
                                         <Image Source="{Binding ImageSource}"
-                                   Aspect="AspectFit"/>
+                                               Aspect="AspectFit"/>
                                     </ContentView>
                                 </DataTemplate>
                             </CarouselView.ItemTemplate>
                         </CarouselView>
                         <ActivityIndicator Color="Green" 
-                   VerticalOptions="Start"
-                   Margin="0,50,0,0"
-                   IsVisible="{Binding IsLoadingVisible}" 
-                   IsRunning="{Binding IsLoadingVisible}"/>
+                                           VerticalOptions="Start"
+                                           Margin="0,50,0,0"
+                                           IsVisible="{Binding IsLoadingVisible}" 
+                                           IsRunning="{Binding IsLoadingVisible}"/>
                         <IndicatorView
-                        x:Name="indicator"
-                        IndicatorColor="#BBB794"
-                        SelectedIndicatorColor="#88A87F"
-                        HorizontalOptions="Center"
-                        IndicatorSize="10"
+                            x:Name="indicator"
+                            IndicatorColor="#BBB794"
+                            SelectedIndicatorColor="#88A87F"
+                            HorizontalOptions="Center"
+                            IndicatorSize="10"
                             HeightRequest="20"
                             WidthRequest="100"
                             BackgroundColor="Transparent"/>
                     </StackLayout>
-                    <Label Text="{Binding ItemHouse.HouseName}"
-                           Margin="0,10,0,0"
-                           FontAttributes="Bold"
-                           FontFamily="oldStandardItalic"
-                           FontSize="25"
-                           TextColor="#234314"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="{Binding ItemHouse.RoomDescription}"
-                           FontFamily="oldStandardItalic"
-                           FontSize="18"
-                           TextColor="#234314"
-                           HorizontalTextAlignment="Center"/>
-                    <Frame HeightRequest="370" 
-                           WidthRequest="295" 
+                    <Frame 
+                           WidthRequest="320" 
                            CornerRadius="30" 
                            HorizontalOptions="Center">
-                        <Grid>
-                            <StackLayout Orientation="Horizontal" Spacing="0" HorizontalOptions="Center">
-                                <Image Source="sofa.png" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="23" WidthRequest="25"/>
-                                <Label Text="Комплектация" 
-                                       TextColor="#576B57" 
+                        <StackLayout>
+                            <StackLayout>
+                                <Label Text="{Binding ItemHouse.HouseName}"
+                                       Margin="0,10,0,20"
+                                       FontAttributes="Bold"
                                        FontFamily="MaMedium"
-                                       FontSize="18"
-                                       Margin="5,0,0,0"
-                                       VerticalTextAlignment="Start"
+                                       FontSize="20"
+                                       TextColor="#234314"
+                                       HorizontalTextAlignment="Center"/>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Image Source="book" HeightRequest="22.5"/>
+                                    <Label Text="Описание"
+                                           FontSize="18"
+                                           FontFamily="MaMedium"
+                                           HorizontalTextAlignment="Center"
+                                           TextColor="#234314"/>
+                                </StackLayout>
+                                <Label Text="{Binding ItemHouse.RoomDescription}"
+                                       FontFamily="MaMedium"
+                                       FontSize="15"
+                                       TextColor="#234314"
                                        HorizontalTextAlignment="Center"/>
                             </StackLayout>
-                            <Grid Margin="0,10,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <StackLayout Grid.Column="1" 
-                                             Margin="0,25,0,0">
-                                    <StackLayout Orientation="Horizontal" Spacing="0">
-                                        <Image Source="personGreen2" HeightRequest="30"/>
-                                        <Label Text="{Binding ItemHouse.MaxNumberOfPeople}" TextColor="#576B57" FontSize="23" VerticalTextAlignment="Center" Margin="5,0,0,0"/>
-                                        <Image Source="homeGreen2" HeightRequest="30" Margin="20,0,0,0"/>
-                                        <Label Text="{Binding ItemHouse.RoomSize}" TextColor="#576B57" FontSize="23" VerticalTextAlignment="Center"/>
-                                        <Label Text="м²" FontSize="23" TextColor="#576B57" Margin="2,0,0,0"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                                        <Image Source="shower"
-                                               HeightRequest="33"/>
-                                        <Label Text="{Binding ItemHouse.AdditionalCharacteristic}"
-                                               FontFamily="MaMedium"
-                                               TextColor="#576B57"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                                        <Image Source="kitchen"
-                                               HeightRequest="30"/>
-                                        <Label Text="{Binding ItemHouse.AdditionalCharacteristic2}"
-                                               FontFamily="MaMedium"
-                                               TextColor="#576B57"/>
-                                    </StackLayout>
+                            <Grid>
+                                <StackLayout Orientation="Horizontal" Spacing="0" HorizontalOptions="Center">
+                                    <Image Source="sofa.png" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="23" WidthRequest="25"/>
+                                    <Label Text="Комплектация" 
+                                           TextColor="#234314" 
+                                           FontFamily="MaMedium"                                                  
+                                           FontSize="18"
+                                           Margin="5,0,0,0"
+                                           VerticalTextAlignment="Start"
+                                           HorizontalTextAlignment="Center"/>
                                 </StackLayout>
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Grid.Column="1" 
+                                             Margin="0,25,0,0">
+                                        <StackLayout Orientation="Horizontal" Spacing="0">
+                                            <Image Source="personGreen2" HeightRequest="30"/>
+                                            <Label Text="{Binding ItemHouse.MaxNumberOfPeople}" TextColor="#576B57" FontSize="23" VerticalTextAlignment="Center" Margin="5,0,0,0"/>
+                                            <Image Source="homeGreen2" HeightRequest="30" Margin="20,0,0,0"/>
+                                            <Label Text="{Binding ItemHouse.RoomSize}" TextColor="#576B57" FontSize="23" VerticalTextAlignment="Center"/>
+                                            <Label Text="м²" FontSize="23" TextColor="#576B57" Margin="2,0,0,0"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                                            <Image Source="shower"
+                                                   HeightRequest="33"/>
+                                            <Label Text="{Binding ItemHouse.AdditionalCharacteristic}"
+                                                   FontFamily="MaMedium"
+                                                   TextColor="#576B57"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                                            <Image Source="kitchen"
+                                                   HeightRequest="30"/>
+                                            <Label Text="{Binding ItemHouse.AdditionalCharacteristic2}"
+                                                   FontFamily="MaMedium"
+                                                   TextColor="#576B57"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Grid>
                             </Grid>
                             <Button VerticalOptions="End"
-                                    HorizontalOptions="Center"
-                                    WidthRequest="190"
-                                    Text="Забронировать"
-                                    TextTransform="None"
-                                    FontFamily="MaMedium"
-                                    CornerRadius="23"
-                                    FontSize="16"
-                                    TextColor="White"
-                                    BackgroundColor="#607D56"
-                                    Command="{Binding ShowBookingPageCommand}"/>
-                        </Grid>
+                                            HorizontalOptions="Center"
+                                            WidthRequest="190"
+                                            Margin="0,20,0,0"
+                                            Text="Забронировать"
+                                            TextTransform="None"
+                                            FontFamily="MaMedium"
+                                            CornerRadius="23"
+                                            FontSize="16"
+                                            TextColor="White"
+                                            BackgroundColor="#607D56"
+                                            Command="{Binding ShowBookingPageCommand}"/>
+                        </StackLayout>
                     </Frame>
                 </StackLayout>
             </Frame>

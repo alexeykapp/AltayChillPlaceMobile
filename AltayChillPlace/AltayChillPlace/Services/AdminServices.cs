@@ -27,5 +27,18 @@ namespace AltayChillPlace.Services
             var result = await _adminClient.GetAllApplicationSatus();
             return result;
         }
+        public async Task CreateNewApplicationStatusAsync(int idStatus, int idRequest)
+        {
+            await _adminClient.CreateNewApplicationStatusAsync(Convert.ToString(idStatus), idRequest);
+        }
+        public async Task CreateNewPaymenеStatusAsync(int idStatus, int idRequest) 
+        {
+            await _adminClient.CreateNewPaymentStatusAsync(Convert.ToString(idStatus), idRequest);
+        }
+        public async Task<NewPostBlogResponse> CreateNewPostBlogAsync(string title, string description, string date, byte[] photo)
+        {
+            var newPost = await _adminClient.CreateNewPostBlogAsync(title, description, date, photo);
+            return newPost;
+        }
     }
 }

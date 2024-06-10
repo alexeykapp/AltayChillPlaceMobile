@@ -11,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace AltayChillPlace.Views.Admin
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class BookingRequestsAdmin : ContentPage
+	public partial class NewPost : ContentPage
 	{
-		public BookingRequestsAdmin ()
+		public NewPost()
 		{
-			InitializeComponent ();
-            BindingContext = App.AppInitializer.ServiceProvider.GetService<BookingRequestsAdminVM>();
+            InitializeComponent();
+            BindingContext = App.AppInitializer.ServiceProvider.GetService<NewPostBlogVM>();
         }
-    }
+	}
 }

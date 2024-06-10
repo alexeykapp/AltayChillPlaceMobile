@@ -7,6 +7,7 @@
              x:DataType="viewmodels:HousesVM"
              x:Class="AltayChillPlace.Views.Houses"
              NavigationPage.HasNavigationBar="False">
+    
     <ContentPage.Resources>
         <DataTemplate x:Key="HousesData">
             <ViewCell>
@@ -79,7 +80,6 @@
                 </Frame>
             </ViewCell>
         </DataTemplate>
-
         <DataTemplate x:Key="ServicesData">
             <ViewCell>
                 <Frame Padding="10" Margin="10" BackgroundColor="White" CornerRadius="10">
@@ -113,7 +113,6 @@
             </ViewCell>
         </DataTemplate>
     </ContentPage.Resources>
-
     <ContentPage.Content>
         <Grid BackgroundColor="#EFF5FB">
             <Grid.RowDefinitions>
@@ -121,7 +120,6 @@
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
             <Grid Grid.Row="0">
                 <Image Grid.Row="0" Source="logo2.png" HeightRequest="100" WidthRequest="130"/>
                 <ImageButton Grid.Row="0"
@@ -163,14 +161,6 @@
                     </StackLayout>
                 </Frame>
             </Grid>
-            <ActivityIndicator
-                Grid.Row="2"
-                IsVisible="{Binding IsVisibleActivityIndicator}"
-                IsRunning="{Binding IsVisibleActivityIndicator}"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
-                Color="Green"
-                Margin="0,0,0,300"/>
             <Label Text="{Binding TextLabel}" 
                    TextColor="Gray"
                    Grid.Row="2"
@@ -182,7 +172,8 @@
             <Button
                 Text="Обновить"
                 IsVisible="{Binding IsVisibleButtonUpdate}"/>
-            <RefreshView Grid.Row="2" IsRefreshing="{Binding IsRefreshing}" Command="{Binding IsRefreshingCommand}">
+            <RefreshView Grid.Row="2" IsRefreshing="{Binding IsRefreshing}" 
+                         Command="{Binding IsRefreshingCommand}">
                 <ListView Grid.Row="2" x:Name="MyListView" ItemsSource="{Binding CurrentItems}" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="OnItemTapped">
                     <ListView.Header>
                         <custom:HeaderContentView BindingContext="{Binding }"/>

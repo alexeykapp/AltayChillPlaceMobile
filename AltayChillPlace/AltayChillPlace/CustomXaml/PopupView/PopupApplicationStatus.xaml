@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AltayChillPlace.CustomXaml.PopupView.PopupApplicationStatus">
+    <ContentView.Content>
+        <ContentView 
+             BackgroundColor="Transparent"
+             Opacity="1"
+             AbsoluteLayout.LayoutFlags="All"
+             AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+            <Frame BackgroundColor="#EFF5FB"
+                   BorderColor="Black"
+                   Padding="20"
+                   CornerRadius="10"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   WidthRequest="300"
+                   HeightRequest="270">
+                <StackLayout>
+                    <Label Text="Выберите статус заявки:" 
+                           FontAttributes="Bold"
+                           FontSize="17"
+                           TextColor="#234314"
+                           FontFamily="MaMedium"
+                           HorizontalOptions="Center" 
+                           Margin="0,0,0,20" />
+                    <StackLayout>
+                        <RadioButton Content="Подтверждено"
+                                     TextColor="#234314"
+                                     FontFamily="MaMedium"
+                                     FontSize="16"
+                                     GroupName="StatusGroup" 
+                                     IsChecked="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsConfirmed}"/>
+                        <RadioButton Content="Отмена"
+                                     TextColor="#234314" 
+                                     FontSize="16"
+                                     FontFamily="MaMedium"
+                                     GroupName="StatusGroup" 
+                                     IsChecked="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsCancelled}"/>
+                        <RadioButton Content="На рассмотрении" 
+                             TextColor="#234314"
+                             FontSize="16"
+                             FontFamily="MaMedium"
+                             GroupName="StatusGroup" 
+                             IsChecked="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsUnderReview}"/>
+                    </StackLayout>
+                    <Button Text="Далее" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},Path=BindingContext.EditStatusCommand}" 
+                            BackgroundColor="#607D56" 
+                            TextColor="White"
+                            CornerRadius="40"
+                            TextTransform="None"
+                            FontFamily="MaMedium"
+                            Margin="45,20,45,0"/>
+                    <Button Text="Отмена" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},Path=BindingContext.CancelPopupAppCommand}" 
+                            BackgroundColor="Red" 
+                            TextColor="White"
+                            HeightRequest="40"
+                            CornerRadius="40"
+                            TextTransform="None"
+                            FontFamily="MaMedium"
+                            Margin="80,0,80,0"/>
+                </StackLayout>
+            </Frame>
+        </ContentView>
+    </ContentView.Content>
+</ContentView>

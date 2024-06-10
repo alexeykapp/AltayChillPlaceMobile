@@ -55,13 +55,15 @@ namespace AltayChillPlace.Configuration
             services.AddTransient<CarouselVM>();
             services.AddTransient<HousesVM>();
             services.AddTransient<BookingVM>();
-            services.AddTransient<BlogVM>(); 
+            services.AddTransient<BlogVM>();
             services.AddTransient<MainMenuVM>();
             services.AddTransient<BookingRequestsAdminVM>();
+            services.AddTransient<NewPostBlogVM>();
             services.AddTransient<ProfileVM>();
             services.AddTransient<MainMenuAdminVM>();
             services.AddTransient<HistoryBookingVM>();
             services.AddTransient<ServiceModel>();
+            services.AddTransient<BlogAdminVM>();
             services.AddTransient<AuthClient>(provider => new AuthClient(provider.GetService<ApiClient>()));
             services.AddTransient<RegistrationClient>(provider => new RegistrationClient(provider.GetService<ApiClient>()));
             services.AddTransient<HousesDataClient>(provider => new HousesDataClient(provider.GetService<ApiClient>()));

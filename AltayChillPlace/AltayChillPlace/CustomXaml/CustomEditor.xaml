@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AltayChillPlace.CustomXaml.CustomEditor">
+    <Frame BackgroundColor="#FFF9F9F9"
+           CornerRadius="20"
+           Padding="0"
+           HasShadow="False"
+           BorderColor="#809180">
+        <Editor x:Name="editor"
+                BackgroundColor="Transparent"
+                TextColor="Black"
+                Placeholder="Введите текст здесь..."
+                Margin="10"
+                FontSize="15"
+                FontFamily="MaMedium"
+                AutoSize="TextChanges"
+                Text="{Binding Text, Mode=TwoWay}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"/>
+    </Frame>
+</ContentView>
