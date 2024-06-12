@@ -56,6 +56,10 @@
                                TextColor="#234314"
                                VerticalTextAlignment="End"
                                FontFamily="MaMedium"/>
+                                <Grid HeightRequest="30" HorizontalOptions="End">
+                                    <Button BackgroundColor="Transparent"/>
+                                    <Image Source="delete"/>
+                                </Grid>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>

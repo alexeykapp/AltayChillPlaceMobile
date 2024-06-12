@@ -25917,46 +25917,49 @@ namespace AltayChillPlace.Droid
 			public const int priceGreen = 2131165353;
 			
 			// aapt resource value: 0x7F0700AA
-			public const int RegistrationBackground = 2131165354;
+			public const int priceGreen3 = 2131165354;
 			
 			// aapt resource value: 0x7F0700AB
-			public const int SearchButton = 2131165355;
+			public const int RegistrationBackground = 2131165355;
 			
 			// aapt resource value: 0x7F0700AC
-			public const int shower = 2131165356;
+			public const int SearchButton = 2131165356;
 			
 			// aapt resource value: 0x7F0700AD
-			public const int SingIn = 2131165357;
+			public const int shower = 2131165357;
 			
 			// aapt resource value: 0x7F0700AE
-			public const int sizeHomeGreen = 2131165358;
+			public const int SingIn = 2131165358;
 			
 			// aapt resource value: 0x7F0700AF
-			public const int sizeHouse = 2131165359;
+			public const int sizeHomeGreen = 2131165359;
 			
 			// aapt resource value: 0x7F0700B0
-			public const int sofa = 2131165360;
+			public const int sizeHouse = 2131165360;
 			
 			// aapt resource value: 0x7F0700B1
-			public const int telegram = 2131165361;
+			public const int sofa = 2131165361;
 			
 			// aapt resource value: 0x7F0700B2
-			public const int test_custom_background = 2131165362;
+			public const int telegram = 2131165362;
 			
 			// aapt resource value: 0x7F0700B3
-			public const int tooltip_frame_dark = 2131165363;
+			public const int test_custom_background = 2131165363;
 			
 			// aapt resource value: 0x7F0700B4
-			public const int tooltip_frame_light = 2131165364;
+			public const int tooltip_frame_dark = 2131165364;
 			
 			// aapt resource value: 0x7F0700B5
-			public const int UploadingPhotos = 2131165365;
+			public const int tooltip_frame_light = 2131165365;
 			
 			// aapt resource value: 0x7F0700B6
-			public const int vk = 2131165366;
+			public const int UploadingPhotos = 2131165366;
 			
 			// aapt resource value: 0x7F0700B7
-			public const int whatsapp = 2131165367;
+			public const int vk = 2131165367;
+			
+			// aapt resource value: 0x7F0700B8
+			public const int whatsapp = 2131165368;
 			
 			static Drawable()
 			{

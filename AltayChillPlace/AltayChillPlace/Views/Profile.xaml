@@ -35,17 +35,17 @@
                            HorizontalTextAlignment="Center"
                            Style="{StaticResource TextProfileStyle}"/>
                         <custom:EntryCustom Text="{Binding PersonResponce.FirstName, Mode=TwoWay}" 
-                                        ColorBorder="#576B57" 
-                                        TextColor="#576B57" 
-                                        Margin="10,0,10,0"/>
+                                            ColorBorder="#576B57" 
+                                            TextColor="#576B57" 
+                                            Margin="10,0,10,0"/>
                         <Label Text="Отчество"
-                           FontSize="17"
-                           HorizontalTextAlignment="Center"
-                           Style="{StaticResource TextProfileStyle}"/>
+                               FontSize="17"
+                               HorizontalTextAlignment="Center"
+                               Style="{StaticResource TextProfileStyle}"/>
                         <custom:EntryCustom Text="{Binding PersonResponce.MiddleName, Mode=TwoWay}" 
-                                        ColorBorder="#576B57" 
-                                        TextColor="#576B57" 
-                                        Margin="10,0,10,0"/>
+                                            ColorBorder="#576B57" 
+                                            TextColor="#576B57" 
+                                            Margin="10,0,10,0"/>
                         <Label Text="Email" 
                            Style="{StaticResource TextProfileStyle}"
                            HorizontalTextAlignment="Center"
@@ -67,30 +67,31 @@
                                FontSize="17"
                                VerticalTextAlignment="Center"/>
                             <DatePicker VerticalOptions="Center"
-                                    FontFamily="MaMedium"
-                                    TextColor="#576B57"
-                                    WidthRequest="110"
-                                    Date="{Binding PersonResponce.DateOfBerth}"
-                                    IsEnabled="False">
+                                        FontFamily="MaMedium"
+                                        TextColor="#576B57"
+                                        WidthRequest="110"
+                                        Date="{Binding PersonResponce.DateOfBerth}"
+                                        IsEnabled="False">
                                 <DatePicker.Behaviors>
                                     <helpers:DatePickerBehavior/>
                                 </DatePicker.Behaviors>
                             </DatePicker>
                         </StackLayout>
                         <Button Text="Сохранить"
-                            Style="{StaticResource ButtonStyle}"
-                            TextTransform="None"
-                            FontSize="18"
-                            TextColor="White"
-                            IsEnabled="{Binding IsEnabledSaveButton}"
-                            Command="{Binding SaveСhangesCommand}"/>
+                                Style="{StaticResource ButtonStyle}"
+                                TextTransform="None"
+                                FontSize="18"
+                                TextColor="White"
+                                IsEnabled="{Binding IsEnabledSaveButton}"
+                                Command="{Binding SaveСhangesCommand}"/>
                         <Button Text="Выйти из профиля"
-                            FontFamily="MaMedium"
-                            TextTransform="None"
-                            TextColor="White"
-                            CornerRadius="30"
-                            Margin="45,10,45,0"
-                            BackgroundColor="#D77070"/>
+                                FontFamily="MaMedium"
+                                TextTransform="None"
+                                TextColor="White"
+                                CornerRadius="30"
+                                Margin="45,10,45,0"
+                                BackgroundColor="#D77070"
+                                Command="{Binding LogOutCommand}"/>
                     </StackLayout>
                 </Frame>
             </Grid>

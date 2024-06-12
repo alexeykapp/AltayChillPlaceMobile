@@ -23,7 +23,7 @@ namespace AltayChillPlace.CustomXaml
         private void OnDateSelected(object sender, DateChangedEventArgs e)
         {
             if (Date != e.NewDate)
-                Date = e.NewDate; // Обновляет свойство Date, когда пользователь выбирает дату
+                Date = e.NewDate; 
         }
 
         protected override void OnPropertyChanged(string propertyName = null)

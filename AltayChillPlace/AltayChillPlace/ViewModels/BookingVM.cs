@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Diagnostics.SymbolStore;
+using Xamarin.CommunityToolkit.UI.Views.Options;
 using Xamarin.Essentials;
 
 namespace AltayChillPlace.ViewModels
@@ -12,12 +13,13 @@ namespace AltayChillPlace.ViewModels
     public class BookingVM : BindableBase
     {
         private readonly IBookingService _bookingServices;
+        private readonly IProfileService _profileService;
         private int _idUser;
         private string _firstName;
         private string _middleName;
         private string _lastName;
         private string _phoneNumber;
-        private int _numberOfPeople;
+        private int _numberOfPeople = 1;
         // date
 
         private DateTime _arrivalDate = DateTime.Now.AddDays(1);
@@ -30,8 +32,10 @@ namespace AltayChillPlace.ViewModels
         private int _finalPrice;
         private MessageService _messageService;
 
-        public BookingVM(IBookingService bookingService)
+        public BookingVM(IBookingService bookingService, IProfileService profileService)
         {
+            _profileService = profileService;
+            LoadingUserInfo();
             _bookingServices = bookingService;
             _messageService = new MessageService();
             BookingCommand = new DelegateCommand(RequestBooking);
@@ -43,24 +47,33 @@ namespace AltayChillPlace.ViewModels
             var resultCheck = CheckIsEmpty();
             if (resultCheck)
             {
-                int[] arr = new int[1] { 111 };
-                var resultCreate = await _bookingServices.CreateNewBooking(1, house.IdHouse, _numberOfPeople, _arrivalDate, _departureDate);
+                var resultCreate = await _bookingServices.CreateNewBooking(_idUser, house.IdHouse, _numberOfPeople, _arrivalDate, _departureDate);
                 if (resultCreate == null)
                 {
-                    _messageService.ShowPopup("Ошибка","Повторите попытку");
+                    _messageService.ShowPopup("Ошибка", "Повторите попытку");
                 }
                 else
                 {
-                    _messageService.ShowPopup("Успешно!","Ожидайте звонка администратора");
+                    _messageService.ShowPopup("Успешно!", "Ожидайте звонка администратора");
                     EntryEmpty();
                 }
             }
             else
             {
-                _messageService.ShowPopup("Ошибка","Проверьте все поля ввода");
+                _messageService.ShowPopup("Ошибка", "Проверьте все поля ввода");
             }
         }
+        private async void LoadingUserInfo()
+        {
+            _idUser = int.Parse(await SecureStorage.GetAsync("IdUser"));
+            var profile = await _profileService.GetPersonResponce();
+            FirstName = profile.FirstName;
+            LastName = profile.LastName;
+            MiddleName = profile.MiddleName;
+            PhoneNumber = profile.Phone;
 
+            NumberOfPeople = 2;
+        }
         private async void SettingValue()
         {
             FinalPrice = House.PricePerDay;
@@ -122,7 +135,18 @@ namespace AltayChillPlace.ViewModels
         public int NumberOfPeople
         {
             get => _numberOfPeople;
-            set => SetProperty(ref _numberOfPeople, value);
+            set
+            {
+                if (value >= 1)
+                {
+                    SetProperty(ref _numberOfPeople, value);
+                }
+                else
+                {
+                    _messageService.ShowPopup("Ошибка", "Введите корректное количество человек");
+                }
+
+            }
         }
         public HouseResponse House
         {
@@ -142,7 +166,7 @@ namespace AltayChillPlace.ViewModels
         {
             if (string.IsNullOrEmpty(FirstName))
             {
-                _messageService.ShowPopup("Ошибка",$"Пустое поле 'Имя'");
+                _messageService.ShowPopup("Ошибка", $"Пустое поле 'Имя'");
                 return false;
             }
             else if (string.IsNullOrEmpty(MiddleName))
@@ -155,7 +179,7 @@ namespace AltayChillPlace.ViewModels
                 _messageService.ShowPopup("Ошибка", $"Пустое поле 'Фамилия'");
                 return false;
             }
-            else if (!string.IsNullOrEmpty(PhoneNumber))
+            else if (string.IsNullOrEmpty(PhoneNumber))
             {
                 _messageService.ShowPopup("Ошибка", $"Пустое поле 'Телефон'");
                 return false;

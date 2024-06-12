@@ -11,16 +11,17 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
-
+            
             <control:MaskedEntry x:Name="entry" 
-                   Grid.Column="0"
-                   Placeholder=""
-                   VerticalOptions="Center"
-                   BackgroundColor="Transparent"
-                   TextColor="{Binding Source={x:Reference Name=entryPhoneMask}, Path=TextColor}"
-                   Mask="+7(XXX)XXX-XX-XX"
-                   Keyboard="Telephone"
-                   Margin="10,0,0,0">
+                                 Grid.Column="0"
+                                 Placeholder=""
+                                 VerticalOptions="Center"
+                                 BackgroundColor="Transparent"
+                                 TextColor="{Binding Source={x:Reference Name=entryPhoneMask}, Path=TextColor}"
+                                 Mask="+7(XXX)XXX-XX-XX"
+                                 Keyboard="Telephone"
+                                 FontFamily="MaMedium"
+                                 Margin="10,0,0,0">
             </control:MaskedEntry>
             <Image x:Name="icon"
                    Grid.Column="1"

@@ -19,7 +19,7 @@ namespace AltayChillPlace.Models
         public async Task<ObservableCollection<HouseResponse>> GetAllHouses()
         {
             var houses = await _houseDataService.GetAllHouseAsync();
-            ConvertByteToImage(houses);
+            //ConvertByteToImage(houses);
             return houses;
         }
         public async Task<ObservableCollection<TypeHouse>> GetTypeHouses()

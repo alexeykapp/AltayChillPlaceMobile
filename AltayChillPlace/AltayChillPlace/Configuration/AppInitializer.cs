@@ -78,7 +78,7 @@ namespace AltayChillPlace.Configuration
 
         private ApiClient ConfiguringHttpClient()
         {
-            string baseApiAdress = "http://192.168.3.27:5000/api/";
+            string baseApiAdress = "http://83.166.239.93:5001/api/";
             var apiClient = new ApiClient(baseApiAdress);
             return apiClient;
         }

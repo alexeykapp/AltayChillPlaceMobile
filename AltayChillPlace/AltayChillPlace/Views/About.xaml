@@ -28,6 +28,7 @@
                            Под защитой самоедов" 
                            FontFamily="MaMedium" 
                            TextColor="Black"
+                           FontSize="15"
                            HorizontalTextAlignment="Center"/>
                     <Label Text="Расскажу как и где отдохнуть в единении с природой,и получить лучшие впечатления." 
                            FontFamily="MaMedium" TextColor="Black"

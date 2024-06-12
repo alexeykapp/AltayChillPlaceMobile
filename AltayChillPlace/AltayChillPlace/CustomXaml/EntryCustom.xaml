@@ -19,6 +19,7 @@
                    BackgroundColor="Transparent"
                    TextColor="{Binding Source={x:Reference Name=entryCustom}, Path=TextColor}"
                    Text=""
+                   FontFamily="MaMedium"
                    IsPassword="{Binding IsPasswordEntry}"
                    Margin="10,0,0,0"/>
             <Image x:Name="icon" 

@@ -79,6 +79,7 @@
                             FontFamily="MaMedium"
                             FontSize="17"
                             WidthRequest="300"
+                            TextColor="Black"
                             Text="{Binding SearchTextService, Mode=TwoWay}"
                             Placeholder="Search items..."/>
                         <Button
@@ -94,7 +95,7 @@
             </StackLayout>
             <CollectionView
                 IsVisible="{Binding IsVisibleHeaderHouse}"
-                HeightRequest="39" 
+                HeightRequest="44" 
                 WidthRequest="150"
                 Margin="15,0,15,0"
                 x:Name="HousesCollectionView"
@@ -117,7 +118,7 @@
             </CollectionView>
             <CollectionView
                 IsVisible="{Binding IsVisibleHeaderService}"
-                HeightRequest="39" 
+                HeightRequest="44" 
                 WidthRequest="150"
                 Margin="15,0,15,0"
                 x:Name="ServicesCollectionView"

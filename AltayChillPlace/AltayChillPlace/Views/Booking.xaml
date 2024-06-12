@@ -78,7 +78,7 @@
                             </StackLayout>
                         </Grid>
                         <Label Text="Количество человек*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontAttributes="Bold" FontSize="18"/>
-                        <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding NumberOfPeople}" />
+                        <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding NumberOfPeople, Mode=TwoWay}" />
                         <StackLayout Orientation="Horizontal">
                             <Label Text="Доп. место 1000руб/сутки"
                                    FontSize="16"
@@ -101,14 +101,15 @@
                                TextColor="#576B57"
                                HorizontalTextAlignment="Center"/>
                         <StackLayout Orientation="Horizontal" Spacing="0" HorizontalOptions="CenterAndExpand">
-                            <Image Source="priceGreen"
+                            <Image Source="priceGreen3"
                                    WidthRequest="45"
                                    HeightRequest="30"/>
                             <Label Text="{Binding FinalPrice}"
                                FontFamily="MaMedium"
                                FontSize="19"
                                TextColor="#A45723"
-                               HorizontalTextAlignment="Center"/>
+                               HorizontalTextAlignment="Center"
+                                   VerticalOptions="End"/>
                         </StackLayout>
 
                         <Button VerticalOptions="End"
