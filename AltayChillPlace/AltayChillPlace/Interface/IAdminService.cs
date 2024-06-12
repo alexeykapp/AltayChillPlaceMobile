@@ -15,5 +15,6 @@ namespace AltayChillPlace.Interface
         Task CreateNewApplicationStatusAsync(int idStatus, int idRequest);
         Task CreateNewPaymenеStatusAsync(int idStatus, int idRequest);
         Task<NewPostBlogResponse> CreateNewPostBlogAsync(string title, string description, string date, byte[] photo);
+        Task DeletePostBlog(int idPost);
     }
 }

@@ -44,13 +44,12 @@ namespace AltayChillPlace.HttpClientMiddleware
             if (response.StatusCode == HttpStatusCode.Unauthorized && !isRefreshing)
             {
                 isRefreshing = true;
-                _countIsRefreshing++;
                 var newAccessToken = await ObtainNewToken();
 
                 if (newAccessToken == null)
                 {
                     isRefreshing = false;
-                    _countIsRefreshing = 0;
+                    await _tokenService.LogOut();
                     return response;
                 }
 

@@ -18,4 +18,11 @@
 	  <!-- You might also want to define the statusBarColor -->
 	  <item name="android:statusBarColor">#A0CE90</item>
   </style>
+	<style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+		<item name="queryBackground">@android:color/transparent</item>
+		<item name="android:textColorHint">#576B57</item>
+		<item name="android:textColor">#576B57</item>
+		<item name="android:colorControlActivated">#576B57</item>
+		<!-- Цвет нижней линии при выделении -->
+	</style>
 </resources>

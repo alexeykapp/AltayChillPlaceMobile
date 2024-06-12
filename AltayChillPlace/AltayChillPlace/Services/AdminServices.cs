@@ -40,5 +40,9 @@ namespace AltayChillPlace.Services
             var newPost = await _adminClient.CreateNewPostBlogAsync(title, description, date, photo);
             return newPost;
         }
+        public async Task DeletePostBlog(int idPost)
+        {
+            await _adminClient.DeleteBlogPost(idPost);
+        }
     }
 }

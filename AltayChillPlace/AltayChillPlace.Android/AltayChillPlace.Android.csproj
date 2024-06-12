@@ -78,6 +78,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="CustomEditorRenderer.cs" />
     <Compile Include="CustomEntryRenderer.cs" />
+    <Compile Include="CustomSearchBarRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

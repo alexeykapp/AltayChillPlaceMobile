@@ -80,15 +80,16 @@
                             FontSize="17"
                             WidthRequest="300"
                             TextColor="Black"
+                            PlaceholderColor="#576B57"
                             Text="{Binding SearchTextService, Mode=TwoWay}"
                             Placeholder="Search items..."/>
                         <Button
                             ImageSource="searchButton"
-                            Margin="25,0,0,7"
+                            Margin="25,0,5,7"
                             WidthRequest="50"
                             HeightRequest="50"
                             VerticalOptions="EndAndExpand"
-                            Command="{Binding SearchSevicesCommand}"
+                            Command="{Binding SearchServicesCommand}"
                            />
                     </StackLayout>
                 </Grid>

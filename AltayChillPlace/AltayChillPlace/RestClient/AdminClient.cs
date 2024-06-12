@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AltayChillPlace.ApiResponses;
 using AltayChillPlace.ApiResponses.Admin;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
 
 namespace AltayChillPlace.RestClient
 {
@@ -87,6 +88,14 @@ namespace AltayChillPlace.RestClient
             }
             var newPost = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<NewPostBlogResponse>(newPost);
+        }
+        public async Task DeleteBlogPost(int idPost)
+        {
+            var response = await _adminClient.HttpClient.DeleteAsync($"admin/delete/post/{idPost}");
+            if (response == null || response.IsSuccessStatusCode == false)
+            {
+                throw new Exception("Error creating a new status");
+            }
         }
     }
 }

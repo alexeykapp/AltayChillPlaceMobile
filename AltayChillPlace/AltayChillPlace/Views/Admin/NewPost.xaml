@@ -22,7 +22,7 @@
 
             <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
                 <Image Source="background.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+                       AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
             </AbsoluteLayout>
             <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
             <ScrollView Grid.Row="1">
@@ -38,14 +38,14 @@
                         </StackLayout>
                         <StackLayout Margin="30,25,0,0">
                             <Label Text="Название"
-                               Margin="20,0,0,0"
-                               FontSize="18"
-                               Style="{StaticResource TextProfileStyle}"/>
+                                   Margin="20,0,0,0"
+                                   FontSize="18"
+                                   Style="{StaticResource TextProfileStyle}"/>
                             <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Margin="0,0,30,0" Text="{Binding Title}"/>
                             <Label Text="Описание"
-                               Style="{StaticResource TextProfileStyle}"
-                               FontSize="18"
-                               HorizontalOptions="Center"/>
+                                   Style="{StaticResource TextProfileStyle}"
+                                   FontSize="18"
+                                   HorizontalOptions="Center"/>
                             <custom:CustomEditor HeightRequest="260" Margin="0,0,30,0" Text="{Binding Description}"/>
                         </StackLayout>
                         <Button Text="Опубликовать"
@@ -55,6 +55,7 @@
                                 WidthRequest="200"
                                 Margin="0,0,0,20"
                                 Command="{Binding PublicationCommand}"/>
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
                     </StackLayout>
                 </Grid>
             </ScrollView>

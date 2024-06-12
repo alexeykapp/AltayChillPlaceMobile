@@ -1,12 +1,9 @@
 ﻿using AltayChillPlace.NavigationFile;
+using AltayChillPlace.Services;
+using AltayChillPlace.Views;
 using Prism.Commands;
 using Prism.Mvvm;
-using AltayChillPlace.Views;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Security.Cryptography;
-using AltayChillPlace.Services;
+using Xamarin.Essentials;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -27,6 +24,7 @@ namespace AltayChillPlace.ViewModels
             OpenAboutCommand = new DelegateCommand(OpenAbout);
             OpenBlogCommand = new DelegateCommand(OpenBlog);
             OpenProfileCommand = new DelegateCommand(OpenProfile);
+            OpenMapsCommand = new DelegateCommand(OpenMaps);
         }
         private async void OpenAbout()
         {
@@ -51,7 +49,8 @@ namespace AltayChillPlace.ViewModels
         }
         private async void OpenMaps()
         {
-            _messageService.ShowPopup("Предупреждение", "Данная часть приложения находится в разработке");
+            var url = @"https://yandex.ru/maps/org/territoriya_otdykha_altay/146834553289/?ll=86.219533%2C51.298231&z=9";
+            await Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
         }
     }
 }

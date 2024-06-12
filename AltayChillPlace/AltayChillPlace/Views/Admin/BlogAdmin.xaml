@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:AltayChillPlace.ViewModels.Admin"
              xmlns:response="clr-namespace:AltayChillPlace.ApiResponses"
@@ -17,54 +16,56 @@
         <Grid BackgroundColor="Gray">
             <Grid.RowDefinitions>
                 <RowDefinition Height="120"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
             <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
                 <Image Source="background.png" Aspect="AspectFill"
                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
             </AbsoluteLayout>
             <Image Grid.Row="0" Source="headerMainMenu" Aspect="AspectFill"/>
-            <CollectionView ItemsSource="{Binding Posts}" 
+            <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+                <CollectionView ItemsSource="{Binding Posts}" 
                     SelectionMode="None" 
-                    Grid.Row="1" 
                     Margin="15,20,15,0"
                     BackgroundColor="Transparent">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="response:BlogPostsResponce">
-                        <Frame Padding="10"
-                       BackgroundColor="White"
-                       Margin="10, 0, 10, 0"
-                       CornerRadius="10">
-                            <StackLayout>
-                                <Image Source="{Binding Image.Data, Converter={StaticResource ByteArrayToImageSourceConverter}}"
-                               HeightRequest="250"/>
-                                <Label Text="{Binding Title}" 
-                               FontFamily="OldStandardBold"
-                               FontSize="22"
-                               TextColor="#234314"
-                               HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding Content}"
-                               FontFamily="MaMedium"
-                               TextColor="#234314"
-                               HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding PublicationDate, Converter={StaticResource DateConverter}}"
-                               HorizontalTextAlignment="Center"
-                               TextColor="#234314"
-                               VerticalTextAlignment="End"
-                               FontFamily="MaMedium"/>
-                                <Grid HeightRequest="30" HorizontalOptions="End">
-                                    <Button BackgroundColor="Transparent"/>
-                                    <Image Source="delete"/>
-                                </Grid>
-                            </StackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="response:BlogPostsResponce">
+                            <Frame Padding="10"
+                                   BackgroundColor="White"
+                                   Margin="10, 0, 10, 0"
+                                   CornerRadius="10">
+                                <StackLayout>
+                                    <Image Source="{Binding Image.Data, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                                           HeightRequest="250"/>
+                                    <Label Text="{Binding Title}" 
+                                           FontFamily="OldStandardBold"
+                                           FontSize="22"
+                                           TextColor="#234314"
+                                           HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding Content}"
+                                           FontFamily="MaMedium"
+                                           TextColor="#234314"
+                                           HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding PublicationDate, Converter={StaticResource DateConverter}}"
+                                           HorizontalTextAlignment="Center"
+                                           TextColor="#234314"
+                                           VerticalTextAlignment="End"
+                                           FontFamily="MaMedium"/>
+                                    <Grid HeightRequest="30" WidthRequest="25" HorizontalOptions="End">
+                                        <Image Source="delete"/>
+                                        <Button BackgroundColor="Transparent" 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeletePostCommand}"
+                                                CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
