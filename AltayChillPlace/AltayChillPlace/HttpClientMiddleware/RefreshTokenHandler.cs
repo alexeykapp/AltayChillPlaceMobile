@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using AltayChillPlace.Services;
 using AltayChillPlace.NavigationFile;
 using AltayChillPlace.Views;
+using System.Diagnostics;
+using System;
 
 namespace AltayChillPlace.HttpClientMiddleware
 {
@@ -40,28 +42,36 @@ namespace AltayChillPlace.HttpClientMiddleware
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             }
 
-            var response = await base.SendAsync(request, cancellationToken);
-            if (response.StatusCode == HttpStatusCode.Unauthorized && !isRefreshing)
+            try
             {
-                isRefreshing = true;
-                var newAccessToken = await ObtainNewToken();
-
-                if (newAccessToken == null)
+                var response = await base.SendAsync(request, cancellationToken);
+                if (response.StatusCode == HttpStatusCode.Unauthorized && !isRefreshing)
                 {
+                    isRefreshing = true;
+                    var newAccessToken = await ObtainNewToken();
+
+                    if (newAccessToken == null)
+                    {
+                        isRefreshing = false;
+                        await _tokenService.LogOut();
+                        return response;
+                    }
+
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", newAccessToken);
                     isRefreshing = false;
-                    await _tokenService.LogOut();
-                    return response;
+                    _countIsRefreshing = 0;
+                    response = await base.SendAsync(request, cancellationToken);
                 }
 
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", newAccessToken);
-
-                isRefreshing = false;
-                _countIsRefreshing = 0;
-                response = await base.SendAsync(request, cancellationToken);
+                return response;
             }
-
-            return response;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error during request: {ex.Message}");
+                throw;
+            }
         }
+
 
         private async Task<string> ObtainNewToken()
         {

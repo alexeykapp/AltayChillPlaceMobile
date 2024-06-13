@@ -91,7 +91,6 @@ namespace AltayChillPlace.Helpers
                     {
                         var byteArray = ConvertStreamToByteArray(stream);
 
-                        // Логирование размера и первых байтов данных изображения
                         Console.WriteLine($"Image byte array length: {byteArray.Length}");
                         Console.WriteLine($"First 10 bytes: {BitConverter.ToString(byteArray.Take(10).ToArray())}");
 

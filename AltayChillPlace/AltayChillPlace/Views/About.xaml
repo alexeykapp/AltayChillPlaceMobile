@@ -15,45 +15,47 @@
             </AbsoluteLayout>
             <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
             <Grid Grid.Row="1">
-                <StackLayout>
-                    <Image Source="dogs" WidthRequest="200" HeightRequest="200"/>
-                    <Label Text="Altay Chill Place | Аренда | 
+                <ScrollView>
+                    <StackLayout>
+                        <Image Source="dogs" WidthRequest="200" HeightRequest="200"/>
+                        <Label Text="Altay Chill Place | Аренда | 
                            Отдых на Алтае" 
                            FontSize="20"
                            FontFamily="MaMedium" 
                            TextColor="Black" 
                            HorizontalTextAlignment="Center"/>
-                    <Label Text="Красивое место в горах Алтая 🌿 
+                        <Label Text="Красивое место в горах Алтая 🌿 
                            Комфортные домики с удобствам 🏠 
                            Под защитой самоедов" 
                            FontFamily="MaMedium" 
                            TextColor="Black"
                            FontSize="15"
                            HorizontalTextAlignment="Center"/>
-                    <Label Text="Расскажу как и где отдохнуть в единении с природой,и получить лучшие впечатления." 
+                        <Label Text="Расскажу как и где отдохнуть в единении с природой,и получить лучшие впечатления." 
                            FontFamily="MaMedium" TextColor="Black"
                            HorizontalTextAlignment="Center"/>
-                    <StackLayout Orientation="Horizontal"
+                        <StackLayout Orientation="Horizontal"
                                  HorizontalOptions="Center"
                                  Margin="0,35,0,0">
-                        <Grid WidthRequest="50" HeightRequest="50">
-                            <Image Source="telegram" Aspect="AspectFit"/>
-                            <Button BackgroundColor="Transparent" />
-                        </Grid>
-                        <Grid WidthRequest="50" HeightRequest="50">
-                            <Image Source="inst" Aspect="AspectFit"/>
-                            <Button BackgroundColor="Transparent" />
-                        </Grid>
-                        <Grid WidthRequest="50" HeightRequest="50">
-                            <Image Source="vk" Aspect="AspectFit"/>
-                            <Button BackgroundColor="Transparent"/>
-                        </Grid>
-                        <Grid WidthRequest="50" HeightRequest="50">
-                            <Image Source="whatsapp" Aspect="AspectFit"/>
-                            <Button BackgroundColor="Transparent"/>
-                        </Grid>
+                            <Grid WidthRequest="50" HeightRequest="50">
+                                <Image Source="telegram" Aspect="AspectFit"/>
+                                <Button BackgroundColor="Transparent" />
+                            </Grid>
+                            <Grid WidthRequest="50" HeightRequest="50">
+                                <Image Source="inst" Aspect="AspectFit"/>
+                                <Button BackgroundColor="Transparent" />
+                            </Grid>
+                            <Grid WidthRequest="50" HeightRequest="50">
+                                <Image Source="vk" Aspect="AspectFit"/>
+                                <Button BackgroundColor="Transparent"/>
+                            </Grid>
+                            <Grid WidthRequest="50" HeightRequest="50">
+                                <Image Source="whatsapp" Aspect="AspectFit"/>
+                                <Button BackgroundColor="Transparent"/>
+                            </Grid>
+                        </StackLayout>
                     </StackLayout>
-                </StackLayout>
+                </ScrollView>
             </Grid>
         </Grid>
     </ContentPage.Content>

@@ -63,7 +63,8 @@
                         BorderColor="#E0B499"
                         BorderWidth="2"
                         TextColor="#1C3E0D"
-                        Margin="0,730,0,0"/>
+                        Margin="0,730,0,0"
+                        Command="{Binding OpenHousesMenuCommand}"/>
                     <Button
                         Text="Подробнее в блоге"
                         FontSize="15"
@@ -72,7 +73,8 @@
                         BorderColor="#E0B499"
                         BorderWidth="2"
                         TextColor="#1C3E0D"
-                        Margin="0,720,0,0"/>
+                        Margin="0,720,0,0"
+                        Command="{Binding OpenBlogCommand}"/>
                 </StackLayout>
             </Grid>
         </ScrollView>

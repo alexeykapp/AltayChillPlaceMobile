@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using AltayChillPlace.NavigationFile;
 using AltayChillPlace.Views;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.Extensions;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -44,6 +45,10 @@ namespace AltayChillPlace.ViewModels
         private bool _isRefreshing = false;
         private bool _isErrorVisible;
 
+        private Page currentPage;
+
+        private Func<Task> func = () => Task.CompletedTask;
+
         private DateTime _arrivalDate = DateTime.Now.AddDays(1);
         private DateTime _departureDate = DateTime.Now.AddDays(2);
         private DateTime _minDepartureDate = DateTime.Now.AddDays(2);
@@ -63,6 +68,7 @@ namespace AltayChillPlace.ViewModels
             _houseModel = houseModel ?? throw new ArgumentNullException(nameof(houseModel));
             _serviceModel = serviceModel ?? throw new ArgumentNullException(nameof(serviceModel));
             _filteringService = new FilteringService();
+            currentPage = NavigationDispatcher.GetCurrentPage();
 
             InitializeCommands();
             LoadDataAsync();
@@ -92,11 +98,11 @@ namespace AltayChillPlace.ViewModels
                 var typeHouseTask = _houseModel.GetTypeHouses();
                 var typeServiceTask = _serviceModel.GetServicesType();
 
-                await Task.WhenAll(housesTask, servicesTask, typeHouseTask, typeServiceTask);
-
+                await Task.WhenAll(housesTask, typeHouseTask);
                 Houses = await housesTask;
-                Services = await servicesTask;
                 TypeHouses = await typeHouseTask;
+                await Task.WhenAll(servicesTask, typeServiceTask);
+                Services = await servicesTask;
                 TypeServices = await typeServiceTask;
 
                 SetupCurrentItem();
@@ -164,8 +170,7 @@ namespace AltayChillPlace.ViewModels
         {
             var houseResponses = CurrentItems as IEnumerable<HouseResponse>;
             var housesFiltering = _filteringService.FilteringHousesByCategory(houseResponses, item.IdTypeHouse);
-            IsVisibleLabel = housesFiltering.Count == 0;
-            TextLabel = housesFiltering.Count == 0 ? "Нет доступных домов" : string.Empty;
+            UpdateVisibilityForNoHouses(housesFiltering);
             CurrentItems = housesFiltering;
         }
 
@@ -232,17 +237,34 @@ namespace AltayChillPlace.ViewModels
 
         private async void SearchAvailableHouse()
         {
+            IsRefreshing = true;
+            currentPage = NavigationDispatcher.GetCurrentPage();
             try
             {
-                _availableHouses = await _houseModel.GetAvailableHouse(ArrivalDate, DepartureDate);
-                IsVisibleLabel = _availableHouses == null || _availableHouses.Count == 0;
-                TextLabel = IsVisibleLabel ? "Нет доступных домов" : string.Empty;
+                // Загружаем доступные домики
+                var availableHouses = await _houseModel.GetAvailableHouse(ArrivalDate, DepartureDate);
+
+                // Обновляем коллекцию
+                _availableHouses = new ObservableCollection<HouseResponse>(availableHouses);
+
+                // Обновляем видимость и метки
+                UpdateVisibilityForNoHouses(_availableHouses);
+
+                // Снимаем выделение с выбранного типа домика, если есть
                 if (TypeHouseSelected != null)
                 {
                     TypeHouseSelected.IsSelected = false;
                 }
-                CurrentItems = _availableHouses;
+
+                // Обновляем текущие элементы
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    CurrentItems = _availableHouses;
+                });
+
                 IsErrorVisible = false;
+
+                await currentPage.DisplaySnackBarAsync($"Найдено домиков: {_availableHouses.Count}", "", func, duration: TimeSpan.FromSeconds(3));
             }
             catch (Exception ex)
             {
@@ -250,8 +272,17 @@ namespace AltayChillPlace.ViewModels
                 IsErrorVisible = true;
                 TextLabel = $"An error occurred: {ex.Message}";
             }
+            finally
+            {
+                IsRefreshing = false;
+            }
         }
-
+        private void UpdateVisibilityForNoHouses(IEnumerable<HouseResponse> houses)
+        {
+            bool noHouses = houses == null || !houses.Any();
+            IsVisibleLabel = noHouses;
+            //TextLabel = noHouses ? "Нет доступных домов" : string.Empty;
+        }
         public DelegateCommand HouseClickCommand { get; private set; }
         public DelegateCommand ServicesClickCommand { get; private set; }
         public DelegateCommand SearchAvailableCommand { get; private set; }
@@ -330,7 +361,16 @@ namespace AltayChillPlace.ViewModels
         public object CurrentItems
         {
             get => _currentItems;
-            private set => SetProperty(ref _currentItems, value);
+            set {
+                SetProperty(ref _currentItems, value);
+                if (value == null) {
+                    IsVisibleLabel = true;
+                }
+                else
+                {
+                    IsVisibleLabel = false;
+                }
+            }
         }
 
         public bool IsRefreshing

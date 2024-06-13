@@ -48,7 +48,7 @@ namespace AltayChillPlace.Services
         {
             try
             {
-                ObservableCollection<HouseResponse> listTypes = await _housesDataClient.GetAvailableHouseAsync(arrivalDate.ToString(), departureDate.ToString());
+                ObservableCollection<HouseResponse> listTypes = await _housesDataClient.GetAvailableHouseAsync(arrivalDate.ToString("yyyy-MM-dd"), departureDate.ToString("yyyy-MM-dd"));
                 return listTypes;
             }
             catch (Exception ex)

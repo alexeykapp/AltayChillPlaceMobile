@@ -84,6 +84,7 @@
                             Text="{Binding SearchTextService, Mode=TwoWay}"
                             Placeholder="Search items..."/>
                         <Button
+                            BackgroundColor="Transparent"
                             ImageSource="searchButton"
                             Margin="25,0,5,7"
                             WidthRequest="50"

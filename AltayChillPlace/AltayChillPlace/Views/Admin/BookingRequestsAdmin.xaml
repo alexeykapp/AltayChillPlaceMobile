@@ -13,11 +13,11 @@
     <AbsoluteLayout>
         <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="170"/>
+                <RowDefinition Height="130"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
-                <Image Source="background.png" Aspect="AspectFill"
+                <Image Source="background.png" Aspect="AspectFit"
                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
             </AbsoluteLayout>
             <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>

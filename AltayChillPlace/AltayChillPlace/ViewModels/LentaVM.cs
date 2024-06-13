@@ -28,6 +28,7 @@ namespace AltayChillPlace.ViewModels
             InitDate();
             _dataTransferService = dataTransferService;
             OpenHousesMenuCommand = new DelegateCommand(OpenHousesMenu);
+            OpenBlogCommand = new DelegateCommand(OpenBlog);
             DateChangedEventArgs = new Command<DateChangedEventArgs>(ExecuteMethod);
         }
         public void ExecuteMethod(DateChangedEventArgs obj)
@@ -43,7 +44,7 @@ namespace AltayChillPlace.ViewModels
         {
             _dataTransferService.SetData("arrival", ArrivalDate);
             _dataTransferService.SetData("departure", DepartureDate);
-            await NavigationDispatcher.Instance.Navigation.PushAsync(new Houses());
+            await NavigationDispatcher.Instance.PushAndRemovePreviousAsync(new Houses());
         }
         public DateTime ArrivalDate
         {
@@ -88,6 +89,10 @@ namespace AltayChillPlace.ViewModels
             MaxArrivalDate = DateTime.Now.AddMonths(6);
             MaxDepartureDate = DateTime.Now.AddMonths(6);
         }
+        private async void OpenBlog()
+        {
+            await NavigationDispatcher.Instance.PushAndRemovePreviousAsync(new MainMenu());
+        } 
 
     }
 }
