@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace AltayChillPlace.ViewModels.Admin
 {
@@ -40,12 +41,14 @@ namespace AltayChillPlace.ViewModels.Admin
             EditPayStatusCommand = new DelegateCommand(EditPayStatus);
             OpenPopupAppStatusCommand = new DelegateCommand<ReservationResponse>(OpenPopupAppStatus);
             OpenPopupPayStatusCommand = new DelegateCommand<ReservationResponse>(OpenPopupPayStatus);
+            CallClientCommand = new DelegateCommand<ReservationResponse>(CallClient);
             InitializeAsync();
         }
         public DelegateCommand EditStatusCommand { get; set; }
         public DelegateCommand<ReservationResponse> OpenPopupAppStatusCommand { get; set; }
         public DelegateCommand<ReservationResponse> OpenPopupPayStatusCommand { get; set; }
         public DelegateCommand EditPayStatusCommand { get; set;}
+        public DelegateCommand<ReservationResponse> CallClientCommand { get; set; }
         public ObservableCollection<ReservationResponse> ReservationResponses
         {
             get => _reservationResponses;
@@ -57,6 +60,22 @@ namespace AltayChillPlace.ViewModels.Admin
         {
             await LoadingDataRequests();
             await LoadingStatus();
+        }
+        private void CallClient(ReservationResponse reservation)
+        {
+            var phoneNumber = reservation.Client.PhoneNumber;
+            try
+            {
+                PhoneDialer.Open(phoneNumber);
+            }
+            catch (FeatureNotSupportedException ex)
+            {
+                _messageService.ShowPopup("Ошибка", "Телефонный набор не поддерживается на этом устройстве");
+            }
+            catch (Exception ex)
+            {
+                _messageService.ShowPopup("Ошибка", "Не удалось выполнить звонок");
+            }
         }
         private ReservationResponse _currentSelected;
         private async void EditAppStatus()

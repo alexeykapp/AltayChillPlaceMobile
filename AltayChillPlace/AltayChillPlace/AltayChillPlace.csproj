@@ -22,6 +22,7 @@
     <None Remove="Fonts\OldStandardItalic.ttf" />
     <None Remove="Fonts\PoiretOne.ttf" />
     <None Remove="Fonts\windsong.ttf" />
+    <None Remove="Fonts\WindSong-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,7 @@
     <EmbeddedResource Include="Fonts\OldStandardItalic.ttf" />
     <EmbeddedResource Include="Fonts\PoiretOne.ttf" />
     <EmbeddedResource Include="Fonts\windsong.ttf" />
+    <EmbeddedResource Include="Fonts\WindSong-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>

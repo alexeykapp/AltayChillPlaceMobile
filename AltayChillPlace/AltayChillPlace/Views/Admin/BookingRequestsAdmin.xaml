@@ -13,17 +13,19 @@
     <AbsoluteLayout>
         <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="130"/>
+                <RowDefinition Height='1'/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
                 <Image Source="background.png" Aspect="AspectFit"
                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
             </AbsoluteLayout>
-            <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
 
             <Grid Grid.Row="1">
                 <CollectionView ItemsSource="{Binding ReservationResponses}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="data:ReservationResponse">
                             <Frame CornerRadius="30" Opacity="0.7">
@@ -32,47 +34,63 @@
                                         <StackLayout Orientation="Horizontal"
                                                      HorizontalOptions="Center">
                                             <Label Text="Номер заявки: "
+                                                   FontSize="19"
                                                    Style="{StaticResource TextProfileStyle}" Opacity="1"/>
                                             <Label Text="{Binding RequestBooking.Id}"
+                                                   FontSize="19"
                                                    Style="{StaticResource TextProfileStyle}"/>
                                         </StackLayout>
                                         <StackLayout>
                                             <StackLayout Orientation="Horizontal">
                                                 <Label Text="Клиент:"
+                                                       FontSize="18"
                                                         Style="{StaticResource TextProfileStyle}"/>
                                                 <Label Text="{Binding Client.FirstName}"
+                                                       FontSize="18"
                                                        Style="{StaticResource TextProfileStyle}"/>
                                             </StackLayout>
                                             <StackLayout Orientation="Horizontal">
                                                 <Label Text="Дата создания заявки:"
+                                                       FontSize="18"
                                                        Style="{StaticResource TextProfileStyle}"/>
-                                                <Label Text="{Binding RequestBooking.DateOfApplication, Converter={StaticResource DateConvert}}"
-                                                       Style="{StaticResource TextProfileStyle}"/>
-                                            </StackLayout>
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label Text="Дата заезда:"
-                                                       Style="{StaticResource TextProfileStyle}"/>
-                                                <Label Text="{Binding RequestBooking.ArrivalDate, Converter={StaticResource DateConvert}}"
+                                                <Label
+                                                    FontSize="18"
+                                                    Text="{Binding RequestBooking.DateOfApplication, Converter={StaticResource DateConvert}}"
                                                        Style="{StaticResource TextProfileStyle}"/>
                                             </StackLayout>
                                             <StackLayout Orientation="Horizontal">
                                                 <Label Text="Дата заезда:"
+                                                       FontSize="18"
                                                        Style="{StaticResource TextProfileStyle}"/>
-                                                <Label Text="{Binding RequestBooking.DepartureDate, Converter={StaticResource DateConvert}}"
+                                                <Label FontSize="18"
+                                                       Text="{Binding RequestBooking.ArrivalDate, Converter={StaticResource DateConvert}}"
+                                                       Style="{StaticResource TextProfileStyle}"/>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label FontSize="18"
+                                                       Text="Дата заезда:"
+                                                       Style="{StaticResource TextProfileStyle}"/>
+                                                <Label FontSize="18"
+                                                       Text="{Binding RequestBooking.DepartureDate, Converter={StaticResource DateConvert}}"
                                                        Style="{StaticResource TextProfileStyle}"/>
                                             </StackLayout>
                                             <StackLayout Orientation="Horizontal">
                                                 <Label Text="Номер телефона:"
+                                                       FontSize="18"
                                                        Style="{StaticResource TextProfileStyle}"/>
                                                 <Label Text="{Binding Client.PhoneNumber}"
+                                                       FontSize="18"
                                                        Style="{StaticResource TextProfileStyle}"/>
                                             </StackLayout>
+                                            
                                             <StackLayout Spacing="0" >
                                                 <Frame BorderColor="#799D6D" BackgroundColor="Transparent" Padding="6">
                                                     <StackLayout Orientation="Horizontal" Spacing="5">
                                                         <Label Text="Статус заявки:"
+                                                               FontSize="18"
                                                            Style="{StaticResource TextProfileStyle}"/>
                                                         <Label Text="{Binding ApplicationStatus.StatusName}"
+                                                               FontSize="18"
                                                            Style="{StaticResource TextProfileStyle}"/>
                                                         <Grid WidthRequest="20" HeightRequest="20">
                                                             <Image Source="pencil.png"/>
@@ -83,9 +101,11 @@
                                                 </Frame>
                                                 <Frame BorderColor="#799D6D" BackgroundColor="Transparent" Padding="6">
                                                     <StackLayout Orientation="Horizontal" Spacing="5">
-                                                        <Label Text="Статус заявки:"
+                                                        <Label Text="Статус оплаты:"
+                                                               FontSize="18"
                                                            Style="{StaticResource TextProfileStyle}"/>
                                                         <Label Text="{Binding PaymentStatus.PaymentStatusName}"
+                                                               FontSize="18"
                                                            Style="{StaticResource TextProfileStyle}"/>
                                                         <Grid WidthRequest="20" HeightRequest="20">
                                                             <Image Source="pencil.png"/>
@@ -94,13 +114,26 @@
                                                         </Grid>
                                                     </StackLayout>
                                                 </Frame>
-                                                <StackLayout Orientation="Horizontal" Spacing="5">
+                                                <StackLayout Orientation="Horizontal" Spacing="5"
+                                                             Margin="0,5,0,0">
                                                     <Label Text="Итоговая стоимость:"
+                                                           FontSize="18"
                                                            Style="{StaticResource TextProfileStyle}"/>
                                                     <Label Text="{Binding RequestBooking.TotalPrice}"
+                                                           FontSize="18"
                                                            Style="{StaticResource TextProfileStyle}"
                                                            TextColor="#A45723"/>
                                                 </StackLayout>
+                                                <Button Text="Позвонить клиенту"
+                                                    TextTransform="None"
+                                                    FontFamily="MaMedium"
+                                                    CornerRadius="20"
+                                                    FontSize="17"
+                                                    TextColor="White"
+                                                        Margin="0,10,0,0"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CallClientCommand}"
+                                                        CommandParameter="{Binding .}"
+                                                    BackgroundColor="#607D56"/>
                                                 <StackLayout>
                                                 </StackLayout>
                                             </StackLayout>

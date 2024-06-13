@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,29 +15,43 @@ namespace AltayChillPlace.CustomXaml
 
         public static readonly BindableProperty IsPasswordProperty =
             BindableProperty.Create(nameof(IsPasswordEntry), typeof(bool), typeof(EntryCustom), default(bool));
+
         public static readonly BindableProperty TextProperty =
             BindableProperty.Create(nameof(Text), typeof(string), typeof(EntryCustom), default(string), BindingMode.TwoWay);
+
         public static readonly BindableProperty BorderColorProperty =
-     BindableProperty.Create(nameof(ColorBorder), typeof(Color), typeof(EntryCustom), Color.FromHex("#EFF5FB"));
+            BindableProperty.Create(nameof(ColorBorder), typeof(Color), typeof(EntryCustom), Color.FromHex("#EFF5FB"));
+
         public static readonly BindableProperty TextColorProperty =
-   BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(EntryCustom), Color.White);
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(EntryCustom), Color.White);
+
+        public static readonly BindableProperty FrameBackgroundColorProperty =
+            BindableProperty.Create(nameof(FrameBackgroundColor), typeof(Color), typeof(EntryCustom), Color.Transparent);
+
         public EntryCustom()
         {
             InitializeComponent();
-            entry.Text = Text;
-            entry.IsPassword = IsPasswordEntry;
             entry.TextChanged += OnTextChanged;
         }
+
         public Color ColorBorder
         {
             get => (Color)GetValue(BorderColorProperty);
             set => SetValue(BorderColorProperty, value);
         }
+
         public Color TextColor
         {
             get => (Color)GetValue(TextColorProperty);
             set => SetValue(TextColorProperty, value);
         }
+
+        public Color FrameBackgroundColor
+        {
+            get => (Color)GetValue(FrameBackgroundColorProperty);
+            set => SetValue(FrameBackgroundColorProperty, value);
+        }
+
         public ImageSource IconSource
         {
             get => (ImageSource)GetValue(IconSourceProperty);
@@ -53,6 +63,7 @@ namespace AltayChillPlace.CustomXaml
             get => (string)GetValue(PlaceholderProperty);
             set => SetValue(PlaceholderProperty, value);
         }
+
         public bool IsPasswordEntry
         {
             get => (bool)GetValue(IsPasswordProperty);
@@ -64,10 +75,12 @@ namespace AltayChillPlace.CustomXaml
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
+
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            Text = e.NewTextValue; // Обновляет свойство Text, когда пользователь вводит текст в Entry
+            Text = e.NewTextValue;
         }
+
         protected override void OnPropertyChanged(string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);

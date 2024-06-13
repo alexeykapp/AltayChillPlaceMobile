@@ -17,12 +17,12 @@
                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
         </AbsoluteLayout>
 
-        <StackLayout HorizontalOptions="Center">
+        <StackLayout HorizontalOptions="Center" Spacing="5">
             <Label Text="Welcome" 
-                   FontFamily="poiretone" 
+                   FontFamily="WindRegular" 
                    TextColor="#EFF5FB" 
-                   FontSize="{OnIdiom Phone=70}"
-             HorizontalOptions="Center" Opacity="0.6" Margin="0"/>
+                   FontSize="{OnIdiom Phone=77}"
+             HorizontalOptions="Center" Opacity="0.6" Margin="0,20,0,0"/>
             <Label Text="Добро пожаловать!" FontFamily="poiretone" TextColor="#EFF5FB" FontSize="{OnIdiom Phone=30}"
             HorizontalOptions="Center" Margin="0"/>
             <Label Text="Номер телефона" FontFamily="MaMedium" TextColor="#C3C7C6" HorizontalOptions="Center" Margin="0,100,0,0" FontSize="18"/>

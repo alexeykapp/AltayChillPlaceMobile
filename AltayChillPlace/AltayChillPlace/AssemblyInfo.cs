@@ -11,3 +11,4 @@ using Xamarin.Forms.Xaml;
 [assembly: ExportFont("MontserratAlternatesMedium.ttf", Alias = "MaMedium")]
 [assembly: ExportFont("OldStandardBold.ttf", Alias = "OldStandBold")]
 [assembly: ExportFont("MontserratAlternatesRegular.ttf", Alias = "MaRegular")]
+[assembly: ExportFont("WindSong-Regular.ttf", Alias = "WindRegular")]
