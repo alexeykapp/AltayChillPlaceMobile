@@ -20,7 +20,6 @@ namespace AltayChillPlace.ViewModels
         private string _lastName;
         private string _phoneNumber;
         private int _numberOfPeople = 1;
-        // date
 
         private DateTime _arrivalDate = DateTime.Now.AddDays(1);
         private DateTime _departureDate = DateTime.Now.AddDays(2);

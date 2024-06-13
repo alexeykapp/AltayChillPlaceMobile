@@ -13,14 +13,18 @@
     <AbsoluteLayout>
         <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
             <Grid.RowDefinitions>
-                <RowDefinition Height='1'/>
+                <RowDefinition Height='50'/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
                 <Image Source="background.png" Aspect="AspectFit"
                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
             </AbsoluteLayout>
-
+            <Picker Grid.Row="0" Title="Выберите статус"
+                    ItemsSource="{Binding ApplicationStatuses, Mode=TwoWay}"
+                    ItemDisplayBinding="{Binding StatusName}"
+                    SelectedItem="{Binding SelectedStatus2, Mode=TwoWay}">
+            </Picker>
             <Grid Grid.Row="1">
                 <CollectionView ItemsSource="{Binding ReservationResponses}">
                     <CollectionView.ItemsLayout>

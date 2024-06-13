@@ -39,9 +39,9 @@
             <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0" >
                 <StackLayout Orientation="Vertical" Spacing="0" Margin="0,0,30,0" IsVisible="{Binding IsVisibleHeaderHouse}">
                     <Label Text="Дата заезда"
-                           FontSize="15"
+                           FontSize="16"
                            FontFamily="MaMedium"/>
-                    <DatePicker FontSize="15"
+                    <DatePicker FontSize="16"
                                 FontFamily="MaMedium"
                                 MinimumDate="{Binding MinArrivalDate}" 
                                 MaximumDate="{Binding MaxArrivalDate}"
@@ -53,11 +53,11 @@
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Spacing="0" IsVisible="{Binding IsVisibleHeaderHouse}">
                     <Label Text="Дата выезда"
-                           FontSize="15"
+                           FontSize="16"
                            FontFamily="MaMedium"/>
                     <DatePicker CharacterSpacing="0" 
                                 FontFamily="MaMedium"
-                                FontSize="15" 
+                                FontSize="16" 
                                 MinimumDate="{Binding MinDepartureDate}"
                                 MaximumDate="{Binding MaxDepartureDate}"        
                                 Date="{Binding DepartureDate}">
