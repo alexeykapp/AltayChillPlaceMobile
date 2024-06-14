@@ -25,9 +25,9 @@
             <Image Grid.Row="0" Source="headerMainMenu" Aspect="AspectFill"/>
             <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
                 <CollectionView ItemsSource="{Binding Posts}" 
-                    SelectionMode="None" 
-                    Margin="15,20,15,0"
-                    BackgroundColor="Transparent">
+                                SelectionMode="None" 
+                                Margin="15,20,15,0"
+                                BackgroundColor="Transparent">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
                     </CollectionView.ItemsLayout>
@@ -38,8 +38,12 @@
                                    Margin="10, 0, 10, 0"
                                    CornerRadius="10">
                                 <StackLayout>
-                                    <Image Source="{Binding Image.Data, Converter={StaticResource ByteArrayToImageSourceConverter}}"
-                                           HeightRequest="250"/>
+                                    <Frame Padding="0" CornerRadius="20" Margin="15,5,15,0">
+                                        <Image Source="{Binding Image.Data, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                                           HeightRequest="250"
+                                           VerticalOptions="Center"
+                                           Aspect="AspectFill"/>
+                                    </Frame>
                                     <Label Text="{Binding Title}" 
                                            FontFamily="OldStandardBold"
                                            FontSize="22"
@@ -58,7 +62,7 @@
                                         <Image Source="delete"/>
                                         <Button BackgroundColor="Transparent" 
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeletePostCommand}"
-                                                CommandParameter="{Binding .}" />
+                                                CommandParameter="{Binding .}" /> 
                                     </Grid>
                                 </StackLayout>
                             </Frame>
@@ -66,6 +70,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </RefreshView>
+            
         </Grid>
     </ContentPage.Content>
 </ContentPage>

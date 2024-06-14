@@ -73,7 +73,7 @@ namespace AltayChillPlace.ViewModels
 
             NumberOfPeople = 2;
         }
-        private async void SettingValue()
+        private void SettingValue()
         {
             FinalPrice = House.PricePerDay;
             //var id = await SecureStorage.GetAsync("IdUser");
@@ -136,15 +136,15 @@ namespace AltayChillPlace.ViewModels
             get => _numberOfPeople;
             set
             {
-                if (value >= 1)
+                if (value <= 1)
                 {
-                    SetProperty(ref _numberOfPeople, value);
+                    SetProperty(ref _numberOfPeople, value); 
                 }
                 else
                 {
-                    _messageService.ShowPopup("Ошибка", "Введите корректное количество человек");
+                    _messageService.ShowPopup("Ошибка", "Введите другое число человек");
                 }
-
+               
             }
         }
         public HouseResponse House
