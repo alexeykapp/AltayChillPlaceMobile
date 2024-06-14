@@ -5,6 +5,7 @@
              xmlns:data="clr-namespace:AltayChillPlace.ApiResponses.Admin"
              xmlns:helpers="clr-namespace:AltayChillPlace.Helpers"
              xmlns:popup="clr-namespace:AltayChillPlace.CustomXaml.PopupView"
+             xmlns:response="clr-namespace:AltayChillPlace.ApiResponses.Admin"
              x:DataType="viewmodel:BookingRequestsAdminVM"
              x:Class="AltayChillPlace.Views.Admin.BookingRequestsAdmin">
     <ContentPage.Resources>
@@ -13,26 +14,50 @@
     <AbsoluteLayout>
         <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
             <Grid.RowDefinitions>
-                <RowDefinition Height='50'/>
+                <RowDefinition Height='1'/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
                 <Image Source="background.png" Aspect="AspectFit"
                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
             </AbsoluteLayout>
-            <Picker Grid.Row="0" Title="Выберите статус"
-                    ItemsSource="{Binding ApplicationStatuses, Mode=TwoWay}"
-                    ItemDisplayBinding="{Binding StatusName}"
-                    SelectedItem="{Binding SelectedStatus2, Mode=TwoWay}">
-            </Picker>
             <Grid Grid.Row="1">
-                <CollectionView ItemsSource="{Binding ReservationResponses}">
+                <CollectionView ItemsSource="{Binding CurrentList}">
+                    <CollectionView.Header>
+                        <StackLayout>
+                            <Label Text="Заявки бронирования"
+                                   FontFamily="MaMedium"
+                                   TextColor="#576B57"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="24"
+                                   Margin="0,10,0,0"/>
+                        <StackLayout Orientation="Horizontal">
+                        <Picker Grid.Row="0" Title="Выберите статус"
+                                ItemsSource="{Binding ApplicationStatuses, Mode=TwoWay}"
+                                ItemDisplayBinding="{Binding Status}"
+                                SelectedItem="{Binding SelectedStatus2}"
+                                FontFamily="MaMedium"
+                                FontSize="18"
+                                WidthRequest="270"
+                                TextColor="#576B57"/>
+                            <Button
+                                Text="Отменить"
+                                HeightRequest="15"
+                                TextTransform="None"
+                                TextColor="White"
+                                BackgroundColor="#607D56"
+                                CornerRadius="30"
+                                Command="{Binding CancellationPickerCommand}"
+                                IsEnabled="{Binding IsEnableButton}"/>
+                            </StackLayout>
+                            </StackLayout>
+                    </CollectionView.Header>
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="data:ReservationResponse">
-                            <Frame CornerRadius="30" Opacity="0.7">
+                            <Frame CornerRadius="30" Opacity="0.8">
                                 <Grid>
                                     <StackLayout>
                                         <StackLayout Orientation="Horizontal"

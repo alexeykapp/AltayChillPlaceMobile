@@ -14,13 +14,14 @@ namespace AltayChillPlace.ViewModels.Admin
 {
     public class BookingRequestsAdminVM : BindableBase
     {
-        private ApplicationStatus _selectedStatus2;
+        private ApplicationStatusResponse _selectedStatus2;
         private IAdminService _adminService;
         private IMessageService _messageService;
         private bool _popupAppStatusIsVisible;
         private bool _popupPayStatusIsVisible;
         private ApplicationStatusResponse _selectedStatus;
         private ObservableCollection<ReservationResponse> _reservationResponses;
+        private ObservableCollection<ReservationResponse> _currentList;
         private ObservableCollection<ApplicationStatusResponse> _applicationStatusResponses;
         private ObservableCollection<ReservationResponse> _filteredReservationResponses;
 
@@ -33,6 +34,8 @@ namespace AltayChillPlace.ViewModels.Admin
         private bool _isPaid;
         private bool _isRefunded;
 
+        private bool _isEnableButton;
+
         public BookingRequestsAdminVM(IAdminService adminService, IMessageService messageService)
         {
             _adminService = adminService;
@@ -44,6 +47,7 @@ namespace AltayChillPlace.ViewModels.Admin
             OpenPopupAppStatusCommand = new DelegateCommand<ReservationResponse>(OpenPopupAppStatus);
             OpenPopupPayStatusCommand = new DelegateCommand<ReservationResponse>(OpenPopupPayStatus);
             CallClientCommand = new DelegateCommand<ReservationResponse>(CallClient);
+            CancellationPickerCommand = new DelegateCommand(CancellationPicker);
             InitializeAsync();
         }
 
@@ -54,6 +58,7 @@ namespace AltayChillPlace.ViewModels.Admin
         public DelegateCommand<ReservationResponse> CallClientCommand { get; set; }
         public DelegateCommand CancelPopupAppCommand { get; set; }
         public DelegateCommand CancelPopupPayCommand { get; set; }
+        public DelegateCommand CancellationPickerCommand { get; set; }
 
         public ObservableCollection<ReservationResponse> ReservationResponses
         {
@@ -79,15 +84,28 @@ namespace AltayChillPlace.ViewModels.Admin
             set => SetProperty(ref _applicationStatusResponses, value);
         }
 
-        public ApplicationStatus SelectedStatus2
+        public ApplicationStatusResponse SelectedStatus2
         {
             get => _selectedStatus2;
             set
             {
-                if (SetProperty(ref _selectedStatus2, value))
+                if (value == null)
                 {
-                    FilterReservations();
+                    IsEnableButton = false;
                 }
+                else
+                {
+                    IsEnableButton = true;
+                }
+                    if (SetProperty(ref _selectedStatus2, value))
+                    {
+                        FilterReservations();
+                    }
+                //}
+                //else
+                //{
+                  //  IsEnableButton = false;
+                //}
             }
         }
 
@@ -105,6 +123,7 @@ namespace AltayChillPlace.ViewModels.Admin
                 if (applications != null)
                 {
                     ReservationResponses = applications;
+                    CurrentList = applications;
                 }
             }
             catch (Exception ex)
@@ -135,15 +154,25 @@ namespace AltayChillPlace.ViewModels.Admin
         {
             if (SelectedStatus2 == null)
             {
-                FilteredReservationResponses = new ObservableCollection<ReservationResponse>(ReservationResponses);
+                FilteredReservationResponses = ReservationResponses;
             }
             else
             {
-                FilteredReservationResponses = new ObservableCollection<ReservationResponse>(
-                    ReservationResponses.Where(r => r.ApplicationStatus.StatusName == SelectedStatus2.StatusName));
+                var list = ReservationResponses.Where(r => r.ApplicationStatus.StatusName == SelectedStatus2.Status).ToList();
+                CurrentList = new ObservableCollection<ReservationResponse>(list);
             }
         }
-
+        public ObservableCollection<ReservationResponse> CurrentList
+        {
+            get => _currentList;
+            set => SetProperty(ref _currentList, value);
+        }
+        private void CancellationPicker()
+        {
+            SelectedStatus2 = null;
+            IsEnableButton = false;
+            CurrentList = ReservationResponses;
+        }
         private void CallClient(ReservationResponse reservation)
         {
             var phoneNumber = reservation.Client.PhoneNumber;
@@ -327,6 +356,11 @@ namespace AltayChillPlace.ViewModels.Admin
         {
             get => _isRefunded;
             set => SetProperty(ref _isRefunded, value);
+        }
+        public bool IsEnableButton
+        {
+            get => _isEnableButton;
+            set => SetProperty(ref _isEnableButton, value);
         }
     }
 }
