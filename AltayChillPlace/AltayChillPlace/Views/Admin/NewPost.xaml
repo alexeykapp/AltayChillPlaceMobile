@@ -5,9 +5,7 @@
              xmlns:viewmodel="clr-namespace:AltayChillPlace.ViewModels.Admin"
              xmlns:custom="clr-namespace:AltayChillPlace.CustomXaml"
              xmlns:helpers="clr-namespace:AltayChillPlace.Helpers"
-             xmlns:toolkit="http://xamarin.com/schemas/2020/toolkit"
              x:DataType="viewmodel:NewPostBlogVM">
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <helpers:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
@@ -41,7 +39,7 @@
                                    Margin="20,0,0,0"
                                    FontSize="18"
                                    Style="{StaticResource TextProfileStyle}"/>
-                            <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Margin="0,0,30,0" Text="{Binding Title}"/>
+                            <custom:EntryCustom TextColor="#234314" FrameBackgroundColor="White" ColorBorder="#576B57" Margin="0,0,30,0" Text="{Binding Title}"/>
                             <Label Text="Описание"
                                    Style="{StaticResource TextProfileStyle}"
                                    FontSize="18"
