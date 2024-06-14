@@ -29,7 +29,6 @@
             </AbsoluteLayout>
             <Image Grid.Row="0" Source="headerMainMenu" Aspect="AspectFill"/>
 
-            <!-- Обновленный RefreshView с привязкой IsRefreshing и обработчиком события Refreshing -->
             <RefreshView Grid.Row="1" 
                          IsRefreshing="{Binding IsRefreshing}"
                          Command="{Binding RefreshCommand}">
@@ -47,8 +46,12 @@
                                    Margin="10, 0, 10, 0"
                                    CornerRadius="10">
                                 <StackLayout>
-                                    <Image Source="{Binding Image.Data, Converter={StaticResource ByteArrayToImageSourceConverter}}"
-                                           HeightRequest="250"/>
+                                    <Frame Padding="0" CornerRadius="20" Margin="15,5,15,0">
+                                        <Image Source="{Binding Image.Data, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                                           HeightRequest="250"
+                                           VerticalOptions="Center"
+                                           Aspect="AspectFill"/>
+                                    </Frame>
                                     <Label Text="{Binding Title}" 
                                            FontFamily="OldStandardBold"
                                            FontSize="22"

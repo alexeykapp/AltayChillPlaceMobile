@@ -23,14 +23,14 @@
                             HeightRequest="30"
                             WidthRequest="30"/>
                         <StackLayout Orientation="Horizontal" Padding="3"  IsVisible="{Binding IsVisibleHouseList}">
-                            <Frame HorizontalOptions="Start" VerticalOptions="Center" Padding="0" HeightRequest="130" CornerRadius="15">
+                            <Frame HorizontalOptions="Start" VerticalOptions="Center" Padding="0" HeightRequest="140" CornerRadius="15">
                                 <Image Source="{Binding PhotoOfTheRoom.Data, Converter={StaticResource ConverterByteToImage}}"
                                        WidthRequest="145"
                                 Aspect="AspectFill"/>
                             </Frame>
                             <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand" Margin="10,0,0,0" Spacing="0">
                                 <Label Text="{Binding HouseName}" 
-                               FontSize="17" 
+                               FontSize="17.5" 
                                FontFamily="OldStandBold"
                                TextColor="#234314"/>
                                 <Label Text="{Binding RoomDescription}"
@@ -38,27 +38,25 @@
                                    FontFamily="MaMedium"
                                    Opacity="0.6"
                                    Margin="0,5,0,0"
-                                   MaxLines="2"/>
+                                   MaxLines="3"/>
                                 <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" Spacing="0">
                                     <Image Source="personGreen.png"
-                                       HeightRequest="25"
-                                       WidthRequest="20"/>
+                                       HeightRequest="27"
+                                       WidthRequest="27"/>
                                     <Label 
                                         Text="{Binding MaxNumberOfPeople}"
                                         VerticalOptions="Center"
                                         FontFamily="MaMedium"
                                         FontSize="15"/>
-                                    <Image Source="sizeHomeGreen.png"
-                                           HeightRequest="25"
-                                           Margin="10,0,0,0"
-                                           WidthRequest="25"/>
+                                    <Image Source="homeGreen2.png"
+                                           HeightRequest="19"
+                                           Margin="10,0,3,0"
+                                           WidthRequest="19"/>
                                     <Label Text="{Binding RoomSize}"
                                            FontFamily="MaMedium"
                                            VerticalOptions="Center"/>
-                                    <Image Source="cube.png"
-                                           VerticalOptions="StartAndExpand"
-                                           HeightRequest="22"
-                                           WidthRequest="22"/>
+                                    <Label Text="м²"
+                                           VerticalOptions="Center"/>
                                     <Image Source="priceGreen3.png"
                                            HeightRequest="26"
                                            WidthRequest="21"
@@ -68,6 +66,10 @@
                                         VerticalOptions="Center"
                                         FontFamily="MaMedium"
                                         TextColor="#A45723"/>
+                                    <Label
+                                        Text="₽"
+                                        TextColor="#A45723"
+                                        VerticalTextAlignment="Center"/>
                                 </StackLayout>
                                 <Label Text="Цена за сутки*"
                                        FontSize="10"

@@ -21,36 +21,40 @@
                    CornerRadius="50" 
                    Margin="6,0,6,20">
                 <StackLayout Spacing="5" HorizontalOptions="FillAndExpand">
-                    <StackLayout>
-                        <CarouselView ItemsSource="{Binding ListImageSources}"
-                                      HeightRequest="250"
-                                      WidthRequest="270"
-                                      IndicatorView="{x:Reference Name=indicator}"
-                                      Loop="False">
-                            <CarouselView.ItemTemplate>
-                                <DataTemplate>
-                                    <ContentView x:DataType="help:ListImageSource">
-                                        <Image Source="{Binding ImageSource}"
-                                               Aspect="AspectFit"/>
-                                    </ContentView>
-                                </DataTemplate>
-                            </CarouselView.ItemTemplate>
-                        </CarouselView>
-                        <ActivityIndicator Color="Green" 
-                                           VerticalOptions="Start"
-                                           Margin="0,50,0,0"
-                                           IsVisible="{Binding IsLoadingVisible}" 
-                                           IsRunning="{Binding IsLoadingVisible}"/>
-                        <IndicatorView
-                            x:Name="indicator"
-                            IndicatorColor="#BBB794"
-                            SelectedIndicatorColor="#88A87F"
-                            HorizontalOptions="Center"
-                            IndicatorSize="10"
-                            HeightRequest="20"
-                            WidthRequest="100"
-                            BackgroundColor="Transparent"/>
-                    </StackLayout>
+                    <Frame CornerRadius="20" Padding="0">
+                        <StackLayout>
+                            <CarouselView ItemsSource="{Binding ListImageSources}"
+                                          HeightRequest="330"
+                                          WidthRequest="270"
+                                          IndicatorView="{x:Reference Name=indicator}"
+                                          Loop="False">
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid x:DataType="help:ListImageSource">
+                                            <Image Source="{Binding ImageSource}"
+                                                   Aspect="AspectFill"
+                                                   HorizontalOptions="FillAndExpand"
+                                                   VerticalOptions="FillAndExpand"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                            <ActivityIndicator Color="Green" 
+                                               VerticalOptions="Start"
+                                               Margin="0,50,0,0"
+                                               IsVisible="{Binding IsLoadingVisible}" 
+                                               IsRunning="{Binding IsLoadingVisible}"/>
+                        </StackLayout>
+                    </Frame>
+                    <IndicatorView
+                                x:Name="indicator"
+                                IndicatorColor="#BBB794"
+                                SelectedIndicatorColor="#88A87F"
+                                HorizontalOptions="Center"
+                                IndicatorSize="10"
+                                HeightRequest="20"
+                                WidthRequest="100"
+                                BackgroundColor="Transparent"/>
                     <Frame 
                            WidthRequest="320" 
                            CornerRadius="30" 
