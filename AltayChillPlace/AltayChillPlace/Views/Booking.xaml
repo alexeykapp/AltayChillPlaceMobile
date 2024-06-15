@@ -26,12 +26,12 @@
                                Margin="0,0,0,0"
                                HorizontalTextAlignment="Center"/>
                         <StackLayout HorizontalOptions="Center" Margin="0,30,0,0">
-                            <Label Text="Имя*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontAttributes="Bold" FontSize="18"/>
-                            <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding FirstName}"/>
-                            <Label Text="Фамилия*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
-                            <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding MiddleName}"/>
-                            <Label Text="Отчество" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
+                            <Label Text="Фамилия*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontAttributes="Bold" FontSize="18"/>
                             <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding LastName}"/>
+                            <Label Text="Имя*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
+                            <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding FirstName}"/>
+                            <Label Text="Отчество" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
+                            <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding MiddleName}"/>
                             <Label Text="Номер телефона*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
                             <custom:EntryPhoneMask TextColor="#234314" ColorBorder="#576B57" Text="{Binding PhoneNumber}"/>
                             <Grid>
@@ -85,8 +85,9 @@
                                        FontSize="16"
                                        FontFamily="MaMedium"
                                        TextColor="#576B57"
-                                       VerticalTextAlignment="Center"/>
-                                <CheckBox Color="#576B57" />
+                                       VerticalTextAlignment="Center"
+                                       />
+                                <CheckBox Color="#576B57" IsChecked="{Binding IsCheckAddPlace}"/>
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
                                 <Label Text="Обед 600руб/на 1-ого гостя"
@@ -94,7 +95,7 @@
                                        FontFamily="MaMedium"
                                        TextColor="#576B57"
                                        VerticalTextAlignment="Center"/>
-                                <CheckBox Color="#576B57" />
+                                <CheckBox Color="#576B57" IsChecked="{Binding IsCheckDinner}"/>
                             </StackLayout>
                             <Label Text="Итоговая сумма"
                                    FontSize="16"

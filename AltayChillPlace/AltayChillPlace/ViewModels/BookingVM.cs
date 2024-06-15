@@ -56,7 +56,6 @@ namespace AltayChillPlace.ViewModels
         {
             IsRefreshing = true;
 
-            // Действия по обновлению данных
             await LoadingUserInfo();
 
             IsRefreshing = false;
@@ -68,7 +67,7 @@ namespace AltayChillPlace.ViewModels
             if (resultCheck)
             {
                 var resultCreate = await _bookingServices.CreateNewBooking(_idUser, house.IdHouse, _numberOfPeople, _arrivalDate, _departureDate);
-                                    if (resultCreate == null)
+                if (resultCreate == null)
                 {
                     _messageService.ShowPopup("Ошибка", "Повторите попытку");
                 }
@@ -218,7 +217,7 @@ namespace AltayChillPlace.ViewModels
             MiddleName = string.Empty;
             LastName = string.Empty;
             PhoneNumber = string.Empty;
-            NumberOfPeople = 0;
+            NumberOfPeople = 2;
         }
 
         private void CheckValuePeople(int value)
@@ -227,6 +226,40 @@ namespace AltayChillPlace.ViewModels
             {
                 NumberOfPeople = 1;
                 _messageService.ShowPopup("Ошибка", "Введите другое число человек");
+            }
+        }
+        private bool isCheckAddPlace;
+        public bool IsCheckAddPlace
+        {
+            get => isCheckAddPlace;
+            set
+            {
+                if (value == true)
+                {
+                    FinalPrice += 1000;
+                }
+                else if (isCheckAddPlace == true && value == false)
+                {
+                    FinalPrice -= 1000;
+                }
+                SetProperty(ref isCheckAddPlace, value);
+            }
+        }
+        private bool isCheckDinner;
+        public bool IsCheckDinner
+        {
+            get => isCheckDinner;
+            set
+            {
+                if(value == true)
+                {
+                    FinalPrice += 600;
+                }
+                else if (isCheckDinner == true && value == false)
+                {
+                    FinalPrice -= 600;
+                }
+                SetProperty(ref isCheckDinner, value);
             }
         }
     }
