@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using AltayChillPlace.Services;
 using AltayChillPlace.NavigationFile;
 using AltayChillPlace.Views;
-using System.Diagnostics;
 using System;
 
 namespace AltayChillPlace.HttpClientMiddleware
