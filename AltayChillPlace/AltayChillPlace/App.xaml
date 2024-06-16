@@ -13,18 +13,15 @@
         <ResourceDictionary>
             <DataTemplate x:Key="Item1Template">
                 <ViewCell>
-                    <!-- Здесь определите отображение для ItemType1 -->
                     <Label Text="{Binding PropertyOfItem1}" />
                 </ViewCell>
             </DataTemplate>
 
             <DataTemplate x:Key="Item2Template">
                 <ViewCell>
-                    <!-- Здесь определите отображение для ItemType2 -->
                     <Label Text="{Binding PropertyOfItem2}" />
                 </ViewCell>
             </DataTemplate>
-            <!-- Другие глобальные ресурсы -->
             
         </ResourceDictionary>
         <Style x:Key="TextProfileStyle" TargetType="Label">

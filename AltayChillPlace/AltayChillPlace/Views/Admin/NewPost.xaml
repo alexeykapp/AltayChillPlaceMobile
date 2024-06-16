@@ -35,7 +35,7 @@
                             </Grid>
                         </StackLayout>
                         <StackLayout Margin="30,25,0,0">
-                            <Label Text="Название"
+                            <Label Text="Заголовок"
                                    Margin="20,0,0,0"
                                    FontSize="18"
                                    Style="{StaticResource TextProfileStyle}"/>
@@ -43,7 +43,8 @@
                             <Label Text="Описание"
                                    Style="{StaticResource TextProfileStyle}"
                                    FontSize="18"
-                                   HorizontalOptions="Center"/>
+                                   HorizontalOptions="Start"
+                                   Margin="20,0,0,0"/>
                             <custom:CustomEditor HeightRequest="260" Margin="0,0,30,0" Text="{Binding Description}"/>
                         </StackLayout>
                         <Button Text="Опубликовать"

@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Limelight-Regular.ttf" />
     <None Remove="Fonts\Montserrat.ttf" />
     <None Remove="Fonts\MontserratAlternates.ttf" />
     <None Remove="Fonts\MontserratAlternatesBold.ttf" />
@@ -26,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Fonts\Limelight-Regular.ttf" />
     <EmbeddedResource Include="Fonts\Montserrat.ttf" />
     <EmbeddedResource Include="Fonts\MontserratAlternatesBold.ttf" />
     <EmbeddedResource Include="Fonts\MontserratAlternates.ttf" />

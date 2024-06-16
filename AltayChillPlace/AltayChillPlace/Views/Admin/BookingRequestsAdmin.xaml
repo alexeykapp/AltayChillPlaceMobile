@@ -14,11 +14,11 @@
     <AbsoluteLayout>
         <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
             <Grid.RowDefinitions>
-                <RowDefinition Height='1'/>
+                <RowDefinition Height='0'/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2">
-                <Image Source="background.png" Aspect="AspectFit"
+                <Image Source="background.png" Aspect="AspectFill"
                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
             </AbsoluteLayout>
             <Grid Grid.Row="1">
@@ -38,14 +38,14 @@
                                 SelectedItem="{Binding SelectedStatus2}"
                                 FontFamily="MaMedium"
                                 FontSize="18"
-                                WidthRequest="270"
+                                WidthRequest="280"
                                 TextColor="#576B57"/>
                             <Button
                                 Text="Отменить"
                                 HeightRequest="15"
                                 TextTransform="None"
                                 TextColor="White"
-                                BackgroundColor="#607D56"
+                                BackgroundColor="#88AA7C"
                                 CornerRadius="30"
                                 Command="{Binding CancellationPickerCommand}"
                                 IsEnabled="{Binding IsEnableButton}"/>
@@ -112,8 +112,8 @@
                                                        Style="{StaticResource TextProfileStyle}"/>
                                             </StackLayout>
                                             
-                                            <StackLayout Spacing="0" >
-                                                <Frame BorderColor="#799D6D" BackgroundColor="Transparent" Padding="6">
+                                            <StackLayout Spacing="0">
+                                                <Frame BorderColor="#88AA7C" BackgroundColor="Transparent" Padding="6">
                                                     <StackLayout Orientation="Horizontal" Spacing="5">
                                                         <Label Text="Статус заявки:"
                                                                FontSize="18"
@@ -128,7 +128,7 @@
                                                         </Grid>
                                                     </StackLayout>
                                                 </Frame>
-                                                <Frame BorderColor="#799D6D" BackgroundColor="Transparent" Padding="6">
+                                                <Frame BorderColor="#88AA7C" BackgroundColor="Transparent" Padding="6">
                                                     <StackLayout Orientation="Horizontal" Spacing="5">
                                                         <Label Text="Статус оплаты:"
                                                                FontSize="18"
@@ -162,7 +162,7 @@
                                                         Margin="0,10,0,0"
                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CallClientCommand}"
                                                         CommandParameter="{Binding .}"
-                                                    BackgroundColor="#607D56"/>
+                                                    BackgroundColor="#88AA7C"/>
                                                 <StackLayout>
                                                 </StackLayout>
                                             </StackLayout>

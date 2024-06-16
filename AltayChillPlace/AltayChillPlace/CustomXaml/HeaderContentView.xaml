@@ -41,8 +41,9 @@
                     <Label Text="Дата заезда"
                            FontSize="16"
                            FontFamily="MaMedium"/>
-                    <DatePicker FontSize="16"
-                                FontFamily="MaMedium"
+                    <DatePicker FontSize="17"
+                                FontFamily="lime"
+                                TextColor="#739368"
                                 MinimumDate="{Binding MinArrivalDate}" 
                                 MaximumDate="{Binding MaxArrivalDate}"
                                 Date="{Binding ArrivalDate}">
@@ -56,8 +57,9 @@
                            FontSize="16"
                            FontFamily="MaMedium"/>
                     <DatePicker CharacterSpacing="0" 
-                                FontFamily="MaMedium"
-                                FontSize="16" 
+                                FontFamily="lime"
+                                FontSize="17"
+                                TextColor="#739368"
                                 MinimumDate="{Binding MinDepartureDate}"
                                 MaximumDate="{Binding MaxDepartureDate}"        
                                 Date="{Binding DepartureDate}">
