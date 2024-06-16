@@ -143,11 +143,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Text="Больше фильтров" IsVisible="{Binding IsVisibleHeaderHouse}"
-                   TextColor="#8F532F"
-                   FontFamily="MaMedium"
-                   HorizontalTextAlignment="End"
-                   Margin="0,0,10,0"/>
         </StackLayout>
     </Grid>
 

@@ -23,7 +23,8 @@
                                FontFamily="MaMedium"
                                FontSize="18"/>
                         <custom:CustomDatePicker FontSize="20"
-                                                 FontFamily="MaMedium"
+                                                 TextColor="#739368"
+                                                 FontFamily="lime"
                                                  Date="{Binding ArrivalDate}"
                                                  MinimumDate="{Binding MinArrivalDate }"
                                                  MaximumDate="{Binding MaxArrivalDate}">
@@ -38,7 +39,8 @@
                                TextColor="#999494" 
                                FontSize="20"/>
                         <custom:CustomDatePicker FontSize="20" 
-                                                 FontFamily="MaMedium"
+                                                 FontFamily="lime"
+                                                 TextColor="#739368"
                                     Date="{Binding DepartureDate}" 
                                     MinimumDate="{Binding MinDepartureDate}" 
                                     MaximumDate="{Binding MaxDepartureDate}">
