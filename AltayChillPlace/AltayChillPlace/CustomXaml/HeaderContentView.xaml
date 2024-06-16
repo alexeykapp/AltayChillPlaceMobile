@@ -39,10 +39,11 @@
             <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0" >
                 <StackLayout Orientation="Vertical" Spacing="0" Margin="0,0,30,0" IsVisible="{Binding IsVisibleHeaderHouse}">
                     <Label Text="Дата заезда"
-                           FontSize="15"
+                           FontSize="16"
                            FontFamily="MaMedium"/>
-                    <DatePicker FontSize="15"
-                                FontFamily="MaMedium"
+                    <DatePicker FontSize="17"
+                                FontFamily="lime"
+                                TextColor="#739368"
                                 MinimumDate="{Binding MinArrivalDate}" 
                                 MaximumDate="{Binding MaxArrivalDate}"
                                 Date="{Binding ArrivalDate}">
@@ -53,11 +54,12 @@
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Spacing="0" IsVisible="{Binding IsVisibleHeaderHouse}">
                     <Label Text="Дата выезда"
-                           FontSize="15"
+                           FontSize="16"
                            FontFamily="MaMedium"/>
                     <DatePicker CharacterSpacing="0" 
-                                FontFamily="MaMedium"
-                                FontSize="15" 
+                                FontFamily="lime"
+                                FontSize="17"
+                                TextColor="#739368"
                                 MinimumDate="{Binding MinDepartureDate}"
                                 MaximumDate="{Binding MaxDepartureDate}"        
                                 Date="{Binding DepartureDate}">
@@ -82,7 +84,7 @@
                             TextColor="Black"
                             PlaceholderColor="#576B57"
                             Text="{Binding SearchTextService, Mode=TwoWay}"
-                            Placeholder="Search items..."/>
+                            Placeholder="Найти"/>
                         <Button
                             BackgroundColor="Transparent"
                             ImageSource="searchButton"
@@ -141,6 +143,11 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <Label Text="Больше фильтров" IsVisible="{Binding IsVisibleHeaderHouse}"
+                   TextColor="#8F532F"
+                   FontFamily="MaMedium"
+                   HorizontalTextAlignment="End"
+                   Margin="0,0,10,0"/>
         </StackLayout>
     </Grid>
 

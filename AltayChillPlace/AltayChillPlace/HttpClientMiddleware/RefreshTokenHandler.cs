@@ -9,8 +9,10 @@ using Newtonsoft.Json;
 using AltayChillPlace.Services;
 using AltayChillPlace.NavigationFile;
 using AltayChillPlace.Views;
-using System.Diagnostics;
 using System;
+using Polly;
+using System.IO;
+using System.Net.Sockets;
 
 namespace AltayChillPlace.HttpClientMiddleware
 {
@@ -42,36 +44,48 @@ namespace AltayChillPlace.HttpClientMiddleware
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             }
 
-            try
-            {
-                var response = await base.SendAsync(request, cancellationToken);
-                if (response.StatusCode == HttpStatusCode.Unauthorized && !isRefreshing)
-                {
-                    isRefreshing = true;
-                    var newAccessToken = await ObtainNewToken();
+            // Политика повторных попыток с использованием Polly
+            var retryPolicy = Policy.Handle<HttpRequestException>()
+                                    .Or<SocketException>()
+                                    .Or<IOException>()
+                                    .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                                        (exception, timeSpan, context) =>
+                                        {
+                                            Console.WriteLine($"Request failed. Waiting {timeSpan} before next retry. Exception: {exception.Message}");
+                                        });
 
-                    if (newAccessToken == null)
+            return await retryPolicy.ExecuteAsync(async () =>
+            {
+                try
+                {
+                    var response = await base.SendAsync(request, cancellationToken);
+                    if (response.StatusCode == HttpStatusCode.Unauthorized && !isRefreshing)
                     {
+                        isRefreshing = true;
+                        var newAccessToken = await ObtainNewToken();
+
+                        if (newAccessToken == null)
+                        {
+                            isRefreshing = false;
+                            await _tokenService.LogOut();
+                            return response;
+                        }
+
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", newAccessToken);
                         isRefreshing = false;
-                        await _tokenService.LogOut();
-                        return response;
+                        _countIsRefreshing = 0;
+                        response = await base.SendAsync(request, cancellationToken);
                     }
 
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", newAccessToken);
-                    isRefreshing = false;
-                    _countIsRefreshing = 0;
-                    response = await base.SendAsync(request, cancellationToken);
+                    return response;
                 }
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error during request: {ex.Message}");
-                throw;
-            }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error during request: {ex.Message}");
+                    throw;
+                }
+            });
         }
-
 
         private async Task<string> ObtainNewToken()
         {

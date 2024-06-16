@@ -19,40 +19,45 @@
             <Frame BackgroundColor="#F7FBFF" 
                    Grid.Row="1" 
                    CornerRadius="50" 
-                   Margin="6,0,6,20">
+                   Margin="3,0,3,20">
                 <StackLayout Spacing="5" HorizontalOptions="FillAndExpand">
-                    <StackLayout>
-                        <CarouselView ItemsSource="{Binding ListImageSources}"
-                                      HeightRequest="250"
-                                      WidthRequest="270"
-                                      IndicatorView="{x:Reference Name=indicator}"
-                                      Loop="False">
-                            <CarouselView.ItemTemplate>
-                                <DataTemplate>
-                                    <ContentView x:DataType="help:ListImageSource">
-                                        <Image Source="{Binding ImageSource}"
-                                               Aspect="AspectFit"/>
-                                    </ContentView>
-                                </DataTemplate>
-                            </CarouselView.ItemTemplate>
-                        </CarouselView>
-                        <ActivityIndicator Color="Green" 
-                                           VerticalOptions="Start"
-                                           Margin="0,50,0,0"
-                                           IsVisible="{Binding IsLoadingVisible}" 
-                                           IsRunning="{Binding IsLoadingVisible}"/>
-                        <IndicatorView
-                            x:Name="indicator"
-                            IndicatorColor="#BBB794"
-                            SelectedIndicatorColor="#88A87F"
-                            HorizontalOptions="Center"
-                            IndicatorSize="10"
-                            HeightRequest="20"
-                            WidthRequest="100"
-                            BackgroundColor="Transparent"/>
-                    </StackLayout>
-                    <Frame 
-                           WidthRequest="320" 
+                    <Frame CornerRadius="20" Padding="0" Margin="10,10,20,0">
+                        <StackLayout>
+                            <CarouselView ItemsSource="{Binding ListImageSources}"
+                                          HeightRequest="330"
+                                          WidthRequest="270"
+                                          IndicatorView="{x:Reference Name=indicator}"
+                                          Loop="False">
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid x:DataType="help:ListImageSource">
+                                            <Image Source="{Binding ImageSource}"
+                                                   Aspect="AspectFill"
+                                                   HorizontalOptions="FillAndExpand"
+                                                   VerticalOptions="FillAndExpand"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                            <ActivityIndicator Color="Green" 
+                                               VerticalOptions="Start"
+                                               Margin="0,50,0,0"
+                                               IsVisible="{Binding IsLoadingVisible}" 
+                                               IsRunning="{Binding IsLoadingVisible}"/>
+                        </StackLayout>
+                    </Frame>
+                    <IndicatorView
+                                x:Name="indicator"
+                                IndicatorColor="#BBB794"
+                                SelectedIndicatorColor="#88A87F"
+                                HorizontalOptions="Center"
+                                IndicatorSize="10"
+                                HeightRequest="20"
+                                WidthRequest="100"
+                                BackgroundColor="Transparent"/>
+                    <Frame
+                        Padding="0"
+                           WidthRequest="380" 
                            CornerRadius="30" 
                            HorizontalOptions="Center">
                         <StackLayout>
@@ -119,11 +124,44 @@
                                         </StackLayout>
                                     </StackLayout>
                                 </Grid>
+                                <Grid Grid.Row="0" Margin="5,40,0,0">
+                                    <StackLayout Spacing="3">
+                                        <Label Text="Прочее"
+                                               FontFamily="MaMedium"
+                                               TextColor="#234314"
+                                               FontSize="17"/>
+                                        <Label Text="-кровать 190х200 см"
+                                               FontFamily="MaMedium"
+                                               FontSize="15"
+                                               TextColor="#234314"
+                                               HorizontalTextAlignment="Start"/>
+                                        <Label Text="-шкаф для одежды"
+                                               FontFamily="MaMedium"
+                                               FontSize="15"
+                                               TextColor="#234314"
+                                               HorizontalTextAlignment="Start"/>
+                                        <Label Text="-небольшой столик"
+                                               FontFamily="MaMedium"
+                                               FontSize="15"
+                                               TextColor="#234314"
+                                               HorizontalTextAlignment="Start"/>
+                                        <Label Text="-2 стула"
+                                               FontFamily="MaMedium"
+                                               FontSize="15"
+                                               TextColor="#234314"
+                                               HorizontalTextAlignment="Start"/>
+                                         <Label Text="-кондиционер"
+                                               FontFamily="MaMedium"
+                                               FontSize="15"
+                                               TextColor="#234314"
+                                               HorizontalTextAlignment="Start"/>
+                                    </StackLayout>
+                                </Grid>
                             </Grid>
                             <Button VerticalOptions="End"
                                             HorizontalOptions="Center"
                                             WidthRequest="190"
-                                            Margin="0,20,0,0"
+                                            Margin="0,20,0,10"
                                             Text="Забронировать"
                                             TextTransform="None"
                                             FontFamily="MaMedium"

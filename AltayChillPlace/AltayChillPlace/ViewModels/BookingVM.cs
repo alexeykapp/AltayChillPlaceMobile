@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics.SymbolStore;
 using Xamarin.CommunityToolkit.UI.Views.Options;
 using Xamarin.Essentials;
+using System.Threading.Tasks;
 
 namespace AltayChillPlace.ViewModels
 {
@@ -20,7 +21,6 @@ namespace AltayChillPlace.ViewModels
         private string _lastName;
         private string _phoneNumber;
         private int _numberOfPeople = 1;
-        // date
 
         private DateTime _arrivalDate = DateTime.Now.AddDays(1);
         private DateTime _departureDate = DateTime.Now.AddDays(2);
@@ -31,6 +31,7 @@ namespace AltayChillPlace.ViewModels
         private HouseResponse house;
         private int _finalPrice;
         private MessageService _messageService;
+        private bool _isRefreshing;
 
         public BookingVM(IBookingService bookingService, IProfileService profileService)
         {
@@ -39,8 +40,26 @@ namespace AltayChillPlace.ViewModels
             _bookingServices = bookingService;
             _messageService = new MessageService();
             BookingCommand = new DelegateCommand(RequestBooking);
+            RefreshCommand = new DelegateCommand(async () => await RefreshData());
         }
+
         public DelegateCommand BookingCommand { get; set; }
+        public DelegateCommand RefreshCommand { get; set; }
+
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
+
+        private async Task RefreshData()
+        {
+            IsRefreshing = true;
+
+            await LoadingUserInfo();
+
+            IsRefreshing = false;
+        }
 
         private async void RequestBooking()
         {
@@ -63,7 +82,8 @@ namespace AltayChillPlace.ViewModels
                 _messageService.ShowPopup("Ошибка", "Проверьте все поля ввода");
             }
         }
-        private async void LoadingUserInfo()
+
+        private async Task LoadingUserInfo()
         {
             _idUser = int.Parse(await SecureStorage.GetAsync("IdUser"));
             var profile = await _profileService.GetPersonResponce();
@@ -74,12 +94,12 @@ namespace AltayChillPlace.ViewModels
 
             NumberOfPeople = 2;
         }
-        private async void SettingValue()
+
+        private void SettingValue()
         {
             FinalPrice = House.PricePerDay;
-            //var id = await SecureStorage.GetAsync("IdUser");
-            //_idUser = int.Parse(id);
         }
+
         public string FirstName
         {
             get => _firstName;
@@ -97,57 +117,59 @@ namespace AltayChillPlace.ViewModels
             get => _lastName;
             set => SetProperty(ref _lastName, value);
         }
+
         public string PhoneNumber
         {
             get => _phoneNumber;
             set => SetProperty(ref _phoneNumber, value);
         }
+
         public DateTime ArrivalDate
         {
             get => _arrivalDate;
             set => SetProperty(ref _arrivalDate, value);
         }
+
         public DateTime DepartureDate
         {
             get => _departureDate;
             set => SetProperty(ref _departureDate, value);
         }
+
         public DateTime MinDepartureDate
         {
             get => _minDepartureDate;
             set => SetProperty(ref _minDepartureDate, value);
         }
+
         public DateTime MaxDepartureDate
         {
             get => _maxDepartureDate;
             set => SetProperty(ref _maxDepartureDate, value);
         }
+
         public DateTime MinArrivalDate
         {
             get => _minArrivalDate;
             set => SetProperty(ref _minArrivalDate, value);
         }
+
         public DateTime MaxArrivalDate
         {
             get => _maxArrivaDate;
             set => SetProperty(ref _maxArrivaDate, value);
         }
+
         public int NumberOfPeople
         {
             get => _numberOfPeople;
             set
             {
-                if (value >= 1)
-                {
-                    SetProperty(ref _numberOfPeople, value);
-                }
-                else
-                {
-                    _messageService.ShowPopup("Ошибка", "Введите корректное количество человек");
-                }
-
+                SetProperty(ref _numberOfPeople, value);
+                CheckValuePeople(value);
             }
         }
+
         public HouseResponse House
         {
             get => house;
@@ -157,11 +179,13 @@ namespace AltayChillPlace.ViewModels
                 SettingValue();
             }
         }
+
         public int FinalPrice
         {
             get => _finalPrice;
             set => SetProperty(ref _finalPrice, value);
         }
+
         private bool CheckIsEmpty()
         {
             if (string.IsNullOrEmpty(FirstName))
@@ -186,13 +210,57 @@ namespace AltayChillPlace.ViewModels
             }
             return true;
         }
+
         private void EntryEmpty()
         {
             FirstName = string.Empty;
             MiddleName = string.Empty;
             LastName = string.Empty;
             PhoneNumber = string.Empty;
-            NumberOfPeople = 0;
+            NumberOfPeople = 2;
+        }
+
+        private void CheckValuePeople(int value)
+        {
+            if (value < 1)
+            {
+                NumberOfPeople = 1;
+                _messageService.ShowPopup("Ошибка", "Введите другое число человек");
+            }
+        }
+        private bool isCheckAddPlace;
+        public bool IsCheckAddPlace
+        {
+            get => isCheckAddPlace;
+            set
+            {
+                if (value == true)
+                {
+                    FinalPrice += 1000;
+                }
+                else if (isCheckAddPlace == true && value == false)
+                {
+                    FinalPrice -= 1000;
+                }
+                SetProperty(ref isCheckAddPlace, value);
+            }
+        }
+        private bool isCheckDinner;
+        public bool IsCheckDinner
+        {
+            get => isCheckDinner;
+            set
+            {
+                if(value == true)
+                {
+                    FinalPrice += 600;
+                }
+                else if (isCheckDinner == true && value == false)
+                {
+                    FinalPrice -= 600;
+                }
+                SetProperty(ref isCheckDinner, value);
+            }
         }
     }
 }

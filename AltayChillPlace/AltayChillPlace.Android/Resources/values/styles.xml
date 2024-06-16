@@ -10,13 +10,15 @@
     <!-- colorPrimary is used for the default action bar background -->
     <!--<item name="colorPrimary">#2196F3</item>-->
     <!-- colorPrimaryDark is used for the status bar -->
-    <!--<item name="colorPrimaryDark">#1976D2</item>-->
-    <!-- colorAccent is used as the default value for colorControlActivated
-         which is used to tint widgets -->
-	  <item name="android:navigationBarColor">#A0CE90</item>
-
-	  <!-- You might also want to define the statusBarColor -->
-	  <item name="android:statusBarColor">#A0CE90</item>
+	  <item name="colorPrimary">#576B57</item>
+	  <!-- Цвет Action Bar -->
+	  <item name="colorPrimaryDark">#576B57</item>
+	  <!-- Цвет Status Bar -->
+	  <item name="android:navigationBarColor">#576B57</item>
+	  <!-- Цвет Navigation Bar -->
+	  <item name="android:statusBarColor">#576B57</item>
+	  <!-- Цвет Status Bar -->
+	  
   </style>
 	<style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
 		<item name="queryBackground">@android:color/transparent</item>

@@ -25,7 +25,7 @@
             <Image Grid.Row="0" Source="headerMainMenu" Aspect="Fill"/>
             <CollectionView ItemsSource="{Binding BookingHistories}"  
                             SelectionMode="None" Grid.Row="1"
-                            Margin="15,0,15,0"
+                            Margin="15,0,15,5"
                             BackgroundColor="Transparent">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
@@ -35,26 +35,26 @@
                         <Frame Padding="10" Margin="10" BackgroundColor="White" CornerRadius="10">
                             <Grid>
                                 <StackLayout Orientation="Vertical">
-                                    <Label Text="{Binding HouseName}" FontFamily="MaRegular" TextColor="#234314" FontSize="18"/>
+                                    <Label Text="{Binding HouseName}"  FontFamily="MaRegular" TextColor="#234314" FontSize="19"/>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="Статус заявки: " FontFamily="MaMedium" TextColor="#234314"/>
-                                        <Label Text="{Binding BookingStatus}" FontFamily="MaMedium" TextColor="#234314"/>
+                                        <Label Text="Статус заявки: " FontSize="17" FontFamily="MaMedium" TextColor="#234314"/>
+                                        <Label Text="{Binding BookingStatus}" FontSize="17" FontFamily="MaMedium" TextColor="#234314"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label FontFamily="MaMedium" Text="Дата заезда" TextColor="#234314"/>
-                                        <Label Text="{Binding ArrivalDate, Converter={StaticResource DateConverter}}" FontFamily="MaMedium"  TextColor="#234314"/>
+                                        <Label FontFamily="MaMedium" FontSize="17" Text="Дата заезда:" TextColor="#234314"/>
+                                        <Label Text="{Binding ArrivalDate, Converter={StaticResource DateConverter}}" FontSize="17" FontFamily="MaMedium"  TextColor="#234314"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label FontFamily="MaMedium" Text="Дата выезда" TextColor="#234314"/>
-                                        <Label Text="{Binding DepartureDate, Converter={StaticResource DateConverter}}" FontFamily="MaMedium"  TextColor="#234314"/>
+                                        <Label FontFamily="MaMedium" Text="Дата выезда:" FontSize="17" TextColor="#234314"/>
+                                        <Label Text="{Binding DepartureDate, Converter={StaticResource DateConverter}}" FontSize="17" FontFamily="MaMedium"  TextColor="#234314"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label FontFamily="MaMedium" Text="Количество человек" TextColor="#234314"/>
-                                        <Label Text="{Binding NumberOfPersons}" FontFamily="MaMedium"  TextColor="#234314"/>
+                                        <Label FontFamily="MaMedium" FontSize="17" Text="Количество человек:" TextColor="#234314"/>
+                                        <Label Text="{Binding NumberOfPersons}" FontSize="17" FontFamily="MaMedium"  TextColor="#234314"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="Итоговая сумма:" FontFamily="MaMedium" TextColor="#234314"/>
-                                        <Label Text="{Binding TotalSum}" FontFamily="MaMedium" TextColor="#A45723"/>
+                                        <Label Text="Итоговая сумма:" FontSize="17" FontFamily="MaMedium" TextColor="#234314"/>
+                                        <Label Text="{Binding TotalSum}" FontSize="17" FontFamily="MaMedium" TextColor="#A45723"/>
                                     </StackLayout>
                                 </StackLayout>
                             </Grid>

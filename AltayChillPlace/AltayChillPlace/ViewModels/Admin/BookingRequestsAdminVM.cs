@@ -6,20 +6,24 @@ using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace AltayChillPlace.ViewModels.Admin
 {
     public class BookingRequestsAdminVM : BindableBase
     {
+        private ApplicationStatusResponse _selectedStatus2;
         private IAdminService _adminService;
         private IMessageService _messageService;
-        private bool _isPickerVisible;
         private bool _popupAppStatusIsVisible;
         private bool _popupPayStatusIsVisible;
         private ApplicationStatusResponse _selectedStatus;
         private ObservableCollection<ReservationResponse> _reservationResponses;
+        private ObservableCollection<ReservationResponse> _currentList;
         private ObservableCollection<ApplicationStatusResponse> _applicationStatusResponses;
+        private ObservableCollection<ReservationResponse> _filteredReservationResponses;
 
         private bool isConfirmed;
         private bool isCancelled;
@@ -29,6 +33,8 @@ namespace AltayChillPlace.ViewModels.Admin
         private bool _isPrepaid;
         private bool _isPaid;
         private bool _isRefunded;
+
+        private bool _isEnableButton;
 
         public BookingRequestsAdminVM(IAdminService adminService, IMessageService messageService)
         {
@@ -40,24 +46,150 @@ namespace AltayChillPlace.ViewModels.Admin
             EditPayStatusCommand = new DelegateCommand(EditPayStatus);
             OpenPopupAppStatusCommand = new DelegateCommand<ReservationResponse>(OpenPopupAppStatus);
             OpenPopupPayStatusCommand = new DelegateCommand<ReservationResponse>(OpenPopupPayStatus);
+            CallClientCommand = new DelegateCommand<ReservationResponse>(CallClient);
+            CancellationPickerCommand = new DelegateCommand(CancellationPicker);
             InitializeAsync();
         }
+
         public DelegateCommand EditStatusCommand { get; set; }
         public DelegateCommand<ReservationResponse> OpenPopupAppStatusCommand { get; set; }
         public DelegateCommand<ReservationResponse> OpenPopupPayStatusCommand { get; set; }
-        public DelegateCommand EditPayStatusCommand { get; set;}
+        public DelegateCommand EditPayStatusCommand { get; set; }
+        public DelegateCommand<ReservationResponse> CallClientCommand { get; set; }
+        public DelegateCommand CancelPopupAppCommand { get; set; }
+        public DelegateCommand CancelPopupPayCommand { get; set; }
+        public DelegateCommand CancellationPickerCommand { get; set; }
+
         public ObservableCollection<ReservationResponse> ReservationResponses
         {
             get => _reservationResponses;
-            set => SetProperty(ref _reservationResponses, value);
+            set
+            {
+                if (SetProperty(ref _reservationResponses, value))
+                {
+                    FilterReservations();
+                }
+            }
         }
-        public ObservableCollection<ApplicationStatusResponse> ApplicationStatuses { get; set; }
+
+        public ObservableCollection<ReservationResponse> FilteredReservationResponses
+        {
+            get => _filteredReservationResponses;
+            set => SetProperty(ref _filteredReservationResponses, value);
+        }
+
+        public ObservableCollection<ApplicationStatusResponse> ApplicationStatuses
+        {
+            get => _applicationStatusResponses;
+            set => SetProperty(ref _applicationStatusResponses, value);
+        }
+
+        public ApplicationStatusResponse SelectedStatus2
+        {
+            get => _selectedStatus2;
+            set
+            {
+                if (value == null)
+                {
+                    IsEnableButton = false;
+                }
+                else
+                {
+                    IsEnableButton = true;
+                }
+                    if (SetProperty(ref _selectedStatus2, value))
+                    {
+                        FilterReservations();
+                    }
+                //}
+                //else
+                //{
+                  //  IsEnableButton = false;
+                //}
+            }
+        }
 
         private async void InitializeAsync()
         {
-            await LoadingDataRequests();
             await LoadingStatus();
+            await LoadingDataRequests();
         }
+
+        private async Task LoadingDataRequests()
+        {
+            try
+            {
+                var applications = await _adminService.GetAllReservationAsync();
+                if (applications != null)
+                {
+                    ReservationResponses = applications;
+                    CurrentList = applications;
+                }
+            }
+            catch (Exception ex)
+            {
+                _messageService.ShowPopup("Ошибка", "Повторите позже");
+                Debug.WriteLine(ex);
+            }
+        }
+
+        private async Task LoadingStatus()
+        {
+            try
+            {
+                var statuses = await _adminService.GetAllApplicationSatus();
+                if (statuses != null)
+                {
+                    ApplicationStatuses = statuses;
+                }
+            }
+            catch (Exception ex)
+            {
+                _messageService.ShowPopup("Ошибка", "Не удалось загрузить статусы");
+                Debug.WriteLine(ex);
+            }
+        }
+
+        private void FilterReservations()
+        {
+            if (SelectedStatus2 == null)
+            {
+                FilteredReservationResponses = ReservationResponses;
+            }
+            else
+            {
+                var list = ReservationResponses.Where(r => r.ApplicationStatus.StatusName == SelectedStatus2.Status).ToList();
+                CurrentList = new ObservableCollection<ReservationResponse>(list);
+            }
+        }
+        public ObservableCollection<ReservationResponse> CurrentList
+        {
+            get => _currentList;
+            set => SetProperty(ref _currentList, value);
+        }
+        private void CancellationPicker()
+        {
+            SelectedStatus2 = null;
+            IsEnableButton = false;
+            CurrentList = ReservationResponses;
+        }
+        private void CallClient(ReservationResponse reservation)
+        {
+            var phoneNumber = reservation.Client.PhoneNumber;
+            try
+            {
+                PhoneDialer.Open(phoneNumber);
+            }
+            catch (FeatureNotSupportedException ex)
+            {
+                _messageService.ShowPopup("Ошибка", "Телефонный набор не поддерживается на этом устройстве");
+            }
+            catch (Exception ex)
+            {
+                _messageService.ShowPopup("Ошибка", "Не удалось выполнить звонок");
+            }
+        }
+
         private ReservationResponse _currentSelected;
         private async void EditAppStatus()
         {
@@ -71,11 +203,12 @@ namespace AltayChillPlace.ViewModels.Admin
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error-"+ex);
+                Debug.WriteLine("Error-" + ex);
             }
             PopupAppStatusIsVisible = false;
             InitializeAsync();
         }
+
         private async void EditPayStatus()
         {
             int id = WhatIsPayStatus();
@@ -93,113 +226,19 @@ namespace AltayChillPlace.ViewModels.Admin
             PopPayStatusIsVisible = false;
             InitializeAsync();
         }
+
         private void OpenPopupAppStatus(ReservationResponse selectedReservation)
         {
             PopupAppStatusIsVisible = true;
             _currentSelected = selectedReservation;
         }
+
         private void OpenPopupPayStatus(ReservationResponse selectedReservation)
         {
             PopPayStatusIsVisible = true;
             _currentSelected = selectedReservation;
         }
-        private async Task LoadingDataRequests()
-        {
-            try
-            {
-                var applications = await _adminService.GetAllReservationAsync();
-                if (applications != null)
-                {
-                    ReservationResponses = applications;
-                }
-            }
-            catch (Exception ex)
-            {
-                _messageService.ShowPopup("Ошибка", "Повторите позже");
-                Debug.WriteLine(ex);
-            }
-        }
-        private async Task LoadingStatus()
-        {
-            try
-            {
-                var statuses = await _adminService.GetAllApplicationSatus();
-                if (statuses != null)
-                {
-                    ApplicationStatuses = statuses;
-                }
-            }
-            catch
-            {
-                _messageService.ShowPopup("Ошибка", "");
-            }
 
-        }
-        private void CancelPopupPay()
-        {
-            PopPayStatusIsVisible = false;
-        }
-        public DelegateCommand CancelPopupAppCommand { get; set; }
-        public DelegateCommand CancelPopupPayCommand { get; set; }
-        public ApplicationStatusResponse SelectedStatus
-        {
-            get => _selectedStatus;
-            set
-            {
-                if (SetProperty(ref _selectedStatus, value))
-                {
-                    Debug.WriteLine($"Selected status: {_selectedStatus}");
-                }
-            }
-        }
-        public bool PopupAppStatusIsVisible
-        {
-            get => _popupAppStatusIsVisible;
-            set => SetProperty(ref _popupAppStatusIsVisible, value);
-        }
-        public bool PopPayStatusIsVisible
-        {
-            get => _popupPayStatusIsVisible;
-            set => SetProperty(ref _popupPayStatusIsVisible, value);
-        }
-        public bool IsConfirmed
-        {
-            get => isConfirmed;
-            set
-            {
-                if (isConfirmed != value)
-                {
-                    isConfirmed = value;
-                    SetProperty(ref isConfirmed, value);
-                }
-            }
-        }
-
-        public bool IsCancelled
-        {
-            get => isCancelled;
-            set
-            {
-                if (isCancelled != value)
-                {
-                    isCancelled = value;
-                    SetProperty(ref isCancelled, value);
-                }
-            }
-        }
-
-        public bool IsUnderReview
-        {
-            get => isUnderReview;
-            set
-            {
-                if (isUnderReview != value)
-                {
-                    isUnderReview = value;
-                    SetProperty(ref isUnderReview, value);
-                }
-            }
-        }
         private int WhatIsIdStatus()
         {
             if (IsConfirmed)
@@ -216,6 +255,7 @@ namespace AltayChillPlace.ViewModels.Admin
             }
             return 0;
         }
+
         private int WhatIsPayStatus()
         {
             if (IsAwaitingPrepayment)
@@ -236,9 +276,63 @@ namespace AltayChillPlace.ViewModels.Admin
             }
             return 0;
         }
+
         private void CancelPopupApp()
         {
             PopupAppStatusIsVisible = false;
+        }
+
+        private void CancelPopupPay()
+        {
+            PopPayStatusIsVisible = false;
+        }
+
+        public bool PopupAppStatusIsVisible
+        {
+            get => _popupAppStatusIsVisible;
+            set => SetProperty(ref _popupAppStatusIsVisible, value);
+        }
+
+        public bool PopPayStatusIsVisible
+        {
+            get => _popupPayStatusIsVisible;
+            set => SetProperty(ref _popupPayStatusIsVisible, value);
+        }
+
+        public bool IsConfirmed
+        {
+            get => isConfirmed;
+            set
+            {
+                if (SetProperty(ref isConfirmed, value))
+                {
+                    FilterReservations();
+                }
+            }
+        }
+
+        public bool IsCancelled
+        {
+            get => isCancelled;
+            set
+            {
+                if (SetProperty(ref isCancelled, value))
+                {
+                    FilterReservations();
+                }
+            }
+        }
+
+        public bool IsUnderReview
+        {
+            get => isUnderReview;
+            set
+            {
+                if (SetProperty(ref isUnderReview, value))
+                {
+                    FilterReservations();
+                }
+            }
         }
         public bool IsAwaitingPrepayment
         {
@@ -262,6 +356,11 @@ namespace AltayChillPlace.ViewModels.Admin
         {
             get => _isRefunded;
             set => SetProperty(ref _isRefunded, value);
+        }
+        public bool IsEnableButton
+        {
+            get => _isEnableButton;
+            set => SetProperty(ref _isEnableButton, value);
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Diagnostics;
 using System.Linq;
+using AltayChillPlace.Interface;
 using System.Collections.Generic;
 using AltayChillPlace.NavigationFile;
 using AltayChillPlace.Views;
@@ -35,6 +36,7 @@ namespace AltayChillPlace.ViewModels
         private ServiceTypeResponce _typeServiceSelected;
         private string _textLabel;
 
+        private IMessageService messageService;
         private bool _isVisibleHeader;
         private bool _isVisibleHouseList;
         private bool _isVisibleActivityIndicator;
@@ -63,13 +65,13 @@ namespace AltayChillPlace.ViewModels
 
         private CurrentPage _currentPage = CurrentPage.House;
 
-        public HousesVM(HouseModel houseModel, ServiceModel serviceModel)
+        public HousesVM(HouseModel houseModel, ServiceModel serviceModel, IMessageService messageService)
         {
             _houseModel = houseModel ?? throw new ArgumentNullException(nameof(houseModel));
             _serviceModel = serviceModel ?? throw new ArgumentNullException(nameof(serviceModel));
             _filteringService = new FilteringService();
             currentPage = NavigationDispatcher.GetCurrentPage();
-
+            this.messageService = messageService;
             InitializeCommands();
             LoadDataAsync();
         }
@@ -241,22 +243,16 @@ namespace AltayChillPlace.ViewModels
             currentPage = NavigationDispatcher.GetCurrentPage();
             try
             {
-                // Загружаем доступные домики
                 var availableHouses = await _houseModel.GetAvailableHouse(ArrivalDate, DepartureDate);
-
-                // Обновляем коллекцию
                 _availableHouses = new ObservableCollection<HouseResponse>(availableHouses);
 
-                // Обновляем видимость и метки
                 UpdateVisibilityForNoHouses(_availableHouses);
 
-                // Снимаем выделение с выбранного типа домика, если есть
                 if (TypeHouseSelected != null)
                 {
                     TypeHouseSelected.IsSelected = false;
                 }
 
-                // Обновляем текущие элементы
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     CurrentItems = _availableHouses;
@@ -281,7 +277,6 @@ namespace AltayChillPlace.ViewModels
         {
             bool noHouses = houses == null || !houses.Any();
             IsVisibleLabel = noHouses;
-            //TextLabel = noHouses ? "Нет доступных домов" : string.Empty;
         }
         public DelegateCommand HouseClickCommand { get; private set; }
         public DelegateCommand ServicesClickCommand { get; private set; }
@@ -296,12 +291,27 @@ namespace AltayChillPlace.ViewModels
         public DateTime ArrivalDate
         {
             get => _arrivalDate;
-            set => SetProperty(ref _arrivalDate, value);
+            set
+            {
+                SetProperty(ref _arrivalDate, value);
+                DepartureDate = value.AddDays(1);
+            }
         }
         public DateTime DepartureDate
         {
             get => _departureDate;
-            set => SetProperty(ref _departureDate, value);
+            set
+            {
+                if (value > ArrivalDate)
+                {
+                    SetProperty(ref _departureDate, value);
+                }
+                else
+                {
+                    SetProperty(ref _departureDate, _arrivalDate.AddDays(1));
+                    messageService.ShowPopup("Ошибка", "Введите корректную дату выезда");
+                }
+            }
         }
 
         public DateTime MinDepartureDate

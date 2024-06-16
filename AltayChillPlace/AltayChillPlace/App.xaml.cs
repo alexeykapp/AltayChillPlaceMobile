@@ -59,7 +59,6 @@ namespace AltayChillPlace
                 }
                 // MainPage = resultValidate ? new NavigationPage(new Houses()) : new NavigationPage(new Autorization());
 
-                // Общие настройки
                 NavigationPage.SetHasNavigationBar(MainPage, false);
                 NavigationDispatcher.Instance.Initialize(MainPage.Navigation);
             }

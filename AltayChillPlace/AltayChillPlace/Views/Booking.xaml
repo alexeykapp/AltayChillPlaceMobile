@@ -15,117 +15,119 @@
             <Image Source="backgroundHouseInfo.png" Aspect="AspectFill"
                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
         </AbsoluteLayout>
-        <ScrollView>
-            <Frame Grid.Row="1" CornerRadius="30" Margin="20,20,20,0" VerticalOptions="Center">
-                <Grid>
-                    <Label Text="Бронирование" 
-                           FontSize="23" 
-                           FontFamily="MaMedium"
-                           TextColor="#576B57"
-                           Margin="0,0,0,0"
-                           HorizontalTextAlignment="Center"/>
-                    <StackLayout HorizontalOptions="Center" Margin="0,30,0,0">
-                        <Label Text="Имя*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontAttributes="Bold" FontSize="18"/>
-                        <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding FirstName}"/>
-                        <Label Text="Фамилия*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
-                        <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding MiddleName}"/>
-                        <Label Text="Отчество" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
-                        <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding LastName}"/>
-                        <Label Text="Номер телефона*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
-                        <custom:EntryPhoneMask TextColor="#234314" ColorBorder="#576B57" Text="{Binding PhoneNumber}"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <StackLayout Orientation="Vertical" 
-                                     Grid.Column="0"
-                                     Spacing="0">
-                                <Label Text="Дата заезда"
-                                   FontFamily="MaMedium"
-                                   TextColor="#999494"
-                                   FontSize="17"/>
-                                <DatePicker 
-                                Margin="0,0,35,0"
-                                FontSize="19"
-                                FontFamily="MaMedium"
-                                Date="{Binding ArrivalDate}"
-                                    MinimumDate="{Binding MinArrivalDate}"
-                                    MaximumDate="{Binding MaxArrivalDate}">
-                                    <DatePicker.Behaviors>
-                                        <helpers:DatePickerBehavior/>
-                                    </DatePicker.Behaviors>
-                                </DatePicker>
-                            </StackLayout>
-                            <StackLayout Orientation="Vertical" 
-                                         Grid.Column="1"
+        <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+            <ScrollView>
+                <Frame Grid.Row="1" CornerRadius="30" Margin="10,15,10,0" VerticalOptions="Center">
+                    <Grid>
+                        <Label Text="Бронирование" 
+                               FontSize="23" 
+                               FontFamily="MaMedium"
+                               TextColor="#576B57"
+                               Margin="0,0,0,0"
+                               HorizontalTextAlignment="Center"/>
+                        <StackLayout HorizontalOptions="Center" Margin="0,30,0,0">
+                            <Label Text="Фамилия*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontAttributes="Bold" FontSize="18"/>
+                            <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding LastName}"/>
+                            <Label Text="Имя*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
+                            <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding FirstName}"/>
+                            <Label Text="Отчество" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
+                            <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding MiddleName}"/>
+                            <Label Text="Номер телефона*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontSize="18"/>
+                            <custom:EntryPhoneMask TextColor="#234314" ColorBorder="#576B57" Text="{Binding PhoneNumber}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Orientation="Vertical" 
+                                         Grid.Column="0"
                                          Spacing="0">
-                                <Label Text="Дата выезда"
+                                    <Label Text="Дата заезда"
                                        FontFamily="MaMedium"
                                        TextColor="#999494"
                                        FontSize="17"/>
-                                <DatePicker
-                                    FontSize="19"
+                                    <DatePicker 
                                     Margin="0,0,35,0"
+                                    FontSize="19"
                                     FontFamily="MaMedium"
-                                    Date="{Binding DepartureDate}"
-                                    MinimumDate="{Binding MinDepartureDate}"
-                                    MaximumDate="{Binding MaxDepartureDate}">
-                                    <DatePicker.Behaviors>
-                                        <helpers:DatePickerBehavior/>
-                                    </DatePicker.Behaviors>
-                                </DatePicker>
+                                    Date="{Binding ArrivalDate}"
+                                        MinimumDate="{Binding MinArrivalDate}"
+                                        MaximumDate="{Binding MaxArrivalDate}">
+                                        <DatePicker.Behaviors>
+                                            <helpers:DatePickerBehavior/>
+                                        </DatePicker.Behaviors>
+                                    </DatePicker>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" 
+                                             Grid.Column="1"
+                                             Spacing="0">
+                                    <Label Text="Дата выезда"
+                                           FontFamily="MaMedium"
+                                           TextColor="#999494"
+                                           FontSize="17"/>
+                                    <DatePicker
+                                        FontSize="19"
+                                        Margin="0,0,35,0"
+                                        FontFamily="MaMedium"
+                                        Date="{Binding DepartureDate}"
+                                        MinimumDate="{Binding MinDepartureDate}"
+                                        MaximumDate="{Binding MaxDepartureDate}">
+                                        <DatePicker.Behaviors>
+                                            <helpers:DatePickerBehavior/>
+                                        </DatePicker.Behaviors>
+                                    </DatePicker>
+                                </StackLayout>
+                            </Grid>
+                            <Label Text="Количество человек*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontAttributes="Bold" FontSize="18"/>
+                            <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding NumberOfPeople, Mode=TwoWay}" />
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Доп. место 1000руб/сутки"
+                                       FontSize="16"
+                                       FontFamily="MaMedium"
+                                       TextColor="#576B57"
+                                       VerticalTextAlignment="Center"
+                                       />
+                                <CheckBox Color="#576B57" IsChecked="{Binding IsCheckAddPlace}"/>
                             </StackLayout>
-                        </Grid>
-                        <Label Text="Количество человек*" FontFamily="MaMedium" TextColor="#576B57" Margin="17,10,0,0" FontAttributes="Bold" FontSize="18"/>
-                        <custom:EntryCustom TextColor="#234314" ColorBorder="#576B57" Text="{Binding NumberOfPeople, Mode=TwoWay}" />
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="Доп. место 1000руб/сутки"
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Обед 600руб/на 1-ого гостя"
+                                       FontSize="16"
+                                       FontFamily="MaMedium"
+                                       TextColor="#576B57"
+                                       VerticalTextAlignment="Center"/>
+                                <CheckBox Color="#576B57" IsChecked="{Binding IsCheckDinner}"/>
+                            </StackLayout>
+                            <Label Text="Итоговая сумма"
                                    FontSize="16"
                                    FontFamily="MaMedium"
                                    TextColor="#576B57"
-                                   VerticalTextAlignment="Center"/>
-                            <CheckBox Color="#576B57" />
+                                   HorizontalTextAlignment="Center"/>
+                            <StackLayout Orientation="Horizontal" Spacing="0" HorizontalOptions="CenterAndExpand">
+                                <Image Source="priceGreen3"
+                                       WidthRequest="45"
+                                       HeightRequest="30"/>
+                                <Label Text="{Binding FinalPrice}"
+                                       FontFamily="MaMedium"
+                                       FontSize="19"
+                                       TextColor="#A45723"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalOptions="End"/>
+                            </StackLayout>
+                            <Button VerticalOptions="End"
+                                    HorizontalOptions="Center"
+                                    WidthRequest="190"
+                                    Text="Забронировать"
+                                    TextTransform="None"
+                                    FontFamily="MaMedium"
+                                    CornerRadius="23"
+                                    FontSize="16"
+                                    TextColor="White"
+                                    BackgroundColor="#607D56"
+                                    Command="{Binding BookingCommand}"/>
                         </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="Обед 600руб/на 1-ого гостя"
-                                   FontSize="16"
-                                   FontFamily="MaMedium"
-                                   TextColor="#576B57"
-                                   VerticalTextAlignment="Center"/>
-                            <CheckBox Color="#576B57" />
-                        </StackLayout>
-                        <Label Text="Итоговая сумма"
-                               FontSize="16"
-                               FontFamily="MaMedium"
-                               TextColor="#576B57"
-                               HorizontalTextAlignment="Center"/>
-                        <StackLayout Orientation="Horizontal" Spacing="0" HorizontalOptions="CenterAndExpand">
-                            <Image Source="priceGreen3"
-                                   WidthRequest="45"
-                                   HeightRequest="30"/>
-                            <Label Text="{Binding FinalPrice}"
-                               FontFamily="MaMedium"
-                               FontSize="19"
-                               TextColor="#A45723"
-                               HorizontalTextAlignment="Center"
-                                   VerticalOptions="End"/>
-                        </StackLayout>
-
-                        <Button VerticalOptions="End"
-                                HorizontalOptions="Center"
-                                WidthRequest="190"
-                                Text="Забронировать"
-                                TextTransform="None"
-                                FontFamily="MaMedium"
-                                CornerRadius="23"
-                                FontSize="16"
-                                TextColor="White"
-                                BackgroundColor="#607D56"
-                                Command="{Binding BookingCommand}"/>
-                    </StackLayout>
-                </Grid>
-            </Frame>
-        </ScrollView>
+                    </Grid>
+                </Frame>
+            </ScrollView>
+        </RefreshView>
     </Grid>
 </ContentPage>

@@ -16,7 +16,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -73,6 +72,9 @@
     <PackageReference Include="Xamarin.Forms.MaskedEntry">
       <Version>1.1.0</Version>
     </PackageReference>
+    <PackageReference Include="Polly">
+      <Version>8.4.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -109,7 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AltayChillPlace\AltayChillPlace.csproj">
-      <Project>{873AF3A9-525A-4B8E-87B7-200FF2DCA3F5}</Project>
+      <Project>{B367F49C-1A08-4D34-A449-5557C7FE8DC6}</Project>
       <Name>AltayChillPlace</Name>
     </ProjectReference>
   </ItemGroup>
